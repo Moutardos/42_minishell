@@ -1,0 +1,1 @@
+echo est un programme test qui affiche son premier argument
