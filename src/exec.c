@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/26 13:30:27 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/04/26 14:20:09 by lcozdenm         ###   ########.fr       */
+/*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
+/*   Updated: 2023/04/26 14:20:14 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exec.h"
-int	main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-	const char * av_test[] = {
-		"echo",
-		"bonjour",
-		NULL,
-	};
 
-	t_arg *test;
-	test = malloc(sizeof(t_arg));
-	if (!test)
-		return (0);
-	test->ac = 2;
-	test->av = av_test;
-	execute(test);
+int	execute(t_arg	*args)
+{
+	const char	*fname;
+	pid_t	pid;
+
+	if (args->ac < 1)
+		return (1); //TODO, renvoyé l'erreur avec un type t_error?
+	fname = args->av[0];
+	pid = fork();
+	if (pid == F_ERROR) // Error
+		return (1);
+	else if (pid == F_SON) // le fils execute le prog
+		execve(fname, args->av, NULL); //dernier arg est l'env
+	else // le pere attend
+	{
+		wait(F_SON);
+	}
 	return (0);
 }
