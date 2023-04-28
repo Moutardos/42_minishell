@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/04/28 15:42:52 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/04/28 16:39:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,22 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef enum e_delim
+{
+  IN,
+  OUT,
+  IN_NL,
+  OUT_APPEND,
+  NONE
+} t_delim
+
 typedef struct s_arg
 {
 	int				ac;
 	const char		**av;
 	int				pipe[2];
+	t_delim			delim;
+	char			*delim_f;
 	int				is_piped;
 	struct s_arg	*next;
 	struct s_arg	*previous;
