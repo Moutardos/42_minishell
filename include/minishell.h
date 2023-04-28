@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/04/28 16:39:05 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:56:12 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef enum e_delim
   IN_NL,
   OUT_APPEND,
   NONE
-} t_delim
+} t_delim;
 
 typedef struct s_arg
 {
