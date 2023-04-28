@@ -8,7 +8,7 @@ LIBFT = $(IDIR)/libft/libft.a
 RM = rm -f
 CFLAGS = -Wall -Wextra -I$(IDIR) 
 LFLAGS = -L$(IDIR)/libft -lft
-FILES =  main exec#mettre les noms des fichiers sans extensions ici
+FILES =  minishell/main builtins/exec#mettre les noms des fichiers sans extensions ici
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))
 
@@ -18,6 +18,12 @@ lib : $(LIBFT)
 
 $(ODIR):
 	mkdir -p $(ODIR)
+	mkdir -p $(ODIR)/builtins
+	mkdir -p $(ODIR)/handlers
+	mkdir -p $(ODIR)/parsing
+	mkdir -p $(ODIR)/minishell
+	#il faudrait créer un directory pour chaque sous dossier source
+
 
 $(BDIR):
 	mkdir -p $(BDIR)
