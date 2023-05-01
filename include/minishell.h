@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/04/29 18:42:45 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:18:35 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,25 @@ typedef enum e_delim
   NONE
 } t_delim;
 
-typedef struct s_arg
+typedef struct s_cmd
 {
 	int				ac;
 	const char		**av;
 	int				pipe[2];
+	int				in;
+	int				out;
 	t_delim			delim;
 	char			*delim_f;
-	int				is_piped;
-	struct s_arg	*next;
-	struct s_arg	*prev;
-}  t_arg;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}  t_cmd;
 
 typedef struct s_minishell
 {
 	t_env	env;
 	char	*pwd;
 	char	*raw_line;
-	t_arg	*args;
+	t_cmd	*args;
 	int		exit;
 }  t_minishell;
 
