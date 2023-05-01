@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:55:14 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/04/29 12:10:30 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/01 12:14:27 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <sys/wait.h>
 // fork
 #define F_ERROR -1
-#define F_SON 0
+#define F_CHILD 0
 
-int	execute(t_arg	*args);
+int	execute(t_cmd	*cmds);
 #endif
