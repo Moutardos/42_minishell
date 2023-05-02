@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/01 13:18:35 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:08:42 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 # define MINISHELL_H
 
-# include "libft/libft.h"
 # include <signal.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
 #include <limits.h>
+
+# include "handlers.h"
+# include "utils.h"
+# include "libft/libft.h"
+# include "error.h"
+# include "exec.h"
+# include "parsing.h"
 
 # define STDIN 0
 # define STDOUT 1
@@ -57,6 +63,7 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 }  t_cmd;
 
+//exit code else than 0 = process spinning down
 typedef struct s_minishell
 {
 	t_env	env;

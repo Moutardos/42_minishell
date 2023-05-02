@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/02 15:27:51 by coltcivers       ###   ########.fr       */
+/*   Created: 2023/05/02 14:48:56 by coltcivers        #+#    #+#             */
+/*   Updated: 2023/05/02 14:53:18 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "minishell.h"
 
-# include "minishell.h"
-
-void	parse_current_cmd(t_minishell *mini);
-int		quote_check(char *line, int index);
-int		quotes(char *line, int index);
-int		is_sep(char c);
-
-#endif
+void	safe_free(void *ptr)
+{
+	if (ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
+}
