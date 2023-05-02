@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:10:16 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/02 15:22:03 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/05/02 16:13:08 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ t_cmd	*cmd_first(t_cmd *lst)
 	return (lst);
 }
 
-void	tile_add_back(t_cmd **cmd, t_cmd *new)
+void	cmd_add_back(t_cmd **cmd, t_cmd *new)
 {
 	t_cmd	*temp;
 
 	if (*cmd)
 	{
-		temp = tile_last(*cmd);
+		temp = cmd_last(*cmd);
 		temp->next = new;
 	}
 	else
 		*cmd = new;
 }
 
-void	tile_del_last(t_cmd **cmd)
+void	cmd_del_last(t_cmd **cmd)
 {
 	t_cmd *	head;
 	t_cmd *	head_min_one;
