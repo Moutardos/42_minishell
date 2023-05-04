@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/02 15:08:42 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/05/04 18:52:07 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include "utils.h"
 # include "libft/libft.h"
 # include "error.h"
-# include "exec.h"
 # include "parsing.h"
 
 # define STDIN 0
@@ -53,8 +52,7 @@ typedef enum e_delim
 typedef struct s_cmd
 {
 	int				ac;
-	const char		**av;
-	int				pipe[2];
+	char		**av;
 	int				in;
 	int				out;
 	t_delim			delim;

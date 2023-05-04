@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/01 13:18:11 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/04 19:07:25 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,19 @@ static t_error	treat_cmds(t_cmd *cmds)
 	{
 		if (cmd->prev != NULL)
 		{
-			if (dup2(cmd->pipe[0], STDIN) < 0)
-				return (ERR_CMD_DUP0);
-			close(cmd->pipe[0]);
+			if (dup2(cmd->in, STDIN) < 0)
+				return (perror("minishell:"), 0);
+			close(cmd->in);
 		}
 		if (cmd->next != NULL)
 		{
-			if (dup2(cmd->next->pipe[1], STDOUT) < 0)
-				return (ERR_CMD_DUP1);
-			close(cmd->next->pipe[1]);
+			if (dup2(cmd->next->out, STDOUT) < 0)
+				return (perror("minishell:"), 0);
+			close(cmd->next->out);
 		}
+		close(cmd->out);
 		execve(cmd->av[0], cmd->av, NULL);
-		return (ERR_CMD_FAIL);
+		return (perror("minishell:"), 0);
 	}
 	return (GOOD);
 }
@@ -88,16 +89,21 @@ static t_error	create_pipe(t_cmd *cmds)
 {
 	t_cmd	*current;
 	int		i;
+	int		pip[2];
+
 
 	i = 0;
 	current = cmds;
 	while (current != NULL)
 	{
-		if (pipe(current->pipe) < 0)
+
+		if (pipe(pip) < 0)
 		{
 			close_pipe(cmds, i);
 			return (ERR_CMD_PIPE);
 		}
+		cmds->out = pip[0];
+		cmds->in = pip[1];
 		current = current->next;
 		i++;
 	}
@@ -116,8 +122,8 @@ static void	close_pipe(t_cmd *cmds, int n)
 	current = cmds;
 	while ((n > 0 && i < n) && current != NULL)
 	{
-		close(current->pipe[0]);
-		close(current->pipe[1]);
+		close(current->in);
+		close(current->out);
 		i++;
 		current = current->next;
 	}
