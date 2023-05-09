@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/04 19:07:25 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:53:22 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,40 @@
 #include "exec.h"
 #include "error.h"
 
-static t_error	treat_cmds(t_cmd *cmds);
+static t_error	treat_cmds(t_cmd *cmds, char **env);
 static t_error	create_pipe(t_cmd *cmds);
 static void		close_pipe(t_cmd *cmds, int n);
 
 /// @brief  Execute each commands 1 by 1
 /// @param  cmds linked list of commands
 /// @return error nb 
-int	execute(t_cmd	*cmds)
+int	execute(t_minishell	*mini)
 {
 	const char	*fname;
 	t_error		err;
 	t_cmd		*curr;
 
-	err = create_pipe(cmds);
+	err = create_pipe(mini->cmds);
 	if (err)
 		return (err);
-	curr = cmds;
+	curr = mini->cmds;
 	while (curr != NULL)
 	{
 		if (curr->ac < 1)
-			return (ERR_CMD_NOARG);
-		fname = curr->av[0];
-		err = treat_cmds(curr);
+			//jsp encore
+			;
+		curr->fname = curr->av[0];
+		if (check_paths(mini, curr))
+			return (ERR_ALLOC);
+		err = treat_cmds(curr, NULL);
+		close(curr->in);
+		close(curr->out);
 		if (err)
-		{
 			return (err);
-		}
 		curr = curr->next;
 	}
 	while (wait(NULL) > 0)
 		;
-	close_pipe(cmds, -1);
 	return (0);
 }
 
@@ -54,7 +56,34 @@ int	execute(t_cmd	*cmds)
 /// @param  cmds linked list of commands
 /// @return error nb 
 /// @todo   check for builtin
-static t_error	treat_cmds(t_cmd *cmds)
+// static t_error	treat_cmds(t_cmd *cmds, char **env)
+// {
+// 	pid_t	pid;
+// 	t_cmd	*cmd;
+
+// 	cmd = cmds;
+// 	pid = fork();
+// 	if (pid == F_CHILD)
+// 	{
+// 		if (cmd->prev != NULL)
+// 		{
+// 			if (dup2(cmd->in, STDIN) < 0)
+// 				return (perror("minishell: in"), 0);
+// 			close(cmd->in);
+// 		}
+// 		if (cmd->next != NULL)
+// 		{
+// 			if (dup2(cmd->next->out, STDOUT) < 0)
+// 				return (perror("minishell: out"), 0);
+// 			close(cmd->next->out);
+// 		}
+// 		execve(cmd->path, cmd->av, env);
+// 		return (perror("minishell: execution:"), 0);
+// 	}
+// 	return (GOOD);
+// }
+
+static t_error	treat_cmds(t_cmd *cmds, char **env)
 {
 	pid_t	pid;
 	t_cmd	*cmd;
@@ -66,23 +95,20 @@ static t_error	treat_cmds(t_cmd *cmds)
 		if (cmd->prev != NULL)
 		{
 			if (dup2(cmd->in, STDIN) < 0)
-				return (perror("minishell:"), 0);
-			close(cmd->in);
+				return (perror("minishell: in"), 0);
 		}
 		if (cmd->next != NULL)
 		{
 			if (dup2(cmd->next->out, STDOUT) < 0)
-				return (perror("minishell:"), 0);
-			close(cmd->next->out);
+				return (perror("minishell: out"), 0);
 		}
-		close(cmd->out);
-		execve(cmd->av[0], cmd->av, NULL);
-		return (perror("minishell:"), 0);
+		close_pipe(cmd, -1);
+		execve(cmd->path, cmd->av, env);
+		return (perror("minishell: execution:"), 0);
 	}
 	return (GOOD);
 }
-
-/// @brief  Pipe each command
+/// @brief  Pipe each command after treating each redirections
 /// @param  cmds linked list of commands
 /// @return error nb 
 static t_error	create_pipe(t_cmd *cmds)
@@ -96,12 +122,10 @@ static t_error	create_pipe(t_cmd *cmds)
 	current = cmds;
 	while (current != NULL)
 	{
-
+		// if (redirections(current) < 0)
+		// 	return (perror("minishell"), ERR_FILES);
 		if (pipe(pip) < 0)
-		{
-			close_pipe(cmds, i);
-			return (ERR_CMD_PIPE);
-		}
+			return (close_pipe(cmds, i), perror("minishell"), ERR_CMD_PIPE);
 		cmds->out = pip[0];
 		cmds->in = pip[1];
 		current = current->next;
@@ -120,7 +144,11 @@ static void	close_pipe(t_cmd *cmds, int n)
 
 	i = 0;
 	current = cmds;
-	while ((n > 0 && i < n) && current != NULL)
+	while(current->prev == NULL)
+	{
+		current = current->prev;
+	}
+	while (((n > 0 && i < n) || (n < 0)) && current != NULL)
 	{
 		close(current->in);
 		close(current->out);

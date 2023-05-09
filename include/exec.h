@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:55:14 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/04 18:49:28 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:31:49 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,17 @@
 #define F_ERROR -1
 #define F_CHILD 0
 
-int	execute(t_cmd	*cmds);
+// EXEC
+int	execute(t_minishell	*mini);
+
+// FILES_UTILS
+/* Open each files and store the last fd for in and out inside cmd,
+   */
+int	redirections(t_cmd *cmd);
+
+/* Try to find if the fname of the command already exist in path, if so
+   allocate the path to cmd->path, if not cmd->path is allocated to current
+   directory + fname*/
+int	check_paths(t_minishell *mini, t_cmd *cmd);
+
 #endif
