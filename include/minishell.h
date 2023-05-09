@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/09 17:52:13 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/05/09 18:40:48 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,3 @@ typedef struct s_minishell
 }  t_minishell;
 
 #endif
-
-/*
-- t_cmd[0] : echo 
-- ac = 1
--av[0] = "salut toi"
--in / out je laisse
--delim = OUT (>)
--delim_f = 'test.txt'
--next = NULL
-*/
