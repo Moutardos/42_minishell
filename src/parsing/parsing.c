@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/02 15:56:08 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/05/05 13:31:59 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,25 @@ void	assign_cmds(char *str)
 {
 	int	i;
 	int j;
+	int	next_delim;
 	char *current_cmd;
 	
 	i = 0;
-	j = -1;
 	while (str[i] != '\0')
 	{
-		if (!quotes(str, i) && is_sep(str[i]))
+		j = 0;
+		if (is_sep(str[i])) // gerer >> / <<
+			i++;
+		next_delim = next_sep_pos(str, i);
+		current_cmd = malloc(next_delim - i + 1);
+		while (i < next_delim)
 		{
-			current_cmd = malloc(sizeof(char) * (i + 1));
-			while (j++ < i)
-				current_cmd[j] = str[j];
-			current_cmd[j] = '\0';
+			current_cmd[j] = str[i];
+			i++;
+			j++;
 		}
-		i++;
+		current_cmd[j] = '\0';
+		printf("current cmd : %s\n", current_cmd);
+		free(current_cmd);
 	}
 }

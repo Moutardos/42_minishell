@@ -6,17 +6,17 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:10:16 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/02 16:13:08 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/05/05 16:50:09 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd	*new_cmd(char *delim, int i)
+t_cmd	*new_cmd(char *delim)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (NULL);
 	cmd->next = NULL;

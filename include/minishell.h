@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/04 18:52:07 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:52:13 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ typedef struct s_cmd
 	char		**av;
 	int				in;
 	int				out;
-	t_delim			delim;
-	char			*delim_f;
+	t_delim			*delim;
+	char			**delim_f;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }  t_cmd;
@@ -72,3 +72,13 @@ typedef struct s_minishell
 }  t_minishell;
 
 #endif
+
+/*
+- t_cmd[0] : echo 
+- ac = 1
+-av[0] = "salut toi"
+-in / out je laisse
+-delim = OUT (>)
+-delim_f = 'test.txt'
+-next = NULL
+*/
