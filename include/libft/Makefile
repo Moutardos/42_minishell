@@ -10,9 +10,10 @@ ft_memset.o  ft_putendl_fd.o ft_putstr_fd.o ft_strchr.o ft_striteri.o ft_strlcat
 ft_strlen.o  ft_strncmp.o ft_strrchr.o ft_substr.o  ft_toupper.o ft_isspace.o\
 ft_itob.o ft_itohexa.o ft_strlow.o ft_strup.o ft_cinstr.o ft_strmap.o ft_striter.o\
 ft_puthex_fd.o ft_putnbru_fd.o ft_pow.o ft_printf/ft_printf.o ft_printf/convert.o gnl/get_next_line.o gnl/get_next_line_utils.o\
+safe_free.o\
 gnl/count_lines.o ft_bitsize.o ft_free_split.o ft_strtoi.o ft_strtoll.o
 _OBJst_bONUS =ft_lstnew.o ft_lstdelone.o ft_lstclear.o ft_lstadd_front.o ft_lstadd_back.o\
-ft_lstmap.o ft_lstiter.o ft_lstlast.o ft_lstsize.o
+ft_lstmap.o ft_lstiter.o ft_lstlast.o ft_lstsize.o 
 OBJS = $(patsubst %, $(ODIR)/%, $(_OBJS))
 OBJst_bONUS = $(patsubst %, $(ODIR)/%, $(_OBJst_bONUS))
 RM = rm -f

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Loic Cozdenmat <Loic Cozdenmat@student.    +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 01:35:07 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/03/09 12:38:37 by Loic Cozden      ###   ########.fr       */
+/*   Updated: 2023/05/08 16:36:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,4 +220,7 @@ void		ft_free_split(void *s);
 
 /* Atoi but now with long long!*/
 long long	ft_strtoll(const char *str);
+
+/* free wrapper that check if ptr is not null*/
+void	safe_free(void *ptr);
 #endif
