@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/08 17:36:55 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:06:38 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	treat_redirections(char *fname, t_delim delim, int *in, int *out);
 int	check_paths(t_minishell *mini, t_cmd *cmd)
 {
 	char	*path;
+	char	*temp;
 	int		i;
 
 	i = 0;
@@ -25,7 +26,11 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 		return (ERR_PARSING);
 	while (mini->paths[i])
 	{
-		path = ft_strjoin(mini->paths[i], cmd->fname);
+		temp = ft_strjoin(mini->paths[i], "/");
+		if (!temp)
+			return (mini->exit = ERR_ALLOC, ERR_ALLOC);
+		path = ft_strjoin(temp, cmd->fname);
+		safe_free(temp);
 		if (!path)
 			return (mini->exit = ERR_ALLOC, ERR_ALLOC);
 		if (access(path, F_OK) == 0)
@@ -33,10 +38,7 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 		safe_free(path);
 		i++;
 	}
-	path = ft_strjoin(".",cmd->fname);
-	// path = ft_strjoin(mini->pwd, cmd->fname);
-	if (!path)
-		return (mini->exit = ERR_ALLOC, ERR_ALLOC);
+	//Doesnt exist
 	return (cmd->path = path, GOOD);
 }
 /* Open each files and store the last fd for in and out inside cmd */
@@ -46,19 +48,18 @@ int	redirections(t_cmd *cmd)
 	int fd_in;
 	int	fd_out;
 
-	if (!cmd->delim || !cmd->delim_f)
-		return (0);
 	i = 0;
 	fd_out = -1;
 	fd_in = -1;
-	while (cmd->delim_f[i] != NULL)
+	while (cmd->delim_f != NULL && cmd->delim_f[i] != NULL)
 	{
 		if (fd_in > 0)
 			close(fd_in);
 		if (fd_out > 0)
 			close(fd_out);
-		if (!treat_redirections(cmd->delim_f[i], cmd->delim[i], &fd_in, &fd_out))
+		if (treat_redirections(cmd->delim_f[i], cmd->delim[i], &fd_in, &fd_out))
 			return (ERR_FILES);
+		i++;
 	}
 	if (fd_in > 0)
 		cmd->in = fd_in;

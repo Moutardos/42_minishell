@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/12 14:41:13 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:04:52 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ int	execute(t_minishell	*mini)
 			//jsp encore
 			;
 		curr->fname = curr->av[0];
-		if (check_paths(mini, curr))
-			return (ERR_ALLOC);
+		if (curr->path == NULL)
+			if (check_paths(mini, curr))
+				return (ERR_ALLOC);
 		err = treat_cmds(curr, NULL);
 		close(curr->in);
 		close(curr->out);
@@ -92,16 +93,10 @@ static t_error	treat_cmds(t_cmd *cmds, char **env)
 	pid = fork();
 	if (pid == F_CHILD)
 	{
-		if (cmd->prev != NULL)
-		{
-			if (dup2(cmd->in, STDIN) < 0)
-				return (perror("minishell: in"), 0);
-		}
-		if (cmd->next != NULL)
-		{
-			if (dup2(cmd->next->out, STDOUT) < 0)
-				return (perror("minishell: out"), 0);
-		}
+		if (dup2(cmd->in, STDIN) < 0)
+			return (perror("minishell: in"), 0);
+		if (dup2(cmd->out, STDOUT) < 0)
+			return (perror("minishell: out"), 0);
 		close_pipe(cmd, -1);
 		execve(cmd->path, cmd->av, env);
 		return (perror("minishell: execution:"), 0);
@@ -120,14 +115,17 @@ static t_error	create_pipe(t_cmd *cmds)
 
 	i = 0;
 	current = cmds;
-	while (current->next != NULL)
+	while (current != NULL)
 	{
-		// if (redirections(current) < 0)
-		// 	return (perror("minishell"), ERR_FILES);
-		if (pipe(pip) < 0)
-			return (close_pipe(cmds, i), perror("minishell"), ERR_CMD_PIPE);
-		current->out = pip[0];
-		current->in = pip[1];
+		if (redirections(current) < 0)
+			return (perror("minishell"), ERR_FILES);
+		if (current->next != NULL)
+		{
+			if (pipe(pip) < 0)
+				return (close_pipe(cmds, i), perror("minishell"), ERR_CMD_PIPE);
+			current->out = pip[1];
+			current->next->in = pip[0];
+		}
 		current = current->next;
 		i++;
 	}
@@ -144,14 +142,16 @@ static void	close_pipe(t_cmd *cmds, int n)
 
 	i = 0;
 	current = cmds;
-	while(current->prev == NULL)
+	while(current->prev != NULL)
 	{
 		current = current->prev;
 	}
 	while (((n > 0 && i < n) || (n < 0)) && current != NULL)
 	{
-		close(current->in);
-		close(current->out);
+		if (current->in != STDIN)
+			close(current->in);
+		if (current->out != STDOUT)
+			close(current->out);
 		i++;
 		current = current->next;
 	}
