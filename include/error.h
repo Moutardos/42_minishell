@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:33:17 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/01 12:55:26 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:10:12 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ typedef enum e_error
 	ERR_CMD_DUP0,
 	ERR_CMD_DUP1,
 	ERR_CMD_PIPE,
-	ERR_CMD_FAIL
+	ERR_CMD_FAIL,
+	ERR_FILES,
+	ERR_PARSING,
+	ERR_EMPTY
 }	t_error;
 #endif
