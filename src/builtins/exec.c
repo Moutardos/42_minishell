@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/09 12:53:22 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:41:13 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ static t_error	create_pipe(t_cmd *cmds)
 
 	i = 0;
 	current = cmds;
-	while (current != NULL)
+	while (current->next != NULL)
 	{
 		// if (redirections(current) < 0)
 		// 	return (perror("minishell"), ERR_FILES);
 		if (pipe(pip) < 0)
 			return (close_pipe(cmds, i), perror("minishell"), ERR_CMD_PIPE);
-		cmds->out = pip[0];
-		cmds->in = pip[1];
+		current->out = pip[0];
+		current->in = pip[1];
 		current = current->next;
 		i++;
 	}
