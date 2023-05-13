@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:55:14 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/08 16:31:49 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/13 14:08:26 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,7 @@ int	redirections(t_cmd *cmd);
    directory + fname*/
 int	check_paths(t_minishell *mini, t_cmd *cmd);
 
+/* Check if file is not stdin or stdout before closing it, return new
+*/
+int   closef(int fd, int new);
 #endif
