@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/05/08 16:48:11 by lcozdenm         ###   ########.fr       */
-=======
-/*   Updated: 2023/05/09 18:40:48 by coltcivers       ###   ########.fr       */
->>>>>>> b9e1ea9af9fea4d46e295980ab283d2fe3f20f69
+/*   Updated: 2023/05/13 14:40:40 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +58,8 @@ typedef struct s_cmd
 	int				out;
 	t_delim			*delim;
 	char			**delim_f;
-<<<<<<< HEAD
 	char			*fname;
 	char			*path;
-=======
->>>>>>> b9e1ea9af9fea4d46e295980ab283d2fe3f20f69
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }  t_cmd;
