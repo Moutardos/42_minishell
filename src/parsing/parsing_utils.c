@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 14:53:32 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/02 15:35:36 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/05/05 13:32:07 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,13 @@ int		quotes(char *line, int index)
 	return (open);
 }
 
-int	is_valid_bltn(char *str)
+int next_sep_pos(char *str, int pos)
 {
-	
+	while (str[pos])
+	{
+		if (!quotes(str, INT_MAX) && is_sep(str[pos]))
+			return (pos);
+		pos++;
+	}
+	return (pos);
 }
