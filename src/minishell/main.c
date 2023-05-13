@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:30:27 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/13 14:34:12 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/13 14:46:10 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv)
 	arg1->delim_f[2] = NULL;
 	arg1->in = 0;
 	arg1->out = 1;
-	arg1->path = "./megatest";
+	arg1->path = ft_strdup("./megatest");
 	
 	arg2->next = NULL;
 	arg1->next = arg2;
@@ -82,7 +82,14 @@ int	main(int argc, char **argv)
 	
 	// commande : "./megatest > result >> why | rev < why"
 	execute(&mini);
-	free(arg1);
-	free(arg2);
+	safe_free(arg1->delim);
+	safe_free(arg2->delim);
+	safe_free(arg1->delim_f);
+	safe_free(arg2->delim_f);
+	ft_free_split(mini.paths);
+	safe_free(arg1->path);
+	safe_free(arg2->path);
+	safe_free(arg1);
+	safe_free(arg2);
 	return (0);
 }
