@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:30:27 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/13 14:22:51 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/13 14:34:12 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
+	//megatest c'est un prog random qui affiche le premier argument
 	const char * av_test[] = {
 		"megatest",
 		"arg1",
@@ -31,6 +32,8 @@ int	main(int argc, char **argv)
 	t_cmd *arg2;
 
 	t_minishell mini;
+
+	// On imagine "rev < why"
 	arg2 = malloc(sizeof(t_cmd));
 	if (!arg2)
 		return (0);
@@ -43,8 +46,9 @@ int	main(int argc, char **argv)
 	arg2->delim_f = malloc(sizeof(char *) * 2);
 	arg2->delim_f[0] = "why";
 	arg2->delim_f[1] = NULL;
-	arg2->next = NULL;
 	arg2->path = NULL;
+
+	// On imagine "./megatest > result >> why"
 	arg1 = malloc(sizeof(t_cmd));
 	if (!arg1)
 		return (0);
@@ -60,10 +64,11 @@ int	main(int argc, char **argv)
 	arg1->in = 0;
 	arg1->out = 1;
 	arg1->path = "./megatest";
+	
+	arg2->next = NULL;
 	arg1->next = arg2;
 	arg1->prev = NULL;
-	arg2->prev = arg1;
-	arg2->next = NULL;
+	
 	mini.cmds = arg1;
 	mini.env = NULL;
 	// if (getcwd(mini.pwd, BUFFER_SIZE) == NULL)
@@ -71,7 +76,11 @@ int	main(int argc, char **argv)
 	// 	printf("couldn't get current working folder\n");
 	// 	return (perror("minishell"),0);
 	// }
+
+	//paths par defaut 
 	mini.paths = ft_split(getenv("PATH"), ':');
+	
+	// commande : "./megatest > result >> why | rev < why"
 	execute(&mini);
 	free(arg1);
 	free(arg2);
