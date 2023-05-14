@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/13 14:24:59 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/14 17:13:59 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	execute(t_minishell	*mini)
 		closef(curr->in, 0);
 		closef(curr->out, 0);
 		if (err)
-			return (err);
+			return (close_pipe(mini->cmds, -1), err);
 		curr = curr->next;
 	}
 	while (wait(NULL) > 0)
@@ -64,7 +64,7 @@ static t_error	treat_cmds(t_cmd *cmds, char **env)
 			return (perror("minishell: out"), 0);
 		close_pipe(cmd, -1);
 		execve(cmd->path, cmd->av, env);
-		return (perror("minishell: execution:"), 0);
+		return (perror2("minishell : ", cmd->path), ERR_CMD_FAIL);
 	}
 	return (GOOD);
 }
