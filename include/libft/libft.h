@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 01:35:07 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/08 16:36:05 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/14 17:15:12 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <limits.h>
-
+# include <errno.h>
+# include <string.h>
 # define STDOUT 1
 # define STDIN 0
 # define TRUE 1
@@ -223,4 +224,7 @@ long long	ft_strtoll(const char *str);
 
 /* free wrapper that check if ptr is not null*/
 void	safe_free(void *ptr);
+
+/* print errno string with prefix and suffix*/
+int	perror2(char *prefix, char *suffix);
 #endif
