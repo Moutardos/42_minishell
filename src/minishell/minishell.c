@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/15 16:35:21 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:18:07 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ void	free_cmds(t_cmd *cmds)
 	}
 }
 
-void	free_mini(t_cmd *mini)
+void	free_mini(t_minishell *mini)
 {
 	free_cmds(mini->cmds);
 	ft_free_split(mini->paths);
-	if (env != NULL)
-		ft_lstclear(mini->env, free);
+	if (mini->env != NULL)
+		//ft_lstclear( (void *) (mini->env), free);
+		;
 	free(mini);
 }
 
