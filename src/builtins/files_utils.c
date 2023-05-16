@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/13 14:26:55 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:10:29 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,32 @@ int	redirections(t_cmd *cmd)
 			return (ERR_FILES);
 		i++;
 	}
-	if (fd_in > 0)
-		cmd->in = closef(cmd->in, fd_in);
-	if (fd_out > 0)
-		cmd->out = closef(cmd->out, fd_out);
+	if (cmd->delim && cmd->delim[i - 1] == IN_NL)
+	{
+		cmd->heredoc = fd_in;
+		cmd->in = closef(cmd->in, fd_out);
+	}
+	else
+	{
+		if (fd_in > 0)
+			cmd->in = closef(cmd->in, fd_in);
+		if (fd_out > 0)
+			cmd->out = closef(cmd->out, fd_out);
+	}
 	return (0);
 }
 
 int	closef(int fd, int new)
 {
-	if (fd != STDIN && fd != STDOUT)
+	if (fd != STDIN && fd != STDOUT && fd > 0)
 		close(fd);
 	return (new);
 }
 
 static int	treat_redirections(char *fname, t_delim delim, int *in, int *out)
 {
+	int	pip[2];
+
 	if (delim == IN)
 	{
 		*in = open(fname, O_RDWR, S_IRUSR | S_IWUSR);
@@ -98,7 +108,25 @@ static int	treat_redirections(char *fname, t_delim delim, int *in, int *out)
 	}
 	else if (delim == IN_NL)
 	{
-		//todo
+		if (pipe(pip) < 0)
+			return (perror2("minishell:",">>"), ERR_CMD_PIPE);
+		*in = pip[1];
+		*out = pip[0];
 	}
 	return (0);
+}
+
+int	here_doc(char *stop, int fd, int is_last)
+{
+	char	*buf;
+
+	buf = get_next_line(STDIN);
+	while (buf && ft_strncmp(buf, stop, ft_strlen(stop)))
+	{
+		if (is_last)
+			write(fd, buf, ft_strlen(buf));
+		safe_free(buf);
+		buf = get_next_line(STDIN);
+	}
+	safe_free(buf);
 }

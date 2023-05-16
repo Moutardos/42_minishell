@@ -8,7 +8,8 @@ LIBFT = $(IDIR)/libft/libft.a
 RM = rm -f
 CFLAGS = -Wall -Wextra -I$(IDIR) 
 LFLAGS = -L$(IDIR)/libft -lft
-FILES =  minishell/main builtins/exec builtins/files_utils #mettre les noms des fichiers sans extensions ici
+FILES =  minishell/main builtins/exec builtins/files_utils \
+         minishell/minishell #mettre les noms des fichiers sans extensions ici
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))
 
@@ -29,7 +30,7 @@ $(BDIR):
 	mkdir -p $(BDIR)
 
 $(LIBFT):
-	$(MAKE) -C $(IDIR)/libft
+	$(MAKE) -C $(IDIR)/libft bonus
 
 $(ODIR)/%.o : src/%.c | $(ODIR)
 	$(CC) $(CFLAGS) -c $< -o $@

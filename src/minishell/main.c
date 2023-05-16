@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:30:27 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/13 14:46:10 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:08:26 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	main(int argc, char **argv)
 	(void)argv;
 	//megatest c'est un prog random qui affiche le premier argument
 	const char * av_test[] = {
-		"megatest",
-		"arg1",
+		"rev",
+		NULL,
 		NULL
 	};
 	const char * av_test2[] = {
@@ -33,7 +33,6 @@ int	main(int argc, char **argv)
 
 	t_minishell mini;
 
-	// On imagine "rev < why"
 	arg2 = malloc(sizeof(t_cmd));
 	if (!arg2)
 		return (0);
@@ -44,52 +43,45 @@ int	main(int argc, char **argv)
 	arg2->delim = malloc(sizeof(t_delim) * 2);
 	arg2->delim[0] = IN;
 	arg2->delim_f = malloc(sizeof(char *) * 2);
-	arg2->delim_f[0] = "why";
+	arg2->delim_f[0] = NULL;
 	arg2->delim_f[1] = NULL;
 	arg2->path = NULL;
 
-	// On imagine "./megatest > result >> why"
 	arg1 = malloc(sizeof(t_cmd));
 	if (!arg1)
 		return (0);
 	arg1->ac = 2;
 	arg1->av = av_test;
 	arg1->delim = malloc(sizeof(t_delim) * 2);
-	arg1->delim[0] = OUT;
-	arg1->delim[1] = OUT_APPEND;
+	arg1->delim[0] = IN_NL;
+	arg1->delim[1] = IN_NL;
 	arg1->delim_f = malloc(sizeof(char *) * 3);
-	arg1->delim_f[0] = "resultat";
-	arg1->delim_f[1] = "why";
+	arg1->delim_f[0] = "k";
+	arg1->delim_f[1] = "non";
 	arg1->delim_f[2] = NULL;
 	arg1->in = 0;
 	arg1->out = 1;
-	arg1->path = ft_strdup("./megatest");
+	arg1->path = NULL;
 	
 	arg2->next = NULL;
-	arg1->next = arg2;
+	arg2->prev = arg1;
+	arg1->next = NULL;
 	arg1->prev = NULL;
 	
 	mini.cmds = arg1;
 	mini.env = NULL;
-	// if (getcwd(mini.pwd, BUFFER_SIZE) == NULL)
-	// {
-	// 	printf("couldn't get current working folder\n");
-	// 	return (perror("minishell"),0);
-	// }
+	if (getcwd(mini.pwd, BUFFER_SIZE) == NULL)
+	{
+		printf("couldn't get current working folder\n");
+		return (perror("minishell"),0);
+	}
 
 	//paths par defaut 
 	mini.paths = ft_split(getenv("PATH"), ':');
-	
+	printf("rev << k << non\n");
 	// commande : "./megatest > result >> why | rev < why"
 	execute(&mini);
-	safe_free(arg1->delim);
-	safe_free(arg2->delim);
-	safe_free(arg1->delim_f);
-	safe_free(arg2->delim_f);
+	free_cmds(arg1);
 	ft_free_split(mini.paths);
-	safe_free(arg1->path);
-	safe_free(arg2->path);
-	safe_free(arg1);
-	safe_free(arg2);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/13 14:40:40 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/16 12:20:52 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-# define BUFFER_SIZE 50 // pour pwd, jsp quoi mettre
+# define BUFFER_SIZE 100 // pour pwd, jsp quoi mettre
 
 typedef struct s_env
 {
@@ -58,6 +58,7 @@ typedef struct s_cmd
 	int				out;
 	t_delim			*delim;
 	char			**delim_f;
+	int				heredoc;
 	char			*fname;
 	char			*path;
 	struct s_cmd	*next;
@@ -75,5 +76,7 @@ typedef struct s_minishell
 	t_cmd	*cmds;
 	int		exit;
 }  t_minishell;
+
+void	free_cmds(t_cmd *cmds);
 
 #endif

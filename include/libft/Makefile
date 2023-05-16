@@ -10,12 +10,12 @@ ft_memset.o  ft_putendl_fd.o ft_putstr_fd.o ft_strchr.o ft_striteri.o ft_strlcat
 ft_strlen.o  ft_strncmp.o ft_strrchr.o ft_substr.o  ft_toupper.o ft_isspace.o\
 ft_itob.o ft_itohexa.o ft_strlow.o ft_strup.o ft_cinstr.o ft_strmap.o ft_striter.o\
 ft_puthex_fd.o ft_putnbru_fd.o ft_pow.o ft_printf/ft_printf.o ft_printf/convert.o gnl/get_next_line.o gnl/get_next_line_utils.o\
-safe_free.o perror2.o\
-gnl/count_lines.o ft_bitsize.o ft_free_split.o ft_strtoi.o ft_strtoll.o
-_OBJst_bONUS =ft_lstnew.o ft_lstdelone.o ft_lstclear.o ft_lstadd_front.o ft_lstadd_back.o\
+gnl/count_lines.o ft_bitsize.o ft_free_split.o ft_strtoi.o ft_strtoll.o \
+safe_free.o perror2.o ft_strcmp.o
+_OBJ_BONUS =ft_lstnew.o ft_lstdelone.o ft_lstclear.o ft_lstadd_front.o ft_lstadd_back.o\
 ft_lstmap.o ft_lstiter.o ft_lstlast.o ft_lstsize.o 
 OBJS = $(patsubst %, $(ODIR)/%, $(_OBJS))
-OBJst_bONUS = $(patsubst %, $(ODIR)/%, $(_OBJst_bONUS))
+OBJ_BONUS = $(patsubst %, $(ODIR)/%, $(_OBJ_BONUS))
 RM = rm -f
 LIBFLAGS = -rc
 CFLAGS = -Wall -Wextra -Werror -o 
@@ -44,7 +44,7 @@ fclean : clean
 
 re: fclean all
 
-bonus: $(BONUS_OBJ)
-	$(AR) $(LIBFLAGS) $(NAME) $(OBJst_bONUS)
+bonus: $(OBJS) $(BONUS_OBJ)
+	$(AR) $(LIBFLAGS) $(NAME) $(OBJS) $(BONUS_OBJ)
 
 .PHONY: all clean fclean re test bonus so

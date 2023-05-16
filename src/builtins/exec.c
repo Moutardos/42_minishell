@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/14 17:13:59 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:00:19 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 static t_error	treat_cmds(t_cmd *cmds, char **env);
 static t_error	create_pipe(t_cmd *cmds);
 static void		close_pipe(t_cmd *cmds, int n);
+static int is_last_heredoc(t_cmd *cmd, int i);
 
 /// @brief  Execute each commands 1 by 1
 /// @param  cmds linked list of commands
@@ -36,10 +37,11 @@ int	execute(t_minishell	*mini)
 		curr->fname = curr->av[0];
 		if (curr->path == NULL)
 			if (check_paths(mini, curr))
-				return (ERR_ALLOC);
+				return (close_pipe(mini->cmds, -1), ERR_ALLOC);
 		err = treat_cmds(curr, NULL);
 		closef(curr->in, 0);
 		closef(curr->out, 0);
+		closef(curr->heredoc, 0);
 		if (err)
 			return (close_pipe(mini->cmds, -1), err);
 		curr = curr->next;
@@ -53,8 +55,16 @@ static t_error	treat_cmds(t_cmd *cmds, char **env)
 {
 	pid_t	pid;
 	t_cmd	*cmd;
+	int		i;
 
 	cmd = cmds;
+	i = 0;
+	while (cmd->delim_f[i] != NULL)
+	{
+		if (cmd->delim[i] == IN_NL)
+			here_doc(cmd->delim_f[i], cmd->heredoc, is_last_heredoc(cmd, i +1));
+		i++;
+	}
 	pid = fork();
 	if (pid == F_CHILD)
 	{
@@ -66,6 +76,11 @@ static t_error	treat_cmds(t_cmd *cmds, char **env)
 		execve(cmd->path, cmd->av, env);
 		return (perror2("minishell : ", cmd->path), ERR_CMD_FAIL);
 	}
+	else if (pid > 0)
+	{
+
+	}
+
 	return (GOOD);
 }
 
@@ -113,7 +128,19 @@ static void	close_pipe(t_cmd *cmds, int n)
 	{
 		closef(current->in, 0);
 		closef(current->out, 0);
+		closef(current->heredoc, 0);
 		i++;
 		current = current->next;
 	}
+}
+
+static int is_last_heredoc(t_cmd *cmd, int i)
+{
+	while (cmd->delim_f[i] != NULL)
+	{
+		if (cmd->delim[i] == IN_NL)
+			return (0);
+		i++;
+	}
+	return (1);
 }

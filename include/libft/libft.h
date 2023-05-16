@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 01:35:07 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/14 17:15:12 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:37:56 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,4 +227,6 @@ void	safe_free(void *ptr);
 
 /* print errno string with prefix and suffix*/
 int	perror2(char *prefix, char *suffix);
+
+int	ft_strcmp(const char *s1, const char *s2);
 #endif
