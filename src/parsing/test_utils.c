@@ -55,3 +55,21 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (*str1 - *str2);
 }
+
+char	*str_fullcpy(char *src)
+{
+	char *dst;
+	int i;
+
+	i = 0 ;
+	dst = malloc(sizeof(char) * (ft_strlen(src) + 1));
+	if (!dst)
+		return (NULL);
+	while (src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
