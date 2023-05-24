@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:30:27 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/16 15:08:26 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/24 02:38:28 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 	
 	arg2->next = NULL;
 	arg2->prev = arg1;
-	arg1->next = NULL;
+	arg1->next = arg2;
 	arg1->prev = NULL;
 	
 	mini.cmds = arg1;
@@ -83,5 +83,10 @@ int	main(int argc, char **argv)
 	execute(&mini);
 	free_cmds(arg1);
 	ft_free_split(mini.paths);
+	t_dico *dico;
+	dico = init_dico("coucou", "bonjour");
+	add_dico(dico, "hey", "salut");
+	add_dico(dico, "hey", "salut2");
+	char **e = array_dico(dico);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/16 12:20:52 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/24 02:41:46 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,6 @@
 # define STDOUT 1
 # define STDERR 2
 # define BUFFER_SIZE 100 // pour pwd, jsp quoi mettre
-
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
 
 typedef enum e_delim
 {
@@ -69,7 +62,7 @@ typedef struct s_cmd
 //paths = $paths de l'environement de l'user, allocated par str_split
 typedef struct s_minishell
 {
-	t_env	*env;
+	t_dico	*env;
 	char	**paths;
 	char	pwd[BUFFER_SIZE];
 	char	*raw_line;
