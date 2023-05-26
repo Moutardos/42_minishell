@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 01:35:07 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/24 02:27:53 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:51:32 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef  struct s_dico
+typedef struct s_dico
 {
-   char           *key;
-   char           *value;
-   struct s_dico  *next;
-} t_dico;
+	char			*key;
+	char			*value;
+	struct s_dico	*next;
+}	t_dico;
 /*** PART 1 ***/
 
 /** MEM **/
@@ -229,17 +229,19 @@ void		ft_free_split(void *s);
 long long	ft_strtoll(const char *str);
 
 /* free wrapper that check if ptr is not null*/
-void	safe_free(void *ptr);
+void		safe_free(void *ptr);
 
 /* print errno string with prefix and suffix*/
-int		perror2(char *prefix, char *suffix);
+int			perror2(char *prefix, char *suffix);
 
-int		ft_strcmp(const char *s1, const char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
 
 /** DICO **/
-t_dico	*init_dico(char *key, char *value);
-void  	free_dico(t_dico **dico);
-t_dico	*add_dico(t_dico *dico, char *key, char *value);
-char	*get_dico(t_dico *dico, char *key);
-char	**array_dico(t_dico *dico);
+t_dico		*init_dico(char *key, char *value);
+void		free_dico(t_dico **dico);
+t_dico		*add_dico(t_dico *dico, char *key, char *value);
+char		*get_dico(t_dico *dico, char *key);
+char		**array_dico(t_dico *dico);
+char		*replace_str(t_dico *dico, char *str);
+
 #endif

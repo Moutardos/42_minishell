@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   safe_free.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 16:22:48 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/25 13:59:31 by lcozdenm         ###   ########.fr       */
+/*   Created: 2023/05/16 14:23:55 by lcozdenm          #+#    #+#             */
+/*   Updated: 2023/05/25 12:21:31 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	safe_free(void *ptr)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	if (ptr)
+	unsigned char	*str1;
+	unsigned char	*str2;
+
+	str1 = (unsigned char *) s1;
+	str2 = (unsigned char *) s2;
+	if (str1 == NULL || str2 == NULL)
+		return (0);
+	while (*str1 == *str2 && (*str1 != '\0'))
 	{
-		free(ptr);
-		ptr = NULL;
+		str1++;
+		str2++;
 	}
+	return (*str1 - *str2);
 }

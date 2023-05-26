@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 01:32:59 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/24 02:35:02 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:52:14 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ t_dico	*init_dico(char *key, char *value)
 	dico->key = ft_strdup(key);
 	dico->value = ft_strdup(value);
 	if (!dico->key || !dico->value)
-		return (safe_free(dico), NULL);
+		return (safe_free(&dico), NULL);
 	return (dico);
 }
 
-void  	free_dico(t_dico **dico)
+void	free_dico(t_dico **dico)
 {
 	t_dico	**last;
 
@@ -66,7 +66,7 @@ char	*get_dico(t_dico *dico, char *key)
 			return (ft_strdup(dico->value));
 		dico = dico->next;
 	}
-	return (NULL);
+	return (ft_strdup(""));
 }
 
 char	**array_dico(t_dico *dico)
@@ -75,7 +75,7 @@ char	**array_dico(t_dico *dico)
 	unsigned int	size;
 	char			**dico_char;
 	unsigned int	i;
-	
+
 	size = 0;
 	current = dico;
 	while (current)
@@ -92,9 +92,8 @@ char	**array_dico(t_dico *dico)
 		dico_char[i + 1] = ft_strdup(current->value);
 		if (!dico_char[i] || !dico_char[i + 1])
 			return (ft_free_split(dico_char), NULL);
-		i +=2;
+		i += 2;
 		current = current->next;
 	}
-	dico_char[i] = NULL;
-	return (dico_char);
+	return (dico_char[i] = NULL, dico_char);
 }
