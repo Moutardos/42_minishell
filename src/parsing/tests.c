@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 23:19:34 by hgirard           #+#    #+#             */
-/*   Updated: 2023/05/29 10:11:50 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/05/30 18:48:42 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 //TODO : MODIF CETTE MERDE, AUCUN SENSS I/J
 /// @brief Checking builtin / redir validity 
@@ -270,6 +270,8 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 		printf("delim_f : %s\n", cmd->delim_f[i]);
 		i++;
 	}
+	cmd->in = STDIN;
+	cmd->out = STDOUT;
 	free(temp);
 	free(copy);
 	free(copy2);
