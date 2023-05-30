@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/24 02:41:46 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/29 10:02:21 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "handlers.h"
 # include "libft/libft.h"
 # include "error.h"
+# include "parsing.h"
 
 # define STDIN 0
 # define STDOUT 1
@@ -56,6 +57,7 @@ typedef struct s_cmd
 	char			*path;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
+	int				delim_amount;
 }  t_cmd;
 
 //exit code else than 0 = process spinning down
@@ -69,7 +71,5 @@ typedef struct s_minishell
 	t_cmd	*cmds;
 	int		exit;
 }  t_minishell;
-
-void	free_cmds(t_cmd *cmds);
 
 #endif

@@ -7,9 +7,12 @@ NAME = $(BDIR)/minishell
 LIBFT = $(IDIR)/libft/libft.a
 RM = rm -f
 CFLAGS = -Wall -Wextra -I$(IDIR) 
-LFLAGS = -L$(IDIR)/libft -lft
+LFLAGS = -L$(IDIR)/libft -lft -lreadline
 FILES =  minishell/main builtins/exec builtins/files_utils \
-         minishell/minishell #mettre les noms des fichiers sans extensions ici
+         minishell/minishell parsing/cmd_utils parsing/parsing_utils1 \
+		 parsing/parsing_utils2 parsing/parsing_utils3 parsing/parsing \
+		 parsing/tests
+		 #mettre les noms des fichiers sans extensions ici
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))
 
@@ -33,7 +36,7 @@ $(LIBFT):
 	$(MAKE) -C $(IDIR)/libft bonus
 
 $(ODIR)/%.o : src/%.c | $(ODIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -ggdb3 $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) | $(BDIR)
 	$(CC) $(CFLAGS)  -o  $@ $(OBJS) $(LFLAGS)

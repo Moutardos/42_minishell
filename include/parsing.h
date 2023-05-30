@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/06 00:11:00 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/05/29 10:04:14 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 
 # include "minishell.h"
 
-void	parse_current_cmd(t_minishell *mini);
-int		quote_check(char *line, int index);
-int		quotes(char *line, int index);
-int		is_sep(char c);
-int		next_sep_pos(char *str, int pos);
+typedef struct s_cmd t_cmd;
+typedef struct s_minishell t_minishell;
 
-t_cmd	*new_cmd(char *delim);
-t_cmd	*cmd_last(t_cmd *lst);
-t_cmd	*cmd_first(t_cmd *lst);
+
+int		quotes(char *line, int index);
+int		next_sep_pos(char *str, int pos);
+t_cmd	*parse_cmd(int start, int end, char *str);
+void	*clear_cmd(t_cmd	*cmd);
+t_cmd	*new_cmd(void);
+void	free_cmds(t_cmd *cmds);
+void	parse_current_cmd(t_minishell *mini);
 void	cmd_add_back(t_cmd **cmd, t_cmd *new);
-void	cmd_del_last(t_cmd **cmd);
+
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/15 17:18:07 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/29 10:48:22 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_minishell *init_minishell()
 {
 	t_minishell *mini;
 
-	mini = malloc(sizeof(t_minishell));
+	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (NULL);
 	//Ajouter ici par la suite les fieds a allouer / initialiser
@@ -59,13 +59,13 @@ void	free_mini(t_minishell *mini)
 	free(mini);
 }
 
-// int main(int ac, char **av)
-// {
-// 	t_minishell	*mini;
+int main(int ac, char **av)
+{
+	t_minishell	*mini;
 
-// 	mini = init_minishell();
-// 	while (mini->exit == 0)
-// 	{
-// 		parse_current_cmd(mini);
-// 	}
-// }
+	mini = init_minishell();
+	//while (mini->exit == 0)
+	//{
+		parse_current_cmd(mini);
+	//}
+}

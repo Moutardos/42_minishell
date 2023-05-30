@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:30:27 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/24 02:38:28 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/05/29 09:38:16 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exec.h"
 
+/*
 int	main(int argc, char **argv)
 {
 	(void)argc;
@@ -90,3 +91,4 @@ int	main(int argc, char **argv)
 	char **e = array_dico(dico);
 	return (0);
 }
+*/
