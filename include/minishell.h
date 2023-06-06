@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/29 10:02:21 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/06 14:58:10 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
-# define BUFFER_SIZE 100 // pour pwd, jsp quoi mettre
+# define BUFFER_SIZE 4096 // pour pwd, jsp quoi mettre
 
 typedef enum e_delim
 {
@@ -42,6 +42,16 @@ typedef enum e_delim
   OUT_APPEND,
   NONE
 } t_delim;
+
+typedef struct s_delims_args {
+	int		i;
+	int		j;
+	int		count;
+	int		m;
+	int		n;
+	int		l;
+	int		delim_b;
+}			t_delims_args;
 
 // path = chemin du prog, allocated par check_paths dans files_utils
 typedef struct s_cmd
@@ -58,6 +68,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 	int				delim_amount;
+
 }  t_cmd;
 
 //exit code else than 0 = process spinning down
@@ -70,6 +81,7 @@ typedef struct s_minishell
 	char	*raw_line;
 	t_cmd	*cmds;
 	int		exit;
+	t_dico	*dico;
 }  t_minishell;
 
 #endif

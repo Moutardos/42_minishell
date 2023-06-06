@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgirard <hgirard@student.42.f>             +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/05/27 23:18:03 by hgirard          ###   ########.fr       */
+/*   Updated: 2023/06/06 13:32:28 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,55 @@ void	*clear_cmd(t_cmd	*cmd)
 		cmd_del_last(cmd);
 	cmd_del_cmd(cmd);
 	return (NULL);
+}
+
+char	*join_from_pos(char *str1, int start, int end, char *env)
+{
+	char	*new;
+	int		i;
+
+	i = -1;
+	new = ft_calloc(ft_strlen(str1) \
+	+ ft_strlen(env) + 1, sizeof(char));
+	if (!new)
+		return (NULL);
+	while (i++ < start)
+		new[i] = str1[i];
+	i = 0;
+	while (env[i] != '\0')
+	{
+		new[start] = env[i];
+		i++;
+		start++;
+	}
+	while (str1[end] != '\0')
+	{
+		new[start] = str1[end];
+		end++;
+		start++;
+	}
+	new[start] = '\0';
+	return (new);
+}
+
+char	*env_from_pos(t_dico *dico, char *str, int start, int end)
+{
+	char	*new;
+	int		i;
+	char	*rep;
+
+	i = 0;
+	new = ft_calloc(end - start + 1, sizeof(char));
+	if (!new)
+		return (NULL);
+	while (start < end)
+	{
+		new[i] = str[start];
+		start++;
+		i++;
+	}
+	new[i] = '\0';
+	rep = get_dico(dico, new);
+	free(new);
+	return (rep);
 }

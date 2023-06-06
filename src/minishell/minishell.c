@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/30 18:20:13 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:59:14 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ t_minishell *init_minishell()
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
 	{
 		printf("couldn't get current working folder\n");
-		return (perror("minishell"),0);
+		return (perror("minishell"), NULL);
 	}
-
+	mini->dico = init_dico("$TEST", "salut");
+	add_dico(mini->dico, "$TEST2", "au revoir");
 	//paths par defaut 
 	mini->paths = ft_split(getenv("PATH"), ':');
-
 	//Ajouter ici par la suite les fieds a allouer / initialiser
 	return (mini);
 }
@@ -39,12 +39,16 @@ t_minishell *init_minishell()
 void	free_cmds(t_cmd *cmds)
 {
 	t_cmd	*curr;
+	t_cmd	*prev;
+
 	curr = cmds;
 	while (curr != NULL)
 	{
+		printf("freeing cmd : %s\n", curr->av[0]);
 		ft_free_split(curr->av);
 		safe_free(curr->path);
-		safe_free(curr->delim_f);
+		if (curr->delim_amount)
+			ft_free_split(curr->delim_f);
 		safe_free(curr->delim);
 		if (curr->next == NULL)
 		{
@@ -53,31 +57,64 @@ void	free_cmds(t_cmd *cmds)
 		}
 		else
 		{
+			prev = curr;
 			curr = curr->next;
-			safe_free(curr->prev);
+			//safe_free(curr->prev);
+			safe_free(prev);
 		}
 	}
 }
 
-void	free_mini(t_minishell *mini)
+void	free_dico2(t_dico *dicos)
 {
-	free_cmds(mini->cmds);
+	t_dico	*curr;
+
+	curr = dicos;
+	while (curr != NULL)
+	{
+		safe_free(curr->key);
+		safe_free(curr->value);
+		if (curr->next == NULL)
+		{
+			safe_free(curr);
+			curr = NULL;
+		}
+		else
+		{
+			curr = curr->next;
+			//safe_free(curr->prev);
+		}
+	}
+}
+
+static void	free_mini(t_minishell *mini)
+{
+	//free_cmds(mini->cmds);
 	ft_free_split(mini->paths);
-	if (mini->env != NULL)
+	//if (mini->env != NULL)
 		//ft_lstclear( (void *) (mini->env), free);
-		;
 	free(mini);
 }
 
+//echo salut"toi"$TEST'$TEST' << test.txt append > test2.txt | echo salut > redir.png | > "to"
 int main(int ac, char **av)
 {
 	t_minishell	*mini;
+	int			test;
 
+	(void)ac;
+	(void)av;
+	test = 0;
 	mini = init_minishell();
-	//while (mini->exit == 0)
-	//{
+	while (test < 1)
+	{
 	parse_current_cmd(mini);
-	if (mini->cmds)
-		execute(mini);
-	//}
+	//if (mini->cmds)
+	//	execute(mini);
+	free_cmds(mini->cmds);
+	test++;
+	}
+	free_dico2(mini->dico);
+	free(mini->dico);
+	free_mini(mini);
 }

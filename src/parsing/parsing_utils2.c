@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgirard <hgirard@student.42.f>             +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:29:02 by hgirard           #+#    #+#             */
-/*   Updated: 2023/05/27 22:48:07 by hgirard          ###   ########.fr       */
+/*   Updated: 2023/06/06 13:21:43 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ int	get_post_bltn(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] == ' ')
+	while (str[i] == ' ' && str[i] != '\0')
 		i++;
-	while (str[i] != ' ')
-		i++;
-	while (str[i] == ' ')
+	i = next_arg_pos(str, i);
+	while (str[i] == ' ' && str[i] != '\0')
 		i++;
 	return (i);
 }
@@ -39,7 +38,8 @@ int	next_arg_pos(char *str, int pos)
 	{
 		if (!quotes(str, pos))
 		{
-			while (!quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0')
+			while (!quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0' \
+			&& !is_delim(str, pos))
 				pos++;
 			return (pos);
 		}
@@ -53,6 +53,8 @@ int	next_arg_pos(char *str, int pos)
 	}
 	return (pos);
 }
+
+// echo test append app> text.txt< test.t | echo "salut toi |"
 
 int	get_delims_amount(char *str)
 {
