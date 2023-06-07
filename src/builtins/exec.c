@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/16 15:00:19 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:54:40 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,6 @@ static t_error	treat_cmds(t_cmd *cmds, char **env)
 		execve(cmd->path, cmd->av, env);
 		return (perror2("minishell : ", cmd->path), ERR_CMD_FAIL);
 	}
-	else if (pid > 0)
-	{
-
-	}
-
 	return (GOOD);
 }
 

@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/06 14:58:10 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 13:59:59 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "libft/libft.h"
 # include "error.h"
 # include "parsing.h"
+# include "exec.h"
 
 # define STDIN 0
 # define STDOUT 1
