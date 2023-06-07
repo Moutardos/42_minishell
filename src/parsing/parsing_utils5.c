@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/07 13:25:36 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 14:06:41 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *builtin)
 
 	alloc = bltn_args_amount(cmd) \
 	+ delims_args_amount(cmd);
-	printf("bltn_args_amount(cmd) : %d\n", bltn_args_amount(cmd));
-	printf("delims_args_amount(cmd) : %d\n", delims_args_amount(cmd));
+	//printf("bltn_args_amount(cmd) : %d\n", bltn_args_amount(cmd));
+	//printf("delims_args_amount(cmd) : %d\n", delims_args_amount(cmd));
 	curr_cmd->ac = 1;
 	curr_cmd->av = ft_calloc(alloc + 2, sizeof(char *));
 	if (!curr_cmd->av)
@@ -119,8 +119,14 @@ int	get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd)
 	char			*holder;
 
 	curr_cmd->delim_amount = get_delims_amount(cmd);
+	//printf("delims amount : %d\n", curr_cmd->delim_amount);
 	if (curr_cmd->delim_amount == 0)
+	{
+		curr_cmd->delim = NULL;
+		curr_cmd->delim_f = ft_calloc(curr_cmd->delim_amount + 1, sizeof(char *));
+		curr_cmd->delim_f[0] = NULL;
 		return (free(args), -1);
+	}
 	curr_cmd->delim = ft_calloc((curr_cmd->delim_amount + 1), sizeof(t_delim));
 	if (!curr_cmd->delim)
 		return (free(args), 1);

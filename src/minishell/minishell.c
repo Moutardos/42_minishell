@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/06 12:59:14 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 14:09:50 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	free_cmds(t_cmd *cmds)
 	curr = cmds;
 	while (curr != NULL)
 	{
-		printf("freeing cmd : %s\n", curr->av[0]);
+		//printf("freeing cmd : %s\n", curr->av[0]);
 		ft_free_split(curr->av);
 		safe_free(curr->path);
 		if (curr->delim_amount)
@@ -106,11 +106,11 @@ int main(int ac, char **av)
 	(void)av;
 	test = 0;
 	mini = init_minishell();
-	while (test < 1)
+	while (1)
 	{
 	parse_current_cmd(mini);
-	//if (mini->cmds)
-	//	execute(mini);
+	if (mini->cmds)
+		execute(mini);
 	free_cmds(mini->cmds);
 	test++;
 	}

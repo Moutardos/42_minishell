@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/07 13:21:47 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 14:07:44 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_cmd	*parser(char *str)
 
 	i = 0;
 	curr_cmd = NULL;
-	printf("full cmd : %s\n", str);
+	//printf("full cmd : %s\n", str);
 	while (str[i] != '\0')
 	{
 		next_delim = next_sep_pos(str, i);
@@ -70,6 +70,7 @@ static t_cmd	*parser(char *str)
 		if (!new_cmd)
 			return (clear_cmd(curr_cmd));
 		cmd_add_back(&curr_cmd, new_cmd);
+		/*
 		printf("=============\n");
 		printf("Builtin args : \n");
 		i = 0;
@@ -87,6 +88,7 @@ static t_cmd	*parser(char *str)
 			printf("delim_f : %s\n", new_cmd->delim_f[i]);
 			i++;
 		}
+		*/
 	i = next_delim;
 	}
 	return (curr_cmd);
