@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/07 17:59:17 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:00:56 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	test = 0;
-	mini = init_minishell();
+	mini = init_minishell(envp);
 	while (1)
 	{
 	parse_current_cmd(mini);
