@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 01:35:07 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/25 13:51:32 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:07:03 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,9 @@ t_dico		*init_dico(char *key, char *value);
 void		free_dico(t_dico **dico);
 t_dico		*add_dico(t_dico *dico, char *key, char *value);
 char		*get_dico(t_dico *dico, char *key);
-char		**array_dico(t_dico *dico);
+t_dico		*array_dico(char **array);
 char		*replace_str(t_dico *dico, char *str);
-
+char		**dico_array(t_dico *dico);
+void		display_dico(t_dico *dico);
+unsigned int	size_dico(t_dico *dico);
 #endif

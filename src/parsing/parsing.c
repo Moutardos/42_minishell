@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/07 13:21:47 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 17:46:28 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	parse_current_cmd(t_minishell *mini)
 	line = readline("minishell : ");
 	if (quotes(line, ft_strlen(line)))
 		return (free(line));
-	line = replace_str2(mini->dico, line);
+	line = replace_str2(mini->env, line);
 	cmds = parser(line);
 	if (cmds)
 		mini->cmds = cmds;

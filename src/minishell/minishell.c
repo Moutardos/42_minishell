@@ -3,33 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/06 12:59:14 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 15:39:27 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+#include "exec.h"
 
 /// @brief Minishell struct and fields init
 /// @return Newly allocated shell entity
-t_minishell *init_minishell()
+t_minishell *init_minishell(char **envp)
 {
 	t_minishell *mini;
 
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (NULL);
-	mini->env = NULL; //todo : utiliser envp pour creer le petit dico
+	if (!envp)
+		mini->env = NULL;
+	else
+		mini->env = array_dico(envp);
+	display_dico(mini->env);
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
 	{
 		printf("couldn't get current working folder\n");
 		return (perror("minishell"), NULL);
 	}
-	mini->dico = init_dico("$TEST", "salut");
-	add_dico(mini->dico, "$TEST2", "au revoir");
 	//paths par defaut 
 	mini->paths = ft_split(getenv("PATH"), ':');
 	//Ajouter ici par la suite les fieds a allouer / initialiser
@@ -97,7 +100,7 @@ static void	free_mini(t_minishell *mini)
 }
 
 //echo salut"toi"$TEST'$TEST' << test.txt append > test2.txt | echo salut > redir.png | > "to"
-int main(int ac, char **av)
+int main(int ac, char **av, char **envp)
 {
 	t_minishell	*mini;
 	int			test;
@@ -105,16 +108,16 @@ int main(int ac, char **av)
 	(void)ac;
 	(void)av;
 	test = 0;
-	mini = init_minishell();
+	mini = init_minishell(envp);
 	while (test < 1)
 	{
 	parse_current_cmd(mini);
-	//if (mini->cmds)
-	//	execute(mini);
+	if (mini->cmds)
+		execute(mini);
 	free_cmds(mini->cmds);
 	test++;
 	}
-	free_dico2(mini->dico);
-	free(mini->dico);
+	free_dico2(mini->env);
+	free(mini->env);
 	free_mini(mini);
 }
