@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/06 14:57:48 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 13:21:47 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,7 @@ void	parse_current_cmd(t_minishell *mini)
 {
 	char	*line;
 	t_cmd	*cmds;
-	int		i;
 
-	i = 0;
 	//signal(SIGINT, &sig_int);
 	//signal(SIGQUIT, &sig_quit);
 	line = readline("minishell : ");

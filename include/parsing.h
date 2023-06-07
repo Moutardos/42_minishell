@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/31 11:29:19 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 13:24:47 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct s_cmd t_cmd;
 typedef struct s_minishell t_minishell;
 typedef enum e_delim t_delim;
+typedef struct s_delims_args t_delims_args;
 
 int		quotes(char *line, int index);
 int		next_sep_pos(char *str, int pos);
@@ -38,5 +39,14 @@ int		get_next_delim(char *str, int start);
 t_delim	get_curr_delim(char *str, int pos);
 int		validate_builtin(char *builtin);
 char	*str_fullcpy(char *src);
+char	*get_builtin(char *cmd);
+void	get_args(t_cmd *curr_cmd, char *cmd, char *builtin);
+int		get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd);
+char	*replace_str2(t_dico *dico, char *str);
+char	*env_from_pos(t_dico *dico, char *str, int start, int end);
+char	*join_from_pos(char *str1, int start, int end, char *env);
+int		delims_args_amount(char *cmd);
+
+
 
 #endif

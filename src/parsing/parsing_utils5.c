@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/06 14:58:46 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/07 13:25:36 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	get_args_auxiliary(t_cmd *curr_cmd, char *cmd, int l, int j)
 /// @param curr_cmd 
 /// @param cmd 
 /// @return 
-int	get_args(t_cmd *curr_cmd, char *cmd, char *builtin)
+void	get_args(t_cmd *curr_cmd, char *cmd, char *builtin)
 {
 	int	alloc;
 	int	test;
@@ -57,7 +57,7 @@ int	get_args(t_cmd *curr_cmd, char *cmd, char *builtin)
 	curr_cmd->ac = 1;
 	curr_cmd->av = ft_calloc(alloc + 2, sizeof(char *));
 	if (!curr_cmd->av)
-		return (1);
+		return ;
 	if (builtin != NULL)
 		curr_cmd->av[0] = builtin;
 	test = 0;
@@ -66,10 +66,10 @@ int	get_args(t_cmd *curr_cmd, char *cmd, char *builtin)
 	if (is_delim(cmd, test))
 		return ;
 	get_args_auxiliary(curr_cmd, cmd, 0, 0);
-	return (1);
+	return ;
 }
 
-static void	get_delims_auxiliary2(t_cmd *curr, t_delims_args *args, \
+static void	get_delims_auxiliary2(t_delims_args *args, \
 char *cmd, char *holder)
 {
 	while (args->i < args->j)
@@ -103,7 +103,7 @@ char *holder)
 				holder = c->av[c->ac + a->m];
 				a->m++;
 			}
-			get_delims_auxiliary2(c, a, cmd, holder);
+			get_delims_auxiliary2(a, cmd, holder);
 			continue ;
 		}
 		a->i++;
