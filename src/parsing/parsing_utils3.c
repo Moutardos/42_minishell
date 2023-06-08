@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/06 13:32:28 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/08 12:13:05 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,9 @@ char	*env_from_pos(t_dico *dico, char *str, int start, int end)
 		i++;
 	}
 	new[i] = '\0';
+	printf("key : %s\n", new);
 	rep = get_dico(dico, new);
+	printf("dico value : %s\n", rep);
 	free(new);
 	return (rep);
 }

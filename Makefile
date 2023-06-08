@@ -11,7 +11,7 @@ LFLAGS = -L$(IDIR)/libft -lft -lreadline
 FILES =  minishell/main builtins/exec builtins/files_utils \
          minishell/minishell parsing/cmd_utils parsing/parsing_utils1 \
 		 parsing/parsing_utils2 parsing/parsing_utils3 parsing/parsing \
-		 parsing/parsing_utils4 parsing/parsing_utils5
+		 parsing/parsing_utils4 parsing/parsing_utils5 parsing/parsing_utils6
 		 #mettre les noms des fichiers sans extensions ici
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))

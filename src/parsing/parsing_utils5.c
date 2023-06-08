@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/07 14:06:41 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/08 12:15:42 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int	get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd)
 	char			*holder;
 
 	curr_cmd->delim_amount = get_delims_amount(cmd);
-	//printf("delims amount : %d\n", curr_cmd->delim_amount);
 	if (curr_cmd->delim_amount == 0)
 	{
 		curr_cmd->delim = NULL;

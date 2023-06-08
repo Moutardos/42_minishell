@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/07 13:24:47 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/08 13:00:32 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*replace_str2(t_dico *dico, char *str);
 char	*env_from_pos(t_dico *dico, char *str, int start, int end);
 char	*join_from_pos(char *str1, int start, int end, char *env);
 int		delims_args_amount(char *cmd);
-
+void	remove_quotes(t_cmd *cmds);
 
 
 #endif

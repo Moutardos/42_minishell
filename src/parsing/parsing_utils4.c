@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:06:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/07 13:23:10 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/08 12:10:58 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*replace_str2(t_dico *dico, char *str)
 		if (str[i] == '$' && quotes(str, i) != 2)
 		{
 			j = next_arg_pos2(str, i + 1);
-			env = env_from_pos(dico, str, i, j);
+			env = env_from_pos(dico, str, i + 1, j);
 			str = join_from_pos(str, i, j, env);
 			i = j;
 			free(env);

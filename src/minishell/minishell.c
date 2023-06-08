@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/07 18:00:56 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/08 13:01:31 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ t_minishell *init_minishell(char **envp)
 		mini->env = NULL;
 	else
 		mini->env = array_dico(envp);
-	display_dico(mini->env);
+	//display_dico(mini->env);
+	//mini->dico = init_dico("TEST", "salut");
+	//add_dico(mini->dico, "TEST2", "au revoir");
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
 	{
 		printf("couldn't get current working folder\n");
@@ -50,8 +52,7 @@ void	free_cmds(t_cmd *cmds)
 		//printf("freeing cmd : %s\n", curr->av[0]);
 		ft_free_split(curr->av);
 		safe_free(curr->path);
-		if (curr->delim_amount)
-			ft_free_split(curr->delim_f);
+		ft_free_split(curr->delim_f);
 		safe_free(curr->delim);
 		if (curr->next == NULL)
 		{
@@ -109,7 +110,7 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	test = 0;
 	mini = init_minishell(envp);
-	while (1)
+	while (test < 1)
 	{
 	parse_current_cmd(mini);
 	if (mini->cmds)
