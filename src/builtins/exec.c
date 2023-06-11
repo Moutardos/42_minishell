@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgirard <hgirard@student.42.f>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/09 16:46:58 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/11 23:51:12 by hgirard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "exec.h"
 #include "error.h"
 #include "builtins.h"
-static t_error	treat_cmds(t_cmd *cmds, char **env);
+static t_error	treat_cmds(t_minishell *mini, t_cmd *cmds, char **env);
 static t_error	create_pipe(t_cmd *cmds);
 static void		close_pipe(t_cmd *cmds, int n);
 static int is_last_heredoc(t_cmd *cmd, int i);
-static int	treat_builtins(t_cmd *cmds, char **env);
+static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env);
 
 /// @brief  Execute each commands 1 by 1
 /// @param  cmds linked list of commands
@@ -39,7 +39,7 @@ int	execute(t_minishell	*mini)
 		if (curr->path == NULL)
 			if (check_paths(mini, curr))
 				return (close_pipe(mini->cmds, -1), ERR_ALLOC);
-		err = treat_cmds(curr, NULL);
+		err = treat_cmds(mini, curr, NULL);
 		closef(curr->in, 0);
 		closef(curr->out, 0);
 		closef(curr->heredoc, 0);
@@ -52,7 +52,7 @@ int	execute(t_minishell	*mini)
 	return (0);
 }
 
-static t_error	treat_cmds(t_cmd *cmds, char **env)
+static t_error	treat_cmds(t_minishell *mini, t_cmd *cmds, char **env)
 {
 	pid_t	pid;
 	t_cmd	*cmd;
@@ -66,7 +66,7 @@ static t_error	treat_cmds(t_cmd *cmds, char **env)
 			here_doc(cmd->delim_f[i], cmd->heredoc, is_last_heredoc(cmd, i +1));
 		i++;
 	}
-	if (!treat_builtins(cmds, env))
+	if (!treat_builtins(mini, cmds, env))
 		return (0);
 	pid = fork();
 	if (pid == F_CHILD)
@@ -143,10 +143,12 @@ static int is_last_heredoc(t_cmd *cmd, int i)
 	return (1);
 }
 
-static int	treat_builtins(t_cmd *cmds, char **env)
+static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env)
 {
 	if (!ft_strcmp(cmds->fname, "echo"))
 		return (echo(cmds));
+	else if (!ft_strcmp(cmds->fname, "export"))
+		return (export(mini, cmds));
 	return (1);
 	//todo le reste
 }
