@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 14:48:56 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/02 14:53:18 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/11 16:09:10 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	safe_free(void *ptr)
+int	closef(int fd, int new)
 {
-	if (ptr)
-	{
-		free(ptr);
-		ptr = NULL;
-	}
+	if (fd != STDIN && fd != STDOUT && fd > 0)
+		close(fd);
+	return (new);
 }

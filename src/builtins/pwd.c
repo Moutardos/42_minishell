@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/10 15:31:46 by lcozdenm         ###   ########.fr       */
+/*   Created: 2023/06/10 15:02:57 by lcozdenm          #+#    #+#             */
+/*   Updated: 2023/06/10 20:16:14 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "builtins.h"
+#include "minishell.h"
 
-# include "minishell.h"
-
-int	closef(int fd, int new);
-#endif
+int	pwd(t_minishell *mini, int fd)
+{
+	return (ft_putstr_fd(mini->pwd, fd), ft_putchar_fd('\n', fd), 0);
+}

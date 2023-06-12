@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/08 13:01:31 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/11 16:15:02 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ t_minishell *init_minishell(char **envp)
 	//mini->dico = init_dico("TEST", "salut");
 	//add_dico(mini->dico, "TEST2", "au revoir");
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
-	{
-		printf("couldn't get current working folder\n");
-		return (perror("minishell"), NULL);
-	}
+		return (perror("minishell:"), free_dico(mini->env), safe_free(mini), NULL);
 	//paths par defaut 
 	mini->paths = ft_split(getenv("PATH"), ':');
 	//Ajouter ici par la suite les fieds a allouer / initialiser
@@ -110,7 +107,7 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	test = 0;
 	mini = init_minishell(envp);
-	while (test < 1)
+	while (test < 4)
 	{
 	parse_current_cmd(mini);
 	if (mini->cmds)

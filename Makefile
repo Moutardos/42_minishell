@@ -8,11 +8,11 @@ LIBFT = $(IDIR)/libft/libft.a
 RM = rm -f
 CFLAGS = -Wall -Wextra -I$(IDIR) 
 LFLAGS = -L$(IDIR)/libft -lft -lreadline
-FILES =  minishell/main builtins/exec builtins/files_utils \
+FILES =  builtins/exec builtins/files_utils \
          minishell/minishell parsing/cmd_utils parsing/parsing_utils1 \
 		 parsing/parsing_utils2 parsing/parsing_utils3 parsing/parsing \
 		 parsing/parsing_utils4 parsing/parsing_utils5 parsing/parsing_utils6\
-		 builtins/echo
+		 builtins/echo builtins/pwd builtins/cd utils/utils
 		 #mettre les noms des fichiers sans extensions ici
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))
@@ -27,6 +27,7 @@ $(ODIR):
 	mkdir -p $(ODIR)/handlers
 	mkdir -p $(ODIR)/parsing
 	mkdir -p $(ODIR)/minishell
+	mkdir -p $(ODIR)/utils
 	#il faudrait créer un directory pour chaque sous dossier source
 
 

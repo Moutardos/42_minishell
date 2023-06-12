@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/05/16 15:10:29 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/11 16:08:54 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,6 @@ int	redirections(t_cmd *cmd)
 			cmd->out = closef(cmd->out, fd_out);
 	}
 	return (0);
-}
-
-int	closef(int fd, int new)
-{
-	if (fd != STDIN && fd != STDOUT && fd > 0)
-		close(fd);
-	return (new);
 }
 
 static int	treat_redirections(char *fname, t_delim delim, int *in, int *out)
