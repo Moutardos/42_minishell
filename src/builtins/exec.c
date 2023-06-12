@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/12 19:33:45 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:36:41 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ static int is_last_heredoc(t_cmd *cmd, int i)
 	return (1);
 }
 
-static int	treat_builtins(t_minishell *mini, t_cmd *cmd, t_minishell *mini, char **env)
+static int	treat_builtins(t_minishell *mini, t_cmd *cmd, char **env)
 {
 	if (!ft_strcmp(cmd->fname, "echo"))
 		return (echo(cmd));
@@ -154,7 +154,7 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmd, t_minishell *mini, char
 	if (!ft_strcmp(cmd->fname, "env"))
 		return (display_dico(mini->env), 0);
 	else if (!ft_strcmp(cmd->fname, "export"))
-		return (export(mini, cmds));
+		return (export(mini, cmd));
 	return (1);
 	//todo le reste
 }
