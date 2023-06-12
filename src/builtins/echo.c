@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:54:22 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/09 16:45:12 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/12 21:20:54 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,25 @@
 int	echo(t_cmd *cmd)
 {
 	int		nl;
+	int		i;
 	char	**av;
 
 	av = cmd->av + 1;
+	i = 0;
 	nl = 1;
 	if (!av)
 		return (1);
-	if (av[0] && !ft_strcmp(av[0], "-n"))
+	if (!av[1] && !ft_strcmp(av[0], "-n"))
 	{
 		av++;
 		nl = 0;
 	}
-	while (*av)
+	while (av[i])
 	{
-		ft_putstr_fd(*av, cmd->out);
-		av++;
+		if (i != 0)
+			ft_putchar_fd(' ', cmd->out);
+		ft_putstr_fd(av[i], cmd->out);
+		i++;
 	}
 	if (nl)
 		ft_putchar_fd('\n', cmd->out);
