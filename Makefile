@@ -13,6 +13,7 @@ FILES =  builtins/exec builtins/files_utils \
 		 parsing/parsing_utils2 parsing/parsing_utils3 parsing/parsing \
 		 parsing/parsing_utils4 parsing/parsing_utils5 parsing/parsing_utils6\
 		 builtins/echo builtins/pwd builtins/cd utils/utils
+		 builtins/echo builtins/export
 		 #mettre les noms des fichiers sans extensions ici
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))

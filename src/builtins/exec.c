@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/11 16:15:30 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/12 19:33:45 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_error	treat_cmds(t_cmd *cmds, t_minishell *mini);
 static t_error	create_pipe(t_cmd *cmds);
 static void		close_pipe(t_cmd *cmds, int n);
 static int is_last_heredoc(t_cmd *cmd, int i);
-static int	treat_builtins(t_cmd *cmds, t_minishell *mini, char **env);
+static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env);
 
 /// @brief  Execute each commands 1 by 1
 /// @param  cmds linked list of commands
@@ -66,7 +66,7 @@ static t_error	treat_cmds(t_cmd *cmd, t_minishell *mini)
 			here_doc(cmd->delim_f[i], cmd->heredoc, is_last_heredoc(cmd, i +1));
 	if (!cmd->av)
 		return (0);
-	if (!treat_builtins(cmd, mini,env))
+	if (!treat_builtins(mini, cmd, env))
 		return (ft_free_split(env), 0);
 	pid = fork();
 	if (pid == F_CHILD)
@@ -143,7 +143,7 @@ static int is_last_heredoc(t_cmd *cmd, int i)
 	return (1);
 }
 
-static int	treat_builtins(t_cmd *cmd, t_minishell *mini, char **env)
+static int	treat_builtins(t_minishell *mini, t_cmd *cmd, t_minishell *mini, char **env)
 {
 	if (!ft_strcmp(cmd->fname, "echo"))
 		return (echo(cmd));
@@ -153,6 +153,8 @@ static int	treat_builtins(t_cmd *cmd, t_minishell *mini, char **env)
 		return (cd(mini));
 	if (!ft_strcmp(cmd->fname, "env"))
 		return (display_dico(mini->env), 0);
+	else if (!ft_strcmp(cmd->fname, "export"))
+		return (export(mini, cmds));
 	return (1);
 	//todo le reste
 }
