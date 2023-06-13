@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgirard <hgirard@student.42.f>             +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:28:01 by hgirard           #+#    #+#             */
-/*   Updated: 2023/05/27 22:43:42 by hgirard          ###   ########.fr       */
+/*   Updated: 2023/06/13 20:36:51 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*str_fullcpy(char *src)
 	int		i;
 
 	i = 0 ;
-	dst = malloc(sizeof(char) * (ft_strlen(src) + 1));
+	dst = ft_calloc((ft_strlen(src) + 1),  sizeof(char));
 	if (!dst)
 		return (NULL);
 	while (src[i] != '\0')

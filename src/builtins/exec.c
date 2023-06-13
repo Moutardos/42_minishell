@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/12 19:36:41 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:28:17 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@ static t_error	treat_cmds(t_cmd *cmds, t_minishell *mini);
 static t_error	create_pipe(t_cmd *cmds);
 static void		close_pipe(t_cmd *cmds, int n);
 static int is_last_heredoc(t_cmd *cmd, int i);
-static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env);
+static int	treat_builtins(t_minishell *mini, t_cmd *cmds);
 
 /// @brief  Execute each commands 1 by 1
 /// @param  cmds linked list of commands
 /// @return error nb 
 int	execute(t_minishell	*mini)
 {
-	const char	*fname;
 	t_error		err;
 	t_cmd		*curr;
 
@@ -66,7 +65,7 @@ static t_error	treat_cmds(t_cmd *cmd, t_minishell *mini)
 			here_doc(cmd->delim_f[i], cmd->heredoc, is_last_heredoc(cmd, i +1));
 	if (!cmd->av)
 		return (0);
-	if (!treat_builtins(mini, cmd, env))
+	if (!treat_builtins(mini, cmd))
 		return (ft_free_split(env), 0);
 	pid = fork();
 	if (pid == F_CHILD)
@@ -143,18 +142,22 @@ static int is_last_heredoc(t_cmd *cmd, int i)
 	return (1);
 }
 
-static int	treat_builtins(t_minishell *mini, t_cmd *cmd, char **env)
+static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->fname, "echo"))
 		return (echo(cmd));
-	if (!ft_strcmp(cmd->fname, "pwd"))
+	else if (!ft_strcmp(cmd->fname, "pwd"))
 		return (pwd(mini, cmd->out));
-	if (!ft_strcmp(cmd->fname, "cd"))
+	else if (!ft_strcmp(cmd->fname, "cd"))
 		return (cd(mini));
-	if (!ft_strcmp(cmd->fname, "env"))
+	else if (!ft_strcmp(cmd->fname, "env"))
 		return (display_dico(mini->env), 0);
 	else if (!ft_strcmp(cmd->fname, "export"))
-		return (export(mini, cmd));
+		return (export_m(mini, cmd));
+	else if (!ft_strcmp(cmd->fname, "unset"))
+		return (unset(mini, cmd));
+	else if (!ft_strcmp(cmd->fname, "exit"))
+		return (exit_m(mini));
 	return (1);
 	//todo le reste
 }

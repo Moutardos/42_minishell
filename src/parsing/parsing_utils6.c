@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:20:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/08 12:54:01 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/13 21:28:00 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*realloc_quote(char *str)
 {
 	char	*new;
-	int		i;
+	size_t		i;
 
 	new = ft_calloc(sizeof(char), ft_strlen(str) + 2);
 	if (!new)

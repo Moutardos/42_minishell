@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/08 12:13:05 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/13 20:49:50 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char	*join_from_pos(char *str1, int start, int end, char *env)
 		start++;
 	}
 	new[start] = '\0';
+	free(str1);
 	return (new);
 }
 

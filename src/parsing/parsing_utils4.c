@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:06:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/08 12:10:58 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/13 20:37:46 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*get_builtin(char *cmd)
 	i = next_arg_pos(cmd, i);
 	builtin = ft_calloc(i - j + 1, sizeof(char));
 	if (!builtin)
-		return (0);
+		return (NULL);
 	k = 0;
 	while (j < i && cmd[j] != ' ')
 	{

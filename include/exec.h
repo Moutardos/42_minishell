@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgirard <hgirard@student.42.f>             +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:55:14 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/11 23:46:36 by hgirard          ###   ########.fr       */
+/*   Updated: 2023/06/13 21:00:22 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int   closef(int fd, int new);
 
 
 int	here_doc(char *stop, int fd, int is_last);
-int export(t_minishell *mini, t_cmd *cmd);
+
 #endif

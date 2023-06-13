@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgirard <hgirard@student.42.f>             +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:27:17 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/11 23:52:25 by hgirard          ###   ########.fr       */
+/*   Updated: 2023/06/13 21:25:37 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-int export(t_minishell *mini, t_cmd *cmd)
+int export_m(t_minishell *mini, t_cmd *cmd)
 {
 	printf("export builtlin \n");
 	int 	i;

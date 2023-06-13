@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/11 16:15:02 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:29:25 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@
 t_minishell *init_minishell(char **envp)
 {
 	t_minishell *mini;
-
+	char		*path;
+	
+	path = getenv("PATH");
+	if (!path)
+		return (NULL);
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (NULL);
@@ -31,9 +35,10 @@ t_minishell *init_minishell(char **envp)
 	//mini->dico = init_dico("TEST", "salut");
 	//add_dico(mini->dico, "TEST2", "au revoir");
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
-		return (perror("minishell:"), free_dico(mini->env), safe_free(mini), NULL);
+		return (perror("minishell:"), free_dico(&mini->env), safe_free(mini), NULL);
 	//paths par defaut 
-	mini->paths = ft_split(getenv("PATH"), ':');
+	mini->paths = ft_split(path, ':');
+	mini->exit = -1;
 	//Ajouter ici par la suite les fieds a allouer / initialiser
 	return (mini);
 }
@@ -101,21 +106,21 @@ static void	free_mini(t_minishell *mini)
 int main(int ac, char **av, char **envp)
 {
 	t_minishell	*mini;
-	int			test;
 
 	(void)ac;
 	(void)av;
-	test = 0;
 	mini = init_minishell(envp);
-	while (test < 4)
+	if (!mini)
+		return (-1);
+	while (mini->exit == -1)
 	{
 	parse_current_cmd(mini);
 	if (mini->cmds)
 		execute(mini);
 	free_cmds(mini->cmds);
-	test++;
 	}
-	free_dico2(mini->env);
+	free_dico(&mini->env);
 	free(mini->env);
 	free_mini(mini);
+	return (0);
 }
