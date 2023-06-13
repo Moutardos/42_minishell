@@ -6,13 +6,14 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 21:39:56 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:53:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exec.h"
 #include "builtins.h"
+#include "utils.h"
 
 static int	treat_cmds(t_cmd *cmds, t_minishell *mini);
 static int	create_pipe(t_cmd *cmds);
@@ -58,7 +59,7 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 		return (-1);
 	if (!cmd->av)
 		return (0);
-	if (!treat_builtins(mini, cmd))
+	if (!treat_builtins(mini, cmd, env))
 		return (ft_free_split(env), 0);
 	pid = fork();
 	if (pid == F_CHILD)

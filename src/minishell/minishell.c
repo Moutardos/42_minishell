@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/13 21:54:09 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:56:46 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_minishell	*init_minishell(char **envp)
 	if (!mini->paths)
 	{
 		perror("minishell");
-		return (, free_dico(&mini->env), safe_free(mini), NULL);
+		return (free_dico(&mini->env), safe_free(mini), NULL);
 	}
 	mini->exit = -1;
 	//Ajouter ici par la suite les fieds a allouer / initialiser
@@ -108,7 +108,6 @@ int	main(int ac, char **av, char **envp)
 			execute(mini);
 			free_cmds(&mini->cmds);
 		}
-		test++;
 	}
 	free_mini(&mini);
 }

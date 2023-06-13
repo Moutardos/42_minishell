@@ -6,12 +6,13 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 20:44:33 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:56:04 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft/libft.h"
+#include "utils.h"
 
 static int	treat_redirections(char *fname, t_delim delim, int *in, int *out);
 static int	here_doc(char *stop, t_dico *env, int fd, int is_last);
