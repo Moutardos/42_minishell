@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 15:02:57 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 21:54:09 by lcozdenm         ###   ########.fr       */
+/*   Created: 2023/06/13 20:47:49 by coltcivers        #+#    #+#             */
+/*   Updated: 2023/06/13 21:31:53 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
 #include "minishell.h"
 
-int	pwd(t_minishell *mini, int fd)
+
+int unset(t_minishell *mini, t_cmd *cmd)
 {
-	printf("pwd custom\n");
-	return (ft_putstr_fd(mini->pwd, fd), ft_putchar_fd('\n', fd), 0);
+	return (0);
 }

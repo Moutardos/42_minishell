@@ -6,14 +6,14 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:27:17 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/13 20:39:24 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:46:18 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-int	export(t_minishell *mini, t_cmd *cmd)
+int	export_m(t_minishell *mini, t_cmd *cmd)
 {
 	int		i;
 	char	**key_val;

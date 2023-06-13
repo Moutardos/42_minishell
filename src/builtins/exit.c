@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 15:02:57 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 21:54:09 by lcozdenm         ###   ########.fr       */
+/*   Created: 2023/06/13 20:56:29 by coltcivers        #+#    #+#             */
+/*   Updated: 2023/06/13 21:25:04 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
 #include "minishell.h"
 
-int	pwd(t_minishell *mini, int fd)
+
+int	exit_m(t_minishell *mini)
 {
-	printf("pwd custom\n");
-	return (ft_putstr_fd(mini->pwd, fd), ft_putchar_fd('\n', fd), 0);
+	printf("exit builtlin \n");
+	mini->exit = 0;
+	return (0);
 }

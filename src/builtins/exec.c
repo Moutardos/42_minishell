@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 20:43:25 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:39:56 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 		return (-1);
 	if (!cmd->av)
 		return (0);
-	if (!treat_builtins(mini, cmd, env))
+	if (!treat_builtins(mini, cmd))
 		return (ft_free_split(env), 0);
 	pid = fork();
 	if (pid == F_CHILD)
@@ -128,13 +128,17 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmd, char **env)
 {
 	if (!ft_strcmp(cmd->fname, "echo"))
 		return (echo(cmd));
-	if (!ft_strcmp(cmd->fname, "pwd"))
+	else if (!ft_strcmp(cmd->fname, "pwd"))
 		return (pwd(mini, cmd->out));
-	if (!ft_strcmp(cmd->fname, "cd"))
+	else if (!ft_strcmp(cmd->fname, "cd"))
 		return (cd(mini));
-	if (!ft_strcmp(cmd->fname, "env"))
+	else if (!ft_strcmp(cmd->fname, "env"))
 		return (display_dico(mini->env), 0);
 	else if (!ft_strcmp(cmd->fname, "export"))
-		return (export(mini, cmd));
+		return (export_m(mini, cmd));
+	else if (!ft_strcmp(cmd->fname, "unset"))
+		return (unset(mini, cmd));
+	else if (!ft_strcmp(cmd->fname, "exit"))
+		return (exit_m(mini));
 	return (1);
 }

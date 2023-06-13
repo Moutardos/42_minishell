@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/13 19:19:53 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:48:50 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char *cmd, char *holder)
 	args->delim_b++;
 }
 
-static int	get_delims_auxiliary(t_cmd *c, t_delims_args *a, char *cmd, \
+static void	get_delims_auxiliary(t_cmd *c, t_delims_args *a, char *cmd, \
 char *holder)
 {
 	while (cmd[a->i] != '\0' && !is_delim(cmd, a->i))
@@ -119,18 +119,23 @@ int	get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd)
 {
 	char			*holder;
 
+	holder = NULL;
 	curr_cmd->delim_amount = get_delims_amount(cmd);
 	if (curr_cmd->delim_amount == 0)
 	{
 		curr_cmd->delim = NULL;
 		curr_cmd->delim_f = ft_calloc(curr_cmd->delim_amount + 1, sizeof(char *));
+		if (!curr_cmd->delim_f)
+			return (free(args), 1);
 		curr_cmd->delim_f[0] = NULL;
-		return (free(args), -1);
+		return (free(args), 0);
 	}
 	curr_cmd->delim = ft_calloc((curr_cmd->delim_amount + 1), sizeof(t_delim));
 	if (!curr_cmd->delim)
 		return (free(args), 1);
 	curr_cmd->delim_f = ft_calloc(curr_cmd->delim_amount + 1, sizeof(char *));
+	if (!curr_cmd->delim_f)
+		return (free(args), 1);
 	while (args->count < curr_cmd->delim_amount)
 	{
 		args->delim_b = 0;

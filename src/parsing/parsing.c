@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/13 19:18:56 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:48:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static char	*parse_cmd_auxiliary(char *str, int start, int end, int j)
 	char	*temp;
 
 	temp = ft_calloc(end - start + 1, sizeof(char));
+	if (!temp)
+		return (NULL);
 	while (start < end)
 	{
 		temp[j] = str[start];
@@ -37,11 +39,19 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 	char			*builtin;
 	t_cmd			*cmd;
 
+
+	if (delims_args_amount(str) < get_delims_amount(str))
+	{
+		printf("Missing delim_f \n");
+		return (NULL);
+	}
 	temp = parse_cmd_auxiliary(str, start, end, 0);
 	builtin = get_builtin(temp);
 	if (!validate_builtin(builtin))
 		printf("Unsuported builtin provided, still going on\n");
 	cmd = new_cmd();
+	if (!cmd)
+		return (NULL);
 	copy = str_fullcpy(temp);
 	copy2 = str_fullcpy(temp);
 	get_args(cmd, copy, builtin);
@@ -100,7 +110,6 @@ static t_cmd	*parser(char *str)
 int	parse_current_cmd(t_minishell *mini)
 {
 	char	*line;
-	t_cmd	*cmds;
 
 	//signal(SIGINT, &sig_int);
 	//signal(SIGQUIT, &sig_quit);
@@ -110,13 +119,9 @@ int	parse_current_cmd(t_minishell *mini)
 	if (quotes(line, ft_strlen(line)))
 		return (free(line), 1);
 	line = replace_str2(mini->env, line);
-	if (!line)
-		return (mini->exit = -1, -1);
-	cmds = parser(line);
-	if (cmds)
-		mini->cmds = cmds;
-	else
+	mini->cmds = parser(line);
+	if (!mini->cmds)
 		return (safe_free(line), mini->exit = -1, -1);
-	remove_quotes(cmds);
+	remove_quotes(mini->cmds);
 	return (safe_free(line), 0);
 }

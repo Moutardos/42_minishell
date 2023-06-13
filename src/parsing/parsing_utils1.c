@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:28:01 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/13 19:19:28 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:54:09 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*str_fullcpy(char *src)
 	int		i;
 
 	i = 0 ;
-	dst = malloc(sizeof(char) * (ft_strlen(src) + 1));
+	dst = ft_calloc((ft_strlen(src) + 1),  sizeof(char));
 	if (!dst)
 		return (NULL);
 	while (src[i] != '\0')

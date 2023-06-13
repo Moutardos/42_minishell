@@ -32,9 +32,5 @@ int	redirections(t_cmd *cmd);
    directory + fname*/
 int	check_paths(t_minishell *mini, t_cmd *cmd);
 
-/* Check if file is not stdin or stdout before closing it, return new
-*/
-int   closef(int fd, int new);
-
 int	treating_here_doc(t_cmd *cmd, t_dico *env);
 #endif
