@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 01:32:59 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/07 17:09:43 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 21:01:54 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,18 @@ t_dico	*init_dico(char *key, char *value)
 
 void	free_dico(t_dico **dico)
 {
-	t_dico	**last;
+	t_dico	*last;
 
-	last = dico;
+	last = *dico;
 	while (*dico)
 	{
 		safe_free((*dico)->value);
 		safe_free((*dico)->key);
-		last = dico;
+		last = *dico;
 		(*dico) = (*dico)->next;
-		safe_free(*last);
+		safe_free(last);
 	}
+	*dico = NULL;
 }
 
 t_dico	*add_dico(t_dico *dico, char *key, char *value)
@@ -49,8 +50,8 @@ t_dico	*add_dico(t_dico *dico, char *key, char *value)
 	last = dico;
 	while (dico)
 	{
-		if (!ft_strncmp(key, dico->key, ft_strlen(key)))
-			return (free(dico->value), dico->value = ft_strdup(value), dico);
+		if (!ft_strcmp(key, dico->key))
+			return (safe_free(dico->value), dico->value = ft_strdup(value), dico);
 		last = dico;
 		dico = dico->next;
 	}
@@ -62,7 +63,7 @@ char	*get_dico(t_dico *dico, char *key)
 {
 	while (dico)
 	{
-		if (!ft_strncmp(key, dico->key, ft_strlen(key)))
+		if (ft_strncmp(key, dico->key, ft_strlen(key)) == 0)
 			return (ft_strdup(dico->value));
 		dico = dico->next;
 	}

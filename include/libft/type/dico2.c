@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:10:23 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/07 17:44:55 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/11 16:03:42 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	display_dico(t_dico *dico)
 {	
 	while (dico)
 	{
-		ft_printf("%s -> %s\n", dico->key, dico->value);
+		ft_printf("%s=%s\n", dico->key, dico->value);
 		dico = dico->next;
 	}
 }
