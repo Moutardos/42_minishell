@@ -6,15 +6,15 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/11 16:08:54 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:44:33 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "error.h"
 #include "libft/libft.h"
 
 static int	treat_redirections(char *fname, t_delim delim, int *in, int *out);
+static int	here_doc(char *stop, t_dico *env, int fd, int is_last);
 
 int	check_paths(t_minishell *mini, t_cmd *cmd)
 {
@@ -24,55 +24,49 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 
 	i = 0;
 	if (!mini->paths)
-		return (ERR_PARSING);
+		return (-1);
 	while (mini->paths[i])
 	{
 		temp = ft_strjoin(mini->paths[i], "/");
 		if (!temp)
-			return (mini->exit = ERR_ALLOC, ERR_ALLOC);
+			return (mini->exit = -1, -1);
 		path = ft_strjoin(temp, cmd->fname);
 		safe_free(temp);
 		if (!path)
-			return (mini->exit = ERR_ALLOC, ERR_ALLOC);
+			return (mini->exit = -1, -1);
 		if (access(path, F_OK) == 0)
-			return (cmd->path = path, GOOD);
+			return (cmd->path = path, 0);
 		safe_free(path);
 		i++;
 	}
-	return (cmd->path = NULL, GOOD);
+	return (cmd->path = NULL, 0);
 }
 
 /* Open each files and store the last fd for in and out inside cmd */
 int	redirections(t_cmd *cmd)
 {
 	int	i;
-	int	fd_in;
-	int	fd_out;
+	int	in;
+	int	out;
 
-	i = 0;
-	fd_out = -1;
-	fd_in = -1;
-	while (cmd->delim_f != NULL && cmd->delim_f[i] != NULL)
+	i = -1;
+	out = -1;
+	in = -1;
+	while (cmd->delim_f != NULL && cmd->delim_f[++i] != NULL)
 	{
-		if (fd_in > 0)
-			closef(fd_in, 0);
-		if (fd_out > 0)
-			closef(fd_out, 0);
-		if (treat_redirections(cmd->delim_f[i], cmd->delim[i], &fd_in, &fd_out))
-			return (ERR_FILES);
-		i++;
+		closef(in, 0);
+		closef(out, 0);
+		if (treat_redirections(cmd->delim_f[i], cmd->delim[i], &in, &out) < 0)
+			return (-1);
 	}
 	if (cmd->delim && cmd->delim[i - 1] == IN_NL)
-	{
-		cmd->heredoc = fd_in;
-		cmd->in = closef(cmd->in, fd_out);
-	}
+		return (cmd->heredoc = in, cmd->in = closef(cmd->in, out));
 	else
 	{
-		if (fd_in > 0)
-			cmd->in = closef(cmd->in, fd_in);
-		if (fd_out > 0)
-			cmd->out = closef(cmd->out, fd_out);
+		if (in > 0)
+			cmd->in = closef(cmd->in, in);
+		if (out > 0)
+			cmd->out = closef(cmd->out, out);
 	}
 	return (0);
 }
@@ -85,41 +79,79 @@ static int	treat_redirections(char *fname, t_delim delim, int *in, int *out)
 	{
 		*in = open(fname, O_RDWR, S_IRUSR | S_IWUSR);
 		if (*in < 0)
-			return (perror("minishell"), ERR_FILES);
+			return (perror("minishell"), 1);
 	}
 	else if (delim == OUT)
 	{
 		*out = open(fname, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
 		if (*out < 0)
-			return (perror("minishell"), ERR_FILES);
+			return (perror("minishell"), 1);
 	}
 	else if (delim == OUT_APPEND)
 	{
 		*out = open(fname, O_CREAT | O_RDWR | O_APPEND, S_IRUSR | S_IWUSR);
 		if (*out < 0)
-			return (perror("minishell"), ERR_FILES);
+			return (perror("minishell"), 1);
 	}
 	else if (delim == IN_NL)
 	{
 		if (pipe(pip) < 0)
-			return (perror2("minishell:",">>"), ERR_CMD_PIPE);
-		*in = pip[1];
-		*out = pip[0];
+			return (perror2("minishell", ">>"), -1);
+		return (*in = pip[1], *out = pip[0], 0);
 	}
 	return (0);
 }
 
-int	here_doc(char *stop, int fd, int is_last)
+int	treating_here_doc(t_cmd *cmd, t_dico *env)
+{
+	int		i;
+	int		check;
+	int		is_last;
+
+	i = 0;
+	while (cmd->delim_f[i])
+	{
+		if (cmd->delim[i] == IN_NL)
+		{
+			check = 1;
+			is_last = 0;
+			while (cmd->delim_f[i + check] && cmd->delim[i + check] != IN_NL)
+				check++;
+			if (!cmd->delim_f[i + check])
+				is_last = 1;
+			if (here_doc(cmd->delim_f[i], env, cmd->heredoc, is_last) < 0)
+				return (-1);
+			i++;
+		}
+	}
+	return (0);
+}
+
+static int	here_doc(char *stop, t_dico *env, int fd, int is_last)
 {
 	char	*buf;
+	char	*str;
 
+	ft_printf("heredoc> ");
 	buf = get_next_line(STDIN);
-	while (buf && ft_strncmp(buf, stop, ft_strlen(stop)))
+	if (!buf)
+		return (-1);
+	str = replace_str2(env, buf);
+	if (!str)
+		return (safe_free(buf), -1);
+	while (str && ft_strncmp(str, stop, ft_strlen(str) - 1))
 	{
 		if (is_last)
-			write(fd, buf, ft_strlen(buf));
+			write(fd, str, ft_strlen(str));
 		safe_free(buf);
+		ft_printf("heredoc> ");
 		buf = get_next_line(STDIN);
+		if (!buf)
+			return (-1);
+		str = replace_str2(env, buf);
+		if (!str)
+			return (safe_free(buf), -1);
 	}
 	safe_free(buf);
+	return (0);
 }

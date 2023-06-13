@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/07 13:59:59 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/13 19:18:25 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 
 # include "handlers.h"
 # include "libft/libft.h"
-# include "error.h"
-# include "parsing.h"
-# include "exec.h"
 
 # define STDIN 0
 # define STDOUT 1
@@ -85,4 +82,5 @@ typedef struct s_minishell
 	t_dico	*dico;
 }  t_minishell;
 
+char	*replace_str2(t_dico *dico, char *str);
 #endif

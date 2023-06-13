@@ -6,18 +6,17 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/12 19:36:41 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:43:25 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "exec.h"
-#include "error.h"
 #include "builtins.h"
-static t_error	treat_cmds(t_cmd *cmds, t_minishell *mini);
-static t_error	create_pipe(t_cmd *cmds);
-static void		close_pipe(t_cmd *cmds, int n);
-static int is_last_heredoc(t_cmd *cmd, int i);
+
+static int	treat_cmds(t_cmd *cmds, t_minishell *mini);
+static int	create_pipe(t_cmd *cmds);
+static void	close_pipe(t_cmd *cmds, int n);
 static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env);
 
 /// @brief  Execute each commands 1 by 1
@@ -25,25 +24,21 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env);
 /// @return error nb 
 int	execute(t_minishell	*mini)
 {
-	const char	*fname;
-	t_error		err;
 	t_cmd		*curr;
 
-	err = create_pipe(mini->cmds);
-	if (err)
-		return (err);
+	if (create_pipe(mini->cmds) < 0)
+		return (-1);
 	curr = mini->cmds;
 	while (curr != NULL)
 	{
 		if (curr->path == NULL && curr->fname)
 			if (check_paths(mini, curr))
-				return (close_pipe(mini->cmds, -1), ERR_ALLOC);
-		err = treat_cmds(curr, mini);
+				return (close_pipe(mini->cmds, -1), -1);
+		if (treat_cmds(curr, mini) < 0)
+			return (close_pipe(mini->cmds, -1), -1);
 		closef(curr->in, 0);
 		closef(curr->out, 0);
 		closef(curr->heredoc, 0);
-		if (err)
-			return (close_pipe(mini->cmds, -1), err);
 		curr = curr->next;
 	}
 	while (wait(NULL) > 0)
@@ -51,19 +46,16 @@ int	execute(t_minishell	*mini)
 	return (0);
 }
 
-static t_error	treat_cmds(t_cmd *cmd, t_minishell *mini)
+static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 {
 	pid_t	pid;
-	int		i;
 	char	**env;
 
 	env = dico_array(mini->env);
 	if (!env)
-		return (ERR_ALLOC);
-	i = -1;
-	while (cmd->delim_f[++i])
-		if (cmd->delim[i] == IN_NL)
-			here_doc(cmd->delim_f[i], cmd->heredoc, is_last_heredoc(cmd, i +1));
+		return (-1);
+	if (treating_here_doc(cmd, mini->env) < 0)
+		return (-1);
 	if (!cmd->av)
 		return (0);
 	if (!treat_builtins(mini, cmd, env))
@@ -77,15 +69,15 @@ static t_error	treat_cmds(t_cmd *cmd, t_minishell *mini)
 			return (perror("minishell: out"), 0);
 		close_pipe(cmd, -1);
 		execve(cmd->path, cmd->av, env);
-		return (ft_free_split(env), perror2("minishell : ", cmd->path), ERR_CMD_FAIL);
+		return (ft_free_split(env), perror2("minishell : ", cmd->path), 0);
 	}
-	return (ft_free_split(env), GOOD);
+	return (ft_free_split(env), 0);
 }
 
 /// @brief  Pipe each command after treating each redirections
 /// @param  cmds linked list of commands
 /// @return error nb 
-static t_error	create_pipe(t_cmd *cmds)
+static int	create_pipe(t_cmd *cmds)
 {
 	t_cmd	*current;
 	int		i;
@@ -98,16 +90,16 @@ static t_error	create_pipe(t_cmd *cmds)
 		if (current->next != NULL)
 		{
 			if (pipe(pip) < 0)
-				return (close_pipe(cmds, i), perror("minishell"), ERR_CMD_PIPE);
+				return (close_pipe(cmds, i), perror("minishell"), -1);
 			current->out = pip[1];
 			current->next->in = pip[0];
 		}
 		if (redirections(current) < 0)
-			return (perror("minishell"), ERR_FILES);
+			return (perror("minishell"), -1);
 		current = current->next;
 		i++;
 	}
-	return (GOOD);
+	return (0);
 }
 
 /// @brief  Close pipes in the range of n
@@ -132,17 +124,6 @@ static void	close_pipe(t_cmd *cmds, int n)
 	}
 }
 
-static int is_last_heredoc(t_cmd *cmd, int i)
-{
-	while (cmd->delim_f[i] != NULL)
-	{
-		if (cmd->delim[i] == IN_NL)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 static int	treat_builtins(t_minishell *mini, t_cmd *cmd, char **env)
 {
 	if (!ft_strcmp(cmd->fname, "echo"))
@@ -156,5 +137,4 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmd, char **env)
 	else if (!ft_strcmp(cmd->fname, "export"))
 		return (export(mini, cmd));
 	return (1);
-	//todo le reste
 }

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/08 12:13:05 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/13 19:19:44 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parsing.h"
 
 t_delim	get_curr_delim(char *str, int pos)
 {
@@ -83,6 +84,7 @@ char	*join_from_pos(char *str1, int start, int end, char *env)
 		start++;
 	}
 	new[start] = '\0';
+	free(str1);
 	return (new);
 }
 
@@ -103,9 +105,7 @@ char	*env_from_pos(t_dico *dico, char *str, int start, int end)
 		i++;
 	}
 	new[i] = '\0';
-	printf("key : %s\n", new);
 	rep = get_dico(dico, new);
-	printf("dico value : %s\n", rep);
 	free(new);
 	return (rep);
 }

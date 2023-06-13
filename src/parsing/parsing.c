@@ -6,11 +6,12 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/11 16:08:30 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:18:56 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parsing.h"
 #include <stdio.h>
 
 static char	*parse_cmd_auxiliary(char *str, int start, int end, int j)
@@ -96,7 +97,7 @@ static t_cmd	*parser(char *str)
 }
 
 /// @brief Get the latest user input and parse it into args, loop called
-void	parse_current_cmd(t_minishell *mini)
+int	parse_current_cmd(t_minishell *mini)
 {
 	char	*line;
 	t_cmd	*cmds;
@@ -104,12 +105,18 @@ void	parse_current_cmd(t_minishell *mini)
 	//signal(SIGINT, &sig_int);
 	//signal(SIGQUIT, &sig_quit);
 	line = readline("minishell : ");
+	if (!line)
+		return (perror("minishell:"), mini->exit = -1, -1);
 	if (quotes(line, ft_strlen(line)))
-		return (free(line));
+		return (free(line), 1);
 	line = replace_str2(mini->env, line);
+	if (!line)
+		return (mini->exit = -1, -1);
 	cmds = parser(line);
 	if (cmds)
 		mini->cmds = cmds;
+	else
+		return (safe_free(line), mini->exit = -1, -1);
 	remove_quotes(cmds);
-	free(line);
+	return (safe_free(line), 0);
 }
