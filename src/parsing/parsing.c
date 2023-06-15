@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/13 21:48:05 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:54:28 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	parse_current_cmd(t_minishell *mini)
 	//signal(SIGINT, &sig_int);
 	//signal(SIGQUIT, &sig_quit);
 	line = readline("minishell : ");
+	add_history(line);
 	if (!line)
 		return (perror("minishell:"), mini->exit = -1, -1);
 	if (quotes(line, ft_strlen(line)))
