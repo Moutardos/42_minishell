@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/15 18:56:29 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/15 19:50:25 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ int	main(int ac, char **av, char **envp)
 	mini = init_minishell(envp);
 	if (!mini)
 		return (-1);
-	while (mini->exit == -1)
+	while (g_exit == -1)
 	{
 		if (parse_current_cmd(mini) < 0)
-			break ;
+			continue ;
 		if (mini->cmds)
 		{
 			execute(mini);
