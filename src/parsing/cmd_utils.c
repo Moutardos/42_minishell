@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgirard <hgirard@student.42.f>             +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:10:16 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/05/27 22:53:13 by hgirard          ###   ########.fr       */
+/*   Updated: 2023/06/15 19:32:39 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	cmd_del_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	if (!cmd)
+		return ;
 	while (cmd->av[i] != NULL)
 	{
 		safe_free(cmd->av[i]);

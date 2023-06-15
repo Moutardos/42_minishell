@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/13 21:54:09 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/15 19:30:35 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	bltn_args_amount(char *cmd)
 
 void	*clear_cmd(t_cmd	*cmd)
 {
-	while (cmd->next != NULL)
+	while (cmd && cmd->next != NULL)
 		cmd_del_last(cmd);
 	cmd_del_cmd(cmd);
 	return (NULL);
