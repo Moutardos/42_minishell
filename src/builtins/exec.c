@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/15 18:46:37 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:59:58 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	execute(t_minishell	*mini)
 			re = ft_itoa(WEXITSTATUS(status));
 			if (!re)
 				return (-1);
-			add_dico(mini->env, "!", re);
+			add_dico(mini->env, "?", re);
 			safe_free(re);
 		}
 	}

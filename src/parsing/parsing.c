@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/15 18:54:28 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/15 18:59:30 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static t_cmd	*parser(char *str)
 		new_cmd = parse_cmd(i, next_delim, str);
 		if (!new_cmd)
 			return (clear_cmd(curr_cmd));
+		if (new_cmd->av[0] == '/')
+			new_cmd->path = new_cmd->av[0];
 		cmd_add_back(&curr_cmd, new_cmd);
 		/*
 		printf("=============\n");
@@ -123,6 +125,6 @@ int	parse_current_cmd(t_minishell *mini)
 	mini->cmds = parser(line);
 	if (!mini->cmds)
 		return (safe_free(line), mini->exit = -1, -1);
-	remove_quotes(mini->cmds);
+	remove_quotes(mini->cmds);		
 	return (safe_free(line), 0);
 }
