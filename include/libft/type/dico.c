@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dico.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 01:32:59 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 21:11:37 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/15 17:49:53 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,21 @@ t_dico	*init_dico(char *key, char *value)
 	return (dico);
 }
 
-void    free_dico(t_dico **dico)
+void	free_dico(t_dico **dico)
 {
-    t_dico    *last;
+	t_dico	*last;
 
-    last = *dico;
-    while (*dico)
-    {
-        safe_free((*dico)->value);
-        safe_free((*dico)->key);
-        last = *dico;
-        (*dico) = (*dico)->next;
-        safe_free(last);
-    }
-    *dico = NULL;
+	if (!dico)
+		return ;
+	while (*dico)
+	{
+		safe_free((*dico)->value);
+		safe_free((*dico)->key);
+		last = *dico;
+		(*dico) = (*dico)->next;
+		safe_free(last);
+	}
+	*dico = NULL;
 }
 
 t_dico	*add_dico(t_dico *dico, char *key, char *value)

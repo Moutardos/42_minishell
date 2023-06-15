@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dico2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:10:23 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 21:11:09 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/15 17:46:31 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_dico	*array_dico(char ** array)
 
 	dico = NULL;
 	i = 0;
-	while (array[i] != NULL)
+	while (array && array[i] != NULL)
 	{
 		len = ft_strchr(array[i], '=') - array[i];
 		key = ft_substr(array[i], 0, len);

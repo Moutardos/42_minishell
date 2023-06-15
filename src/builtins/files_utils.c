@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 21:56:04 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:48:30 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 }
 
 /* Open each files and store the last fd for in and out inside cmd */
-int	redirections(t_cmd *cmd)
+int	redirections(t_minishell *mini, t_cmd *cmd)
 {
-	int	i;
-	int	in;
-	int	out;
+	int		i;
+	int		in;
+	int		out;
+	char	*fname;
 
 	i = -1;
 	out = -1;
@@ -57,24 +58,24 @@ int	redirections(t_cmd *cmd)
 	{
 		closef(in, 0);
 		closef(out, 0);
-		if (treat_redirections(cmd->delim_f[i], cmd->delim[i], &in, &out) < 0)
+		if (is_last_heredoc(cmd, i))
+			fname = mini->hd_path;
+		else if (cmd->delim[i] == IN_NL)
+			continue;
+		else
+			fname = cmd->delim_f[i];
+		if (treat_redirections(fname, cmd->delim[i], &in, &out) < 0)
 			return (-1);
 	}
-	if (cmd->delim && cmd->delim[i - 1] == IN_NL)
-		return (cmd->heredoc = in, cmd->in = closef(cmd->in, out));
-	else
-	{
-		if (in > 0)
-			cmd->in = closef(cmd->in, in);
-		if (out > 0)
-			cmd->out = closef(cmd->out, out);
-	}
+	if (in > 0)
+		cmd->in = closef(cmd->in, in);
+	if (out > 0)
+		cmd->out = closef(cmd->out, out);
 	return (0);
 }
 
 static int	treat_redirections(char *fname, t_delim delim, int *in, int *out)
 {
-	int	pip[2];
 
 	if (delim == IN)
 	{
@@ -96,14 +97,14 @@ static int	treat_redirections(char *fname, t_delim delim, int *in, int *out)
 	}
 	else if (delim == IN_NL)
 	{
-		if (pipe(pip) < 0)
-			return (perror2("minishell", ">>"), -1);
-		return (*in = pip[1], *out = pip[0], 0);
+		*in = open(fname, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+		if (*in < 0)
+			return (perror("minishell"), 1);
 	}
 	return (0);
 }
 
-int	treating_here_doc(t_cmd *cmd, t_dico *env)
+int	treating_here_doc(t_cmd *cmd, t_minishell *mini)
 {
 	int		i;
 	int		check;
@@ -114,16 +115,15 @@ int	treating_here_doc(t_cmd *cmd, t_dico *env)
 	{
 		if (cmd->delim[i] == IN_NL)
 		{
-			check = 1;
-			is_last = 0;
-			while (cmd->delim_f[i + check] && cmd->delim[i + check] != IN_NL)
-				check++;
-			if (!cmd->delim_f[i + check])
-				is_last = 1;
-			if (here_doc(cmd->delim_f[i], env, cmd->heredoc, is_last) < 0)
+			is_last = is_last_heredoc(cmd, i);
+			if (here_doc(cmd->delim_f[i], mini->env, cmd->in, is_last) < 0)
 				return (-1);
-			i++;
+			closef(cmd->in, 0);
+			cmd->in = open(mini->hd_path, O_RDWR, S_IRUSR | S_IWUSR);
+			if (cmd->in < 0)
+				return (perror("minishell"), -1);
 		}
+		i++;
 	}
 	return (0);
 }
@@ -154,5 +154,6 @@ static int	here_doc(char *stop, t_dico *env, int fd, int is_last)
 			return (safe_free(buf), -1);
 	}
 	safe_free(buf);
+	close(fd);
 	return (0);
 }

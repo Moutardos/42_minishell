@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 19:18:25 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:56:42 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct s_cmd
 	int				out;
 	t_delim			*delim;
 	char			**delim_f;
-	int				heredoc;
 	char			*fname;
 	char			*path;
 	struct s_cmd	*next;
@@ -76,6 +75,7 @@ typedef struct s_minishell
 	t_dico	*env;
 	char	**paths;
 	char	pwd[BUFFER_SIZE];
+	char	*hd_path;
 	char	*raw_line;
 	t_cmd	*cmds;
 	int		exit;

@@ -46,6 +46,7 @@ $(NAME): $(OBJS) | $(BDIR)
 
 clean:
 	$(RM) -R $(ODIR)
+	$(RM) -R .hd
 	$(MAKE) -C $(IDIR)/libft $@
 	#supprimer les dependances (.d) aussi 
 

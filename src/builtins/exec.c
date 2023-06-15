@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 21:53:05 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:46:37 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "utils.h"
 
 static int	treat_cmds(t_cmd *cmds, t_minishell *mini);
-static int	create_pipe(t_cmd *cmds);
+static int	create_pipe(t_minishell *mini);
 static void	close_pipe(t_cmd *cmds, int n);
 static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env);
 
@@ -26,8 +26,10 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env);
 int	execute(t_minishell	*mini)
 {
 	t_cmd		*curr;
+	int			status;
+	char		*re;
 
-	if (create_pipe(mini->cmds) < 0)
+	if (create_pipe(mini) < 0)
 		return (-1);
 	curr = mini->cmds;
 	while (curr != NULL)
@@ -39,11 +41,19 @@ int	execute(t_minishell	*mini)
 			return (close_pipe(mini->cmds, -1), -1);
 		closef(curr->in, 0);
 		closef(curr->out, 0);
-		closef(curr->heredoc, 0);
 		curr = curr->next;
 	}
-	while (wait(NULL) > 0)
-		;
+	while (waitpid(-1, &status, NULL) > 0)
+	{
+		if (WIFEXITED(status))
+		{
+			re = ft_itoa(WEXITSTATUS(status));
+			if (!re)
+				return (-1);
+			add_dico(mini->env, "!", re);
+			safe_free(re);
+		}
+	}
 	return (0);
 }
 
@@ -55,10 +65,10 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	env = dico_array(mini->env);
 	if (!env)
 		return (-1);
-	if (treating_here_doc(cmd, mini->env) < 0)
-		return (-1);
 	if (!cmd->av)
 		return (0);
+	if (treating_here_doc(cmd, mini) < 0)
+			return (-1);
 	if (!treat_builtins(mini, cmd, env))
 		return (ft_free_split(env), 0);
 	pid = fork();
@@ -69,6 +79,7 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 		if (dup2(cmd->out, STDOUT) < 0)
 			return (perror("minishell: out"), 0);
 		close_pipe(cmd, -1);
+
 		execve(cmd->path, cmd->av, env);
 		return (ft_free_split(env), perror2("minishell : ", cmd->path), 0);
 	}
@@ -78,24 +89,24 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 /// @brief  Pipe each command after treating each redirections
 /// @param  cmds linked list of commands
 /// @return error nb 
-static int	create_pipe(t_cmd *cmds)
+static int	create_pipe(t_minishell *mini)
 {
 	t_cmd	*current;
 	int		i;
 	int		pip[2];
 
 	i = 0;
-	current = cmds;
+	current = mini->cmds;
 	while (current != NULL)
 	{
 		if (current->next != NULL)
 		{
 			if (pipe(pip) < 0)
-				return (close_pipe(cmds, i), perror("minishell"), -1);
+				return (close_pipe(mini->cmds, i), perror("minishell"), -1);
 			current->out = pip[1];
 			current->next->in = pip[0];
 		}
-		if (redirections(current) < 0)
+		if (redirections(mini, current) < 0)
 			return (perror("minishell"), -1);
 		current = current->next;
 		i++;
@@ -119,7 +130,6 @@ static void	close_pipe(t_cmd *cmds, int n)
 	{
 		closef(current->in, 0);
 		closef(current->out, 0);
-		closef(current->heredoc, 0);
 		i++;
 		current = current->next;
 	}

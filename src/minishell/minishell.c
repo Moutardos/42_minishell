@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/13 21:56:46 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:26:04 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,19 @@ t_minishell	*init_minishell(char **envp)
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (NULL);
-	if (!envp)
-		mini->env = NULL;
-	else
-		mini->env = array_dico(envp);
+	mini->env = array_dico(envp);
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
-	{
-		perror("minishell");
 		return (free_dico(&mini->env), safe_free(mini), NULL);
-	}
-	//paths par defaut 
 	mini->paths = ft_split(path, ':');
 	if (!mini->paths)
+		return (free_dico(&mini->env), safe_free(mini), NULL);
+	mini->hd_path = ft_strjoin(mini->pwd, "/.hd");
+	if (!mini->hd_path)
 	{
-		perror("minishell");
+		ft_free_split(mini->paths);
 		return (free_dico(&mini->env), safe_free(mini), NULL);
 	}
 	mini->exit = -1;
-	//Ajouter ici par la suite les fieds a allouer / initialiser
 	return (mini);
 }
 
@@ -86,7 +81,8 @@ static void	free_mini(t_minishell **mini)
 		ft_free_split(curr->paths);
 	if (curr->env)
 		free_dico(&curr->env);
-	free(curr);
+	safe_free(curr->hd_path);
+	safe_free(curr);
 	*mini = NULL;
 }
 
