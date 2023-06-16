@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:02:57 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 21:54:09 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:11:31 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,5 @@
 
 int	pwd(t_minishell *mini, int fd)
 {
-	printf("pwd custom\n");
 	return (ft_putstr_fd(mini->pwd, fd), ft_putchar_fd('\n', fd), 0);
 }

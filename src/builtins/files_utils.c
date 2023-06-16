@@ -6,14 +6,14 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/16 15:20:08 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:31:42 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft/libft.h"
 #include "utils.h"
-
+#include "builtins.h"
 static int	treat_redirections(char *fname, t_delim delim, int *in, int *out);
 static int	here_doc(char *stop, t_dico *env, int fd, int is_last);
 
@@ -30,11 +30,11 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 	{
 		temp = ft_strjoin(mini->paths[i], "/");
 		if (!temp)
-			return (mini->exit = -1, -1);
+			return (exit_m(), -1);
 		path = ft_strjoin(temp, cmd->fname);
 		safe_free(temp);
 		if (!path)
-			return (mini->exit = -1, -1);
+			return (exit_m(), -1);
 		if (access(path, F_OK) == 0)
 			return (cmd->path = path, 0);
 		safe_free(path);

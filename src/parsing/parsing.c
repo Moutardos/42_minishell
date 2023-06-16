@@ -6,13 +6,14 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 17:17:29 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:31:46 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include <stdio.h>
+#include "builtins.h"
 
 static char	*parse_cmd_auxiliary(char *str, int start, int end, int j)
 {
@@ -72,7 +73,6 @@ static t_cmd	*parser(char *str)
 
 	i = 0;
 	curr_cmd = NULL;
-	//printf("full cmd : %s\n", str);
 	while (str[i] != '\0')
 	{
 		next_delim = next_sep_pos(str, i);
@@ -80,27 +80,12 @@ static t_cmd	*parser(char *str)
 		if (!new_cmd)
 			return (clear_cmd(curr_cmd));
 		if (ft_strchr(new_cmd->av[0], '/'))
-			new_cmd->path = new_cmd->av[0];
+		{
+			new_cmd->path = ft_strdup(new_cmd->av[0]);
+			if (!new_cmd->path)
+				return (clear_cmd(curr_cmd), NULL);
+		}
 		cmd_add_back(&curr_cmd, new_cmd);
-		/*
-		printf("=============\n");
-		printf("Builtin args : \n");
-		i = 0;
-		while (new_cmd->av[i] != NULL)
-		{
-			printf("arg : %s\n", new_cmd->av[i]);
-			i++;
-		}
-		printf("/////////////\n");
-		printf("Builtin redirections : \n");
-		i = 0;
-		while (i < new_cmd->delim_amount)
-		{
-			printf("delim : %d\n", new_cmd->delim[i]);
-			printf("delim_f : %s\n", new_cmd->delim_f[i]);
-			i++;
-		}
-		*/
 	i = next_delim;
 	}
 	return (curr_cmd);
@@ -116,13 +101,13 @@ int	parse_current_cmd(t_minishell *mini)
 	line = readline("minishell : ");
 	add_history(line);
 	if (!line)
-		return (perror("minishell:"), mini->exit = -1, -1);
+		return (perror("minishell:"), exit_m(), -1);
 	if (quotes(line, ft_strlen(line)))
 		return (free(line), 1);
 	line = replace_str2(mini->env, line);
 	mini->cmds = parser(line);
 	if (!mini->cmds)
-		return (safe_free(line), mini->exit = -1, -1);
+		return (safe_free(line), -1);
 	remove_quotes(mini->cmds);		
 	return (safe_free(line), 0);
 }

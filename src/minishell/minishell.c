@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 17:19:08 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:27:35 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	free_cmds(t_cmd **cmds)
 	while (curr != NULL)
 	{
 		ft_free_split(curr->av);
+		safe_free(curr->path);
 		ft_free_split(curr->delim_f);
 		safe_free(curr->delim);
 		if (curr->next == NULL)

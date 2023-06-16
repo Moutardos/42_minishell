@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:27:33 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/15 18:54:07 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/16 17:31:24 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	cd(t_minishell *mini)
 	if (err)
 		return (perror("minishell"), 0);
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
-		return (perror("minishell:"), mini->exit = -1, 0);
+		return (perror("minishell:"), exit_m(), 0);
 	if (!add_dico(mini->env, "PWD", mini->pwd))
-		return (mini->exit = -1, 0);
+		return (exit_m(), 0);
 	return (0);
 }
