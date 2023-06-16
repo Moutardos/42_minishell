@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/15 19:51:34 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/16 15:50:04 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <siginfo.h>
 
 #include <limits.h>
 
@@ -32,8 +31,6 @@
 # define STDOUT 1
 # define STDERR 2
 # define BUFFER_SIZE 4096 // pour pwd, jsp quoi mettre
-
-static int g_exit = -1;
 
 typedef enum e_delim
 {

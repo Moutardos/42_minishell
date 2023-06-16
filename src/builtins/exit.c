@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:56:29 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/13 21:25:04 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/16 15:51:01 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 int	exit_m(t_minishell *mini)
 {
+	extern int g_exit;
 	printf("exit builtlin \n");
-	mini->exit = 0;
+	g_exit = 0;
 	return (0);
 }
