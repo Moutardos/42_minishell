@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 16:59:07 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:19:08 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_minishell	*init_minishell(char **envp)
 		ft_free_split(mini->paths);
 		return (free_dico(&mini->env), safe_free(mini), NULL);
 	}
-	mini->exit = -1;
 	return (mini);
 }
 
@@ -53,7 +52,6 @@ void	free_cmds(t_cmd **cmds)
 	while (curr != NULL)
 	{
 		ft_free_split(curr->av);
-		safe_free(curr->path);
 		ft_free_split(curr->delim_f);
 		safe_free(curr->delim);
 		if (curr->next == NULL)
@@ -108,4 +106,5 @@ int	main(int ac, char **av, char **envp)
 		}
 	}
 	free_mini(&mini);
+	return (0);
 }
