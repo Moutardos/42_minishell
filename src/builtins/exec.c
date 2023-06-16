@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/15 18:59:58 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/16 16:46:22 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static int	treat_cmds(t_cmd *cmds, t_minishell *mini);
 static int	create_pipe(t_minishell *mini);
 static void	close_pipe(t_cmd *cmds, int n);
-static int	treat_builtins(t_minishell *mini, t_cmd *cmds, char **env);
+static int	treat_builtins(t_minishell *mini, t_cmd *cmds);
 
 /// @brief  Execute each commands 1 by 1
 /// @param  cmds linked list of commands
@@ -43,7 +43,7 @@ int	execute(t_minishell	*mini)
 		closef(curr->out, 0);
 		curr = curr->next;
 	}
-	while (waitpid(-1, &status, NULL) > 0)
+	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WIFEXITED(status))
 		{
@@ -62,28 +62,27 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	pid_t	pid;
 	char	**env;
 
-	env = dico_array(mini->env);
-	if (!env)
-		return (-1);
 	if (!cmd->av)
 		return (0);
 	if (treating_here_doc(cmd, mini) < 0)
 			return (-1);
-	if (!treat_builtins(mini, cmd, env))
-		return (ft_free_split(env), 0);
+	if (!treat_builtins(mini, cmd))
+		return (0);
 	pid = fork();
 	if (pid == F_CHILD)
 	{
+		env = dico_array(mini->env);
+		if (!env)
+			return (-1);
 		if (dup2(cmd->in, STDIN) < 0)
 			return (perror("minishell: in"), 0);
 		if (dup2(cmd->out, STDOUT) < 0)
 			return (perror("minishell: out"), 0);
 		close_pipe(cmd, -1);
-
 		execve(cmd->path, cmd->av, env);
 		return (ft_free_split(env), perror2("minishell : ", cmd->path), 0);
 	}
-	return (ft_free_split(env), 0);
+	return (0);
 }
 
 /// @brief  Pipe each command after treating each redirections
@@ -135,7 +134,7 @@ static void	close_pipe(t_cmd *cmds, int n)
 	}
 }
 
-static int	treat_builtins(t_minishell *mini, t_cmd *cmd, char **env)
+static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->fname, "echo"))
 		return (echo(cmd));
@@ -150,6 +149,6 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmd, char **env)
 	else if (!ft_strcmp(cmd->fname, "unset"))
 		return (unset(mini, cmd));
 	else if (!ft_strcmp(cmd->fname, "exit"))
-		return (exit_m(mini));
+		return (exit_m());
 	return (1);
 }

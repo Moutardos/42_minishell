@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:47:49 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/15 18:53:14 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/16 16:55:19 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,21 @@
 int unset(t_minishell *mini, t_cmd *cmd)
 {
 	int		i;
-	char	**key_val;
-
+	char	*value;
+	
 	i = 1;
 	while (i < cmd->ac)
 	{
-		if (get_dico(mini->env, cmd->av[i]) != "")
+		value = get_dico(mini->env, cmd->av[i]);
+		if (!value)
+			return (-1);
+		if (ft_strcmp(value, ""))
 		{
-			add_dico(mini->dico, cmd->av[i], "");
+			if (!add_dico(mini->env, cmd->av[i], ""))
+				return (-1);
 		}
+		safe_free(value);
 		i++;
 	}
-	return (0);
 	return (0);
 }

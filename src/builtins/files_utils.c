@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/15 18:48:30 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:20:08 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	treating_here_doc(t_cmd *cmd, t_minishell *mini)
 	int		i;
 	int		check;
 	int		is_last;
+	char	*stop;
 
 	i = 0;
 	while (cmd->delim_f[i])
@@ -116,8 +117,12 @@ int	treating_here_doc(t_cmd *cmd, t_minishell *mini)
 		if (cmd->delim[i] == IN_NL)
 		{
 			is_last = is_last_heredoc(cmd, i);
-			if (here_doc(cmd->delim_f[i], mini->env, cmd->in, is_last) < 0)
-				return (-1);
+			stop = ft_strjoin(cmd->delim_f[i], "\n");
+			if (!stop)
+				return (perror("minishell"), -1);
+			if (here_doc(stop, mini->env, cmd->in, is_last) < 0)
+				return (safe_free(stop), -1);
+			safe_free(stop);
 			closef(cmd->in, 0);
 			cmd->in = open(mini->hd_path, O_RDWR, S_IRUSR | S_IWUSR);
 			if (cmd->in < 0)
