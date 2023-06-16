@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:29:02 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/13 19:19:23 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 20:17:23 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	get_delims_amount(char *str)
 	count = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '>' || str[i] == '<')
+		if (!quotes(str, i) && (str[i] == '>' || str[i] == '<'))
 		{
 			if ((str[i] == '>' && str[i + 1] == '>') \
 			|| (str[i] == '<' && str[i + 1] == '<'))
@@ -83,7 +83,9 @@ int	get_next_delim(char *str, int start)
 	int	i;
 
 	i = start;
-	while (str[i] != '\0' && str[i] != '>' && str[i] != '<')
+	//while (str[i] != '\0' && str[i] != '>' && str[i] != '<')
+	while (str[i] != '\0' && !is_delim(str, i))
 		i++;
 	return (i);
 }
+

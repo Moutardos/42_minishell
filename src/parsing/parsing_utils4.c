@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:06:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/13 21:49:26 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 20:16:59 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,3 +131,4 @@ int	delims_args_amount(char *cmd)
 	amount = delims_args_amount_auxiliary(cmd, delim_amount, i, amount);
 	return (amount);
 }
+

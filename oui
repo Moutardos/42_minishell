@@ -1,9 +1,0 @@
-Makefile
-bin
-echo
-include
-obj
-oui
-readme.md
-src
-valgrind.ignore

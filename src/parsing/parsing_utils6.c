@@ -6,11 +6,12 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:20:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/13 21:28:00 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/16 20:15:31 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parsing.h"
 
 static char	*realloc_quote(char *str)
 {
@@ -47,4 +48,51 @@ void	remove_quotes(t_cmd *cmds)
 		}
 		cmds = cmds->next;
 	}
+}
+
+static int	quotes_amount(char *str)
+{
+	int count;
+	int	i;
+
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '"' || str[i] == '\'' || str[i] == '\\')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+//remove all ',",/ from pos 0 to next delim pos 
+char 	*expand_bltn(char *str)
+{
+	char	*new;
+	int		i;
+	int		j;
+	
+	//printf("next delim : %d\n", next_delim);
+	new = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	//printf("alloced: %d\n", next_delim - quotes_amount(str, next_delim) \
+	+ 1);
+	if (!new)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '"' || str[i] == '\'' || str[i] == '\\')
+		{
+			i++;
+			continue ;
+		}
+		new[j] = str[i];
+		j++;
+		i++;
+	}
+	new[j] = '\0';
+	free(str);
+	return new;
 }
