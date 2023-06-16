@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/15 18:59:30 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/16 17:17:29 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,11 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 
 	if (delims_args_amount(str) < get_delims_amount(str))
 	{
-		printf("Missing delim_f \n");
+		ft_printf("mnishell: parse error");
 		return (NULL);
 	}
 	temp = parse_cmd_auxiliary(str, start, end, 0);
 	builtin = get_builtin(temp);
-	if (!validate_builtin(builtin))
-		printf("Unsuported builtin provided, still going on\n");
 	cmd = new_cmd();
 	if (!cmd)
 		return (NULL);
@@ -81,7 +79,7 @@ static t_cmd	*parser(char *str)
 		new_cmd = parse_cmd(i, next_delim, str);
 		if (!new_cmd)
 			return (clear_cmd(curr_cmd));
-		if (new_cmd->av[0] == '/')
+		if (ft_strchr(new_cmd->av[0], '/'))
 			new_cmd->path = new_cmd->av[0];
 		cmd_add_back(&curr_cmd, new_cmd);
 		/*
