@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:54:22 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/13 20:39:46 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:50:51 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	echo(t_cmd *cmd)
 	nl = 1;
 	if (!av)
 		return (1);
-	if (!av[1] && !ft_strcmp(av[0], "-n"))
+	if (av[0] && !ft_strcmp(av[0], "-n"))
 	{
 		av++;
 		nl = 0;
