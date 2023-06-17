@@ -6,11 +6,12 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:56:29 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 16:44:04 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:28:10 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "builtins.h"
 
 
 int	exit_m()

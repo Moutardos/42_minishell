@@ -6,12 +6,12 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:47:49 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 16:55:19 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:28:15 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+#include "builtins.h"
 
 int unset(t_minishell *mini, t_cmd *cmd)
 {
