@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 20:18:18 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/17 15:58:45 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 # define PARSING_H
 
 # include "minishell.h"
-
-typedef struct s_cmd t_cmd;
-typedef struct s_minishell t_minishell;
-typedef enum e_delim t_delim;
-typedef struct s_delims_args t_delims_args;
 
 int		quotes(char *line, int index);
 int		next_sep_pos(char *str, int pos);
@@ -46,8 +41,7 @@ char	*env_from_pos(t_dico *dico, char *str, int start, int end);
 char	*join_from_pos(char *str1, int start, int end, char *env);
 int		delims_args_amount(char *cmd);
 void	remove_quotes(t_cmd *cmds);
-char 	*expand_bltn(char *str);
+char	*expand_bltn(char *str);
 int		curr_delim_offset(char *str, int pos);
-
 
 #endif

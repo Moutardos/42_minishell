@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:55:14 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/15 18:47:04 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:01:17 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 
 # include <sys/wait.h>
 # include "minishell.h"
-// fork
-#define F_ERROR -1
-#define F_CHILD 0
+# define F_ERROR -1
+# define F_CHILD 0
 
 // EXEC
 int	execute(t_minishell	*mini);
