@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:20:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 20:15:31 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/17 20:22:13 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ char 	*expand_bltn(char *str)
 	
 	//printf("next delim : %d\n", next_delim);
 	new = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	//printf("alloced: %d\n", next_delim - quotes_amount(str, next_delim) \
-	+ 1);
+	//printf("alloced: %d\n", ft_strlen(str) + 1);
 	if (!new)
 		return (NULL);
 	i = 0;

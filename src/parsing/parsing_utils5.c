@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 20:15:45 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/17 20:52:57 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,44 @@ static void assign_delims_offest(char *cmd, char *cmd2, int *data, int size)
 	//printf("data[i] %d\n", data[i]);
 }
 
+
+static int	next_arg_pos2(char *str, int pos)
+{
+	while (str[pos] != '\0')
+	{
+		if (!quotes(str, pos))
+		{
+			while (!quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0')
+				pos++;
+			return (pos);
+		}
+		if (quotes(str, pos))
+		{
+			while (quotes(str, pos))
+				pos++;
+			return (pos + 1);
+		}
+		pos++;
+	}
+	return (pos);
+}
+
+// echo salut"toi << test"t
 static void	get_args_auxiliary(t_cmd *curr_cmd, char *cmd, int l, int j, int delim_offset)
 {
 	int	i;
 
 	i = get_post_bltn(cmd);
 	//ICI RECUP OFFSET
+	//printf("post bltn : %d\n", i);
+	//printf("for string : %s\n", cmd);
 	while (cmd[i] != '\0' && i < delim_offset)
 	{
-		if (curr_cmd->ac > 50)
-			exit(1);
 		//if (cmd[i] != ' ' && !is_delim(cmd, i))
 		if (cmd[i] != ' ')
 		{
 			l = 0;
-			j = next_arg_pos(cmd, i);
+			j = next_arg_pos2(cmd, i);
 			if (is_delim(cmd, j));
 				j++;
 			//printf("cmd[i] : %c\n", cmd[i]);
@@ -80,7 +103,7 @@ static void	get_args_auxiliary(t_cmd *curr_cmd, char *cmd, int l, int j, int del
 			curr_cmd->av[curr_cmd->ac] = ft_calloc(j - i + 1, sizeof(char));
 			if (!curr_cmd->av[curr_cmd->ac])
 				return ;
-			while (i < j)
+			while (i < j - 1)
 			{
 				curr_cmd->av[curr_cmd->ac][l] = cmd[i];
 				i++;
@@ -105,8 +128,9 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin)
 	int	test;
 	int	delim_offset;
 
-	alloc = bltn_args_amount(cmd) \
+	alloc = bltn_args_amount(cmd2) \
 	+ delims_args_amount(cmd2);
+	//printf("bltn_args_amount(cmd2) : %d\n", bltn_args_amount(cmd2));
 	//printf("bltn_args_amount(cmd) : %d\n", bltn_args_amount(cmd));
 	//printf("delims_args_amount(cmd) : %d\n", delims_args_amount(cmd2));
 	//printf("alloc : %d\n", alloc);
@@ -137,10 +161,11 @@ char *cmd, char *holder)
 		args->l++;
 	}
 	holder[args->l] = '\0';
-	//printf("holder[args->l] : %s\n", holder[args->l]);
+	//printf("holder : %s\n", holder);
 	args->delim_b++;
 }
 
+//echo salut > test | echo test
 static void	get_delims_auxiliary(t_cmd *c, t_delims_args *a, char *cmd, \
 char *holder, int delim_offset_index)
 {
@@ -148,9 +173,13 @@ char *holder, int delim_offset_index)
 	//printf("delim_offset_index : %d\n", delim_offset_index);
 	//printf("delim_offset_index + 1 : %d\n", delim_offset_index + 1);
 	//printf("delim_offset_index : %d\n", delim_offset_index);
-	//printf("a->i : %d\n", a->i);
-	while (cmd[a->i] != '\0' && a->i < c->offset_delims[delim_offset_index + 1])
+	//printf("cmd : %s\n", cmd);
+	//printf("c->offset_delims[delim_offset_index + 1] : %d\n", c->offset_delims[delim_offset_index + 1]);
+	while (cmd[a->i] != '\0' && cmd[a->i] != '|' && a->i < c->offset_delims[delim_offset_index + 1])
 	{
+		//printf("i : %d\n", a->i);
+		//printf("cmd[i] : %c\n", cmd[a->i]);
+		//printf("cmd[i + 1] : %c\n", cmd[a->i + 1]);
 		if (cmd[a->i] != ' ')
 		{
 			a->l = 0;
