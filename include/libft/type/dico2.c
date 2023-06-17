@@ -6,19 +6,19 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:10:23 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/15 17:46:31 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:08:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-t_dico	*array_dico(char ** array)
+t_dico	*array_dico(char **array)
 {
 	unsigned int	i;
 	t_dico			*dico;
 	char			*key;
 	char			*value;
-	int	len;
+	int				len;
 
 	dico = NULL;
 	i = 0;
@@ -49,9 +49,9 @@ void	display_dico(t_dico *dico)
 	}
 }
 
-unsigned int	size_dico(t_dico *dico)
+int	size_dico(t_dico *dico)
 {
-	unsigned int	size;
+	int	size;
 
 	size = 0;
 	while (dico)
