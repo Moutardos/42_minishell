@@ -1,4 +1,4 @@
-CC = cc
+CC = gcc
 ODIR = obj
 BDIR = bin
 SDIR = src
@@ -6,15 +6,15 @@ IDIR = include
 NAME = $(BDIR)/minishell
 LIBFT = $(IDIR)/libft/libft.a
 RM = rm -f
-CFLAGS = -Wall -Wextra -I$(IDIR) 
-LFLAGS = -L$(IDIR)/libft -lft -lreadline
+CFLAGS = -Wall -Wextra -I$(IDIR)
+LFLAGS = -L$(IDIR)/libft -lft -lreadline 
 FILES =  builtins/exec builtins/files_utils \
          minishell/minishell parsing/cmd_utils parsing/parsing_utils1 \
 		 parsing/parsing_utils2 parsing/parsing_utils3 parsing/parsing \
 		 parsing/parsing_utils4 parsing/parsing_utils5 parsing/parsing_utils6\
 		 builtins/echo builtins/pwd builtins/cd utils/utils\
-		 builtins/export builtins/unset builtins/exit
-		 #mettre les noms des fichiers sans extensions ici
+		 builtins/export builtins/unset builtins/exit\
+		 handlers/signals
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))
 

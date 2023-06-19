@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:57:49 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/04/28 14:58:32 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/19 15:35:43 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "minishell.h"
 
-void	sig_quit(int n);
-void	sig_int(int n);
-
+void	handler(int sig, siginfo_t *info, void *c);
+void	replace_line(void);
+void	setup_signals(void handler(int, siginfo_t, void*));
 #endif

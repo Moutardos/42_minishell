@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 20:18:59 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/19 15:36:46 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "exec.h"
+#include "handlers.h"
 
 int	g_exit = -1;
+
 /// @brief Minishell struct and fields init
 /// @return Newly allocated shell entity
 t_minishell	*init_minishell(char **envp)
@@ -94,6 +96,7 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 
+	setup_signals(handler);
 	mini = init_minishell(envp);
 	if (!mini)
 		return (-1);
