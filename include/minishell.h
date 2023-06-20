@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 19:06:31 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/20 23:02:58 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ typedef struct s_minishell
 	char	*raw_line;
 	t_cmd	*cmds;
 	int		exit;
-	t_dico	*dico;
 }	t_minishell;
 
 char	*replace_str2(t_dico *dico, char *str);

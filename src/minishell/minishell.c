@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 19:21:59 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/20 23:29:48 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "exec.h"
 #include "handlers.h"
 
-int	g_exit = -1;
+int	g_exit_code = 0;
 
 /// @brief Minishell struct and fields init
 /// @return Newly allocated shell entity
@@ -23,8 +23,7 @@ t_minishell	*init_minishell(char **envp)
 {
 	t_minishell	*mini;
 	char		*path;
-	char		*term;
-	
+
 	path = getenv("PATH");
 	if (!path)
 		return (NULL);
@@ -100,7 +99,7 @@ int	main(int ac, char **av, char **envp)
 	mini = init_minishell(envp);
 	if (!mini)
 		return (-1);
-	while (g_exit == -1)
+	while (!mini->exit)
 	{
 		if (parse_current_cmd(mini) < 0)
 			continue ;
@@ -111,5 +110,5 @@ int	main(int ac, char **av, char **envp)
 		}
 	}
 	free_mini(&mini);
-	return (0);
+	return (g_exit_code);
 }

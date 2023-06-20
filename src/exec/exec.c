@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 16:20:22 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 23:30:07 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execute(t_minishell	*mini)
 		cmd = cmd->next;
 	}
 	if (wait_exec(mini) < 0)
-		return (exit_m(), -1);
+		return (exit_m(mini, NULL), -1);
 	return (0);
 }
 
@@ -54,7 +54,7 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	if (!cmd->av)
 		return (0);
 	if (treating_here_doc(cmd, mini) < 0)
-		return (exit_m(), -1);
+		return (exit_m(mini, NULL), -1);
 	if (!treat_builtins(mini, cmd))
 		return (0);
 	pid = fork();
@@ -117,20 +117,22 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->fname, "unset"))
 		return (unset(mini, cmd));
 	else if (!ft_strcmp(cmd->fname, "exit"))
-		return (exit_m());
+		return (exit_m(mini, cmd));
 	return (1);
 }
 
 static int	wait_exec(t_minishell *mini)
 {
-	int		status;
-	char	*re;
-	t_dico	*check;
+	int			status;
+	char		*re;
+	t_dico		*check;
+	extern int	g_exit_code;
 
 	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WIFEXITED(status))
 		{
+			g_exit_code = WEXITSTATUS(status);
 			re = ft_itoa(WEXITSTATUS(status));
 			if (!re)
 				return (-1);

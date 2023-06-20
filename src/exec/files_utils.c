@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 16:59:15 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 23:00:21 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 	{
 		temp = ft_strjoin(mini->paths[i], "/");
 		if (!temp)
-			return (exit_m(), -1);
+			return (exit_m(mini, NULL), -1);
 		path = ft_strjoin(temp, cmd->fname);
 		safe_free(temp);
 		if (!path)
-			return (exit_m(), -1);
+			return (exit_m(mini, NULL), -1);
 		if (access(path, F_OK) == 0)
 			return (cmd->path = path, 0);
 		safe_free(path);

@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtoi.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Loic Cozdenmat <Loic Cozdenmat@student.    +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:43:43 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/03/09 12:31:57 by Loic Cozden      ###   ########.fr       */
+/*   Updated: 2023/06/20 23:14:54 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_is_numeric(const char *str)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]) && (i != 0 && str[i] == '-'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int	*ft_strtoi(const char *str, int *size)
 {
@@ -38,7 +24,7 @@ int	*ft_strtoi(const char *str, int *size)
 		return (NULL);
 	len = -1;
 	while (tatoi[++len])
-		if (!ft_is_numeric(tatoi[len]))
+		if (!ft_isnumeric(tatoi[len]))
 			return (ft_free_split(tatoi), NULL);
 	res = malloc(sizeof(int) * len);
 	i = -1;

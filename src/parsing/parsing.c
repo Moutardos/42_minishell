@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 22:36:58 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/20 23:11:54 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 	char			*builtin;
 	t_cmd			*cmd;
 
-	int	i;
 	if (delims_args_amount(str) < get_delims_amount(str))
 	{
 		ft_printf("mnishell: parse error");
@@ -117,7 +116,7 @@ int	parse_current_cmd(t_minishell *mini)
 	line = readline("minishell : ");
 	add_history(line);
 	if (!line)
-		return (exit_m(), -1);
+		return (exit_m(mini, NULL), -1);
 	if (quotes(line, ft_strlen(line)))
 		return (free(line), 1);
 	line = replace_str2(mini->env, line);

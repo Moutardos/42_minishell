@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 16:37:43 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 22:57:47 by lcozdenm         ###   ########.fr       */
+/*   Created: 2023/06/20 23:09:26 by lcozdenm          #+#    #+#             */
+/*   Updated: 2023/06/20 23:14:46 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
-# include "minishell.h"
+#include "libft.h"
 
-int	echo(t_cmd *cmd);
-int	pwd(t_minishell *mini, int fd);
-int	cd(t_minishell *mini);
-int	export_m(t_minishell *mini, t_cmd *cmd);
-int	unset(t_minishell *mini, t_cmd *cmd);
-int	export_m(t_minishell *mini, t_cmd *cmd);
-int	exit_m(t_minishell *mini, t_cmd *cmd);
-#endif
+int	ft_isnumeric(const char *str)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]) && (i != 0 && str[i] == '-'))
+			return (0);
+		i++;
+	}
+	return (1);
+}

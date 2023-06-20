@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:27:33 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/17 15:28:00 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 22:58:35 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	cd(t_minishell *mini)
 	if (err)
 		return (perror("minishell"), 0);
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
-		return (perror("minishell:"), exit_m(), 0);
+		return (perror("minishell:"), exit_m(mini, NULL), 0);
 	if (!add_dico(mini->env, "PWD", mini->pwd))
-		return (exit_m(), 0);
+		return (exit_m(mini, NULL), 0);
 	return (0);
 }

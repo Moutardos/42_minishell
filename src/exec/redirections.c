@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:15:16 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 17:01:31 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 23:14:07 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "builtins.h"
 
 static int	treat_redirections(char *fname, t_delim delim, int *in, int *out);
-static int	here_doc(char *stop, t_dico *env, int fd, int is_last);
-static char	*prompt_heredoc(t_dico *env);
+static int	here_doc(char *stop, t_minishell *mini, int fd, int is_last);
+static char	*prompt_heredoc(t_minishell *mini);
 
 /* Open each files and store the last fd for in and out inside cmd */
 int	redirections(t_minishell *mini, t_cmd *cmd)
@@ -58,7 +58,7 @@ static int	treat_redirections(char *fname, t_delim delim, int *in, int *out)
 		if (delim == IN)
 			option = O_RDWR;
 		else
-			option = O_CREAT | O_RDWR;
+			option = O_CREAT | O_RDWR | O_TRUNC;
 		*in = open(fname, option, S_IRUSR | S_IWUSR);
 		if (*in < 0)
 			return (perror("minishell"), 1);
@@ -91,7 +91,7 @@ int	treating_here_doc(t_cmd *cmd, t_minishell *mini)
 			stop = ft_strjoin(cmd->delim_f[i], "\n");
 			if (!stop)
 				return (perror("minishell"), -1);
-			if (here_doc(stop, mini->env, cmd->in, is_last) < 0)
+			if (here_doc(stop, mini, cmd->in, is_last) < 0)
 				return (safe_free(stop), -1);
 			safe_free(stop);
 			cmd->in = open(mini->hd_path, O_RDWR, S_IRUSR | S_IWUSR);
@@ -103,22 +103,22 @@ int	treating_here_doc(t_cmd *cmd, t_minishell *mini)
 	return (0);
 }
 
-static int	here_doc(char *stop, t_dico *env, int fd, int is_last)
+static int	here_doc(char *stop, t_minishell *mini, int fd, int is_last)
 {
 	char	*str;
 
-	str = prompt_heredoc(env);
+	str = prompt_heredoc(mini);
 	while (str && ft_strcmp(str, stop))
 	{
 		if (is_last)
 			ft_putstr_fd(str, fd);
 		safe_free(str);
-		str = prompt_heredoc(env);
+		str = prompt_heredoc(mini);
 	}
 	return (close(fd), 0);
 }
 
-static char	*prompt_heredoc(t_dico *env)
+static char	*prompt_heredoc(t_minishell *mini)
 {
 	char	*buf;
 	char	*str;
@@ -127,8 +127,8 @@ static char	*prompt_heredoc(t_dico *env)
 	buf = get_next_line(STDIN);
 	if (!buf)
 		return (NULL);
-	str = replace_str2(env, buf);
+	str = replace_str2(mini->env, buf);
 	if (!str)
-		return (exit_m(), NULL);
+		return (exit_m(mini, NULL), NULL);
 	return (str);
 }
