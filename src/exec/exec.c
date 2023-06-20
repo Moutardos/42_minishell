@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/16 16:46:22 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:20:22 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,43 +17,32 @@
 
 static int	treat_cmds(t_cmd *cmds, t_minishell *mini);
 static int	create_pipe(t_minishell *mini);
-static void	close_pipe(t_cmd *cmds, int n);
 static int	treat_builtins(t_minishell *mini, t_cmd *cmds);
+static int	wait_exec(t_minishell *mini);
 
 /// @brief  Execute each commands 1 by 1
 /// @param  cmds linked list of commands
 /// @return error nb 
 int	execute(t_minishell	*mini)
 {
-	t_cmd		*curr;
-	int			status;
-	char		*re;
+	t_cmd	*cmd;
 
+	cmd = mini->cmds;
 	if (create_pipe(mini) < 0)
 		return (-1);
-	curr = mini->cmds;
-	while (curr != NULL)
+	while (cmd != NULL)
 	{
-		if (curr->path == NULL && curr->fname)
-			if (check_paths(mini, curr))
+		if (cmd->path == NULL && cmd->fname)
+			if (check_paths(mini, cmd))
 				return (close_pipe(mini->cmds, -1), -1);
-		if (treat_cmds(curr, mini) < 0)
+		if (treat_cmds(cmd, mini) < 0)
 			return (close_pipe(mini->cmds, -1), -1);
-		closef(curr->in, 0);
-		closef(curr->out, 0);
-		curr = curr->next;
+		closef(cmd->in, 0);
+		closef(cmd->out, 0);
+		cmd = cmd->next;
 	}
-	while (waitpid(-1, &status, 0) > 0)
-	{
-		if (WIFEXITED(status))
-		{
-			re = ft_itoa(WEXITSTATUS(status));
-			if (!re)
-				return (-1);
-			add_dico(mini->env, "?", re);
-			safe_free(re);
-		}
-	}
+	if (wait_exec(mini) < 0)
+		return (exit_m(), -1);
 	return (0);
 }
 
@@ -65,7 +54,7 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	if (!cmd->av)
 		return (0);
 	if (treating_here_doc(cmd, mini) < 0)
-			return (-1);
+		return (exit_m(), -1);
 	if (!treat_builtins(mini, cmd))
 		return (0);
 	pid = fork();
@@ -113,27 +102,6 @@ static int	create_pipe(t_minishell *mini)
 	return (0);
 }
 
-/// @brief  Close pipes in the range of n
-/// @param  cmds linked list of commands
-/// @param  n    range, max if negative  
-static void	close_pipe(t_cmd *cmds, int n)
-{
-	int		i;
-	t_cmd	*current;
-
-	i = 0;
-	current = cmds;
-	while (current->prev != NULL)
-		current = current->prev;
-	while (((n > 0 && i < n) || (n < 0)) && current != NULL)
-	{
-		closef(current->in, 0);
-		closef(current->out, 0);
-		i++;
-		current = current->next;
-	}
-}
-
 static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 {
 	if (!ft_strcmp(cmd->fname, "echo"))
@@ -151,4 +119,26 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->fname, "exit"))
 		return (exit_m());
 	return (1);
+}
+
+static int	wait_exec(t_minishell *mini)
+{
+	int		status;
+	char	*re;
+	t_dico	*check;
+
+	while (waitpid(-1, &status, 0) > 0)
+	{
+		if (WIFEXITED(status))
+		{
+			re = ft_itoa(WEXITSTATUS(status));
+			if (!re)
+				return (-1);
+			check = add_dico(mini->env, "?", re);
+			if (!check)
+				return (safe_free(re), -1);
+			safe_free(re);
+		}
+	}
+	return (0);
 }

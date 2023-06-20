@@ -8,13 +8,13 @@ LIBFT = $(IDIR)/libft/libft.a
 RM = rm -f
 CFLAGS = -Wall -Wextra -I$(IDIR)
 LFLAGS = -L$(IDIR)/libft -lft -lreadline 
-FILES =  builtins/exec builtins/files_utils \
+FILES =  exec/exec exec/files_utils \
          minishell/minishell parsing/cmd_utils parsing/parsing_utils1 \
 		 parsing/parsing_utils2 parsing/parsing_utils3 parsing/parsing \
 		 parsing/parsing_utils4 parsing/parsing_utils5 parsing/parsing_utils6\
-		 builtins/echo builtins/pwd builtins/cd utils/utils\
+		 builtins/echo builtins/pwd builtins/cd\
 		 builtins/export builtins/unset builtins/exit\
-		 handlers/signals
+		 handlers/signals exec/redirections
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))
 
@@ -28,7 +28,7 @@ $(ODIR):
 	mkdir -p $(ODIR)/handlers
 	mkdir -p $(ODIR)/parsing
 	mkdir -p $(ODIR)/minishell
-	mkdir -p $(ODIR)/utils
+	mkdir -p $(ODIR)/exec
 	#il faudrait créer un directory pour chaque sous dossier source
 
 
@@ -48,7 +48,6 @@ clean:
 	$(RM) -R $(ODIR)
 	$(RM) -R .hd
 	$(MAKE) -C $(IDIR)/libft $@
-	#supprimer les dependances (.d) aussi 
 
 fclean: clean
 	$(MAKE) -C $(IDIR)/libft $@

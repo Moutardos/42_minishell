@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils6.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:20:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/17 20:22:13 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/20 16:28:24 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ void	remove_quotes(t_cmd *cmds)
 	}
 }
 
-static int	quotes_amount(char *str)
-{
-	int count;
-	int	i;
+// static int	quotes_amount(char *str)
+// {
+// 	int count;
+// 	int	i;
 
-	i = 0;
-	count = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '"' || str[i] == '\'' || str[i] == '\\')
-			count++;
-		i++;
-	}
-	return (count);
-}
+// 	i = 0;
+// 	count = 0;
+// 	while (str[i] != '\0')
+// 	{
+// 		if (str[i] == '"' || str[i] == '\'' || str[i] == '\\')
+// 			count++;
+// 		i++;
+// 	}
+// 	return (count);
+// }
 
 //remove all ',",/ from pos 0 to next delim pos 
 char 	*expand_bltn(char *str)

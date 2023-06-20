@@ -6,13 +6,14 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:56:07 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/19 16:11:37 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:21:11 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "handlers.h"
-void	handler(int sig, siginfo_t *info, void *c)
+
+void	handler(int sig)
 {
 	if (waitpid(-1, NULL, WNOHANG) == 0)
 		return ;
@@ -22,9 +23,10 @@ void	handler(int sig, siginfo_t *info, void *c)
 		replace_line();
 }
 
-void	setup_signals(void handler(int, siginfo_t, void*))
+void	setup_signals(void handler(int))
 {
 	struct sigaction	sa;
+
 	sa.sa_handler = handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;

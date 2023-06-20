@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/17 15:50:15 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:27:29 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 	char			*copy;
 	char			*copy2;
 	char			*builtin;
-	char			*expanded;
 	t_cmd			*cmd;
 
 	temp = parse_cmd_auxiliary(str, start, end, 0);

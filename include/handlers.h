@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:57:49 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/19 15:35:43 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:21:27 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "minishell.h"
 
-void	handler(int sig, siginfo_t *info, void *c);
+void	handler(int sig);
 void	replace_line(void);
-void	setup_signals(void handler(int, siginfo_t, void*));
+void	setup_signals(void handler(int));
 #endif
