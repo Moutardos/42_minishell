@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 16:34:47 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 22:38:24 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ static void assign_delims_offest(char *cmd, char *cmd2, int *data, int size)
 
 	i = 0;
 	j = 0;
+	//printf("delim amount : %d\n", size);
 	while (i < size)
 	{
-		if (is_delim(cmd, j))
+		if (is_delim(cmd, j) && i != 0)
 		{
 			j++;
 			continue ;
@@ -53,8 +54,8 @@ static void assign_delims_offest(char *cmd, char *cmd2, int *data, int size)
 		i++;
 	}
 	//printf("last i allocated: %d\n", i);
-	data[i] = ft_strlen(cmd2) + 1;
-	//printf("data[i] %d\n", data[i]);
+	data[i] = ft_strlen(cmd2);
+	//printf("curr_delim_offset : %d\n", data[i]);
 }
 
 
@@ -95,15 +96,16 @@ static void	get_args_auxiliary(t_cmd *curr_cmd, char *cmd, int l, int j, int del
 		{
 			l = 0;
 			j = next_arg_pos2(cmd, i);
-			if (is_delim(cmd, j));
-				j++;
+			//if (is_delim(cmd, j));
+			//PTT PB
+			//j++;
 			//printf("cmd[i] : %c\n", cmd[i]);
 			//printf("cmd[i+1] : %c\n", cmd[i + 1]);
 			//printf("curr_cmd->ac : %d\n", curr_cmd->ac);
 			curr_cmd->av[curr_cmd->ac] = ft_calloc(j - i + 1, sizeof(char));
 			if (!curr_cmd->av[curr_cmd->ac])
 				return ;
-			while (i < j - 1)
+			while (i < j)
 			{
 				curr_cmd->av[curr_cmd->ac][l] = cmd[i];
 				i++;
@@ -151,6 +153,7 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin)
 	return ;
 }
 
+//echo salut"toi >>> || |" "|" > test."txt" append" append2" ">"
 static void	get_delims_auxiliary2(t_delims_args *args, \
 char *cmd, char *holder)
 {
@@ -172,9 +175,9 @@ char *holder, int delim_offset_index)
 	//METTRE ICI && A->I < c[]
 	//printf("delim_offset_index : %d\n", delim_offset_index);
 	//printf("delim_offset_index + 1 : %d\n", delim_offset_index + 1);
-	//printf("delim_offset_index : %d\n", delim_offset_index);
 	//printf("cmd : %s\n", cmd);
 	//printf("c->offset_delims[delim_offset_index + 1] : %d\n", c->offset_delims[delim_offset_index + 1]);
+	//printf("i : %d\n", a->i);
 	while (cmd[a->i] != '\0' && cmd[a->i] != '|' && a->i < c->offset_delims[delim_offset_index + 1])
 	{
 		//printf("i : %d\n", a->i);
@@ -183,7 +186,9 @@ char *holder, int delim_offset_index)
 		if (cmd[a->i] != ' ')
 		{
 			a->l = 0;
-			a->j = next_arg_pos(cmd, a->i);
+			//TEMPORAIRE
+			a->j = next_arg_pos2(cmd, a->i);
+			//printf("next_arg_pos : %d\n", a->j);
 			if (a->delim_b == 0)
 			{
 				c->delim_f[a->n] = ft_calloc(a->j - a->i + 1, 1);
@@ -243,6 +248,7 @@ int	get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd, char *cmd2)
 		if (curr_cmd->delim[args->count] == IN_NL \
 		|| curr_cmd->delim[args->count] == OUT_APPEND)
 			args->i ++;
+			//TEST
 		args->i++;
 		get_delims_auxiliary(curr_cmd, args, cmd, holder, args->count);
 		args->count++;

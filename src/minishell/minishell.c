@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 16:27:09 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:21:59 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_minishell	*init_minishell(char **envp)
 {
 	t_minishell	*mini;
 	char		*path;
-
+	char		*term;
+	
 	path = getenv("PATH");
 	if (!path)
 		return (NULL);

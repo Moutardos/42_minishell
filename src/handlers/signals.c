@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:56:07 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 16:21:11 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:27:20 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	replace_line(void)
 {
 	ft_printf("\n");
 	rl_on_new_line();
-	// rl_replace_line("", 0); enlever le comm
+	rl_replace_line("", 0);
 	rl_redisplay();
 }

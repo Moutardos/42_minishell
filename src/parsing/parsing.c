@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 16:27:29 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/20 22:36:58 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 	char			*builtin;
 	t_cmd			*cmd;
 
+	int	i;
+	if (delims_args_amount(str) < get_delims_amount(str))
+	{
+		ft_printf("mnishell: parse error");
+		return (NULL);
+	}
 	temp = parse_cmd_auxiliary(str, start, end, 0);
 	builtin = get_builtin(temp);
 	cmd = new_cmd();
@@ -50,6 +56,25 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 	copy2 = str_fullcpy(temp);
 	get_args(cmd, copy, copy2, builtin);
 	get_delims(cmd, ft_calloc(sizeof(t_delims_args), 1), copy, copy2);
+	/*
+	printf("=============\n");
+	printf("Builtin args : \n");
+	i = 0;
+	while (cmd->av[i] != NULL)
+	{
+		printf("arg : %s\n", cmd->av[i]);
+		i++;
+	}
+	printf("/////////////\n");
+	printf("Builtin redirections : \n");
+	i = 0;
+	while (i < cmd->delim_amount)
+	{
+		printf("delim : %d\n", cmd->delim[i]);
+		printf("delim_f : %s\n", cmd->delim_f[i]);
+		i++;
+	}
+	*/
 	cmd->in = STDIN;
 	cmd->out = STDOUT;
 	cmd->fname = cmd->av[0];
@@ -72,7 +97,7 @@ static t_cmd	*parser(char *str)
 		new_cmd = parse_cmd(i, next_delim, str);
 		if (!new_cmd)
 			return (clear_cmd(curr_cmd));
-		if (ft_strchr(new_cmd->av[0], '/'))
+		if (new_cmd->av[0] != NULL && ft_strchr(new_cmd->av[0], '/'))
 		{
 			new_cmd->path = ft_strdup(new_cmd->av[0]);
 			if (!new_cmd->path)
@@ -92,7 +117,7 @@ int	parse_current_cmd(t_minishell *mini)
 	line = readline("minishell : ");
 	add_history(line);
 	if (!line)
-		return (perror("minishell:"), exit_m(), -1);
+		return (exit_m(), -1);
 	if (quotes(line, ft_strlen(line)))
 		return (free(line), 1);
 	line = replace_str2(mini->env, line);
