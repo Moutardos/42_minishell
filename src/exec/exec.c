@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 23:30:07 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:14:55 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	pid_t	pid;
 	char	**env;
 
-	if (!cmd->av)
+	if (!cmd->av || !cmd->path)
 		return (0);
 	if (treating_here_doc(cmd, mini) < 0)
 		return (exit_m(mini, NULL), -1);

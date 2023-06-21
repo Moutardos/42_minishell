@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/21 14:47:38 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/21 15:00:49 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 	get_delims(cmd, ft_calloc(sizeof(t_delims_args), 1), copy, copy2);
 	cmd->in = STDIN;
 	cmd->out = STDOUT;
-	cmd->fname = cmd->av[0];
 	return (safe_free(temp), safe_free(copy), safe_free(copy2), cmd);
 }
 

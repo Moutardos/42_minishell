@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/21 14:40:02 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/21 15:06:17 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_cmds(t_cmd **cmds);
 int		parse_current_cmd(t_minishell *mini);
 void	cmd_add_back(t_cmd **cmd, t_cmd *new);
 int		get_delims_amount(char *str);
-int	bltn_args_amount(char *cmd, int end);
+int		bltn_args_amount(char *cmd, int end);
 int		get_post_bltn(char *str);
 int		is_delim(char *cmd, int i);
 int		next_arg_pos(char *str, int pos);

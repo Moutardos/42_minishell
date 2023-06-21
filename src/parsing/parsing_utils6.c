@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils6.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:20:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/21 14:43:02 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/21 15:05:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	remove_quotes(t_cmd *cmds)
 				cmds->av[i] = realloc_quote(cmds->av[i]);
 			i++;
 		}
+		cmds->fname = cmds->av[0];
 		cmds = cmds->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/21 14:42:51 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/21 14:59:18 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ void	get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd, char *cmd2)
 		return ;
 	curr_cmd->delim = ft_calloc((curr_cmd->delim_a + 1), sizeof(t_delim));
 	if (!curr_cmd->delim)
-		return (free(args), 1);
+		return (free(args));
 	curr_cmd->delim_f = ft_calloc(curr_cmd->delim_a + 1, sizeof(char *));
 	if (!curr_cmd->delim_f)
-		return (free(args), 1);
+		return (free(args));
 	while (args->count < curr_cmd->delim_a)
 	{
 		args->delim_b = 0;
@@ -149,5 +149,5 @@ void	get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd, char *cmd2)
 	}
 	curr_cmd->av[curr_cmd->ac + args->m] = NULL;
 	curr_cmd->delim_f[args->n] = NULL;
-	return (free(args), 0);
+	return (free(args));
 }

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 23:00:21 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:07:27 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 	int		i;
 
 	i = 0;
-	if (!mini->paths)
+	if (!mini->paths || !ft_strcmp(cmd->fname, ""))
 		return (-1);
 	while (mini->paths[i])
 	{
@@ -38,6 +38,7 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 		safe_free(path);
 		i++;
 	}
+	ft_printf("minishell: %s: not found\n", cmd->fname);
 	return (cmd->path = NULL, 0);
 }
 

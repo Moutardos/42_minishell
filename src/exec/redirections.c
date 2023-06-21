@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:15:16 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 23:14:07 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:32:02 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	treat_redirections(char *fname, t_delim delim, int *in, int *out)
 	else if (delim == OUT || delim == OUT_APPEND)
 	{
 		if (delim == OUT)
-			option = O_CREAT | O_RDWR;
+			option = O_CREAT | O_RDWR | O_TRUNC;
 		else
 			option = O_CREAT | O_RDWR | O_APPEND;
 		*out = open(fname, option, S_IRUSR | S_IWUSR);
