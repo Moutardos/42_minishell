@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils6.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:20:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 16:28:24 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:43:02 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-static char	*realloc_quote(char *str)
+char	*realloc_quote(char *str)
 {
-	char	*new;
+	char		*new;
 	size_t		i;
 
 	new = ft_calloc(sizeof(char), ft_strlen(str) + 2);
@@ -35,7 +35,7 @@ static char	*realloc_quote(char *str)
 void	remove_quotes(t_cmd *cmds)
 {
 	int	i;
-	
+
 	while (cmds != NULL)
 	{
 		i = 0;
@@ -50,32 +50,14 @@ void	remove_quotes(t_cmd *cmds)
 	}
 }
 
-// static int	quotes_amount(char *str)
-// {
-// 	int count;
-// 	int	i;
-
-// 	i = 0;
-// 	count = 0;
-// 	while (str[i] != '\0')
-// 	{
-// 		if (str[i] == '"' || str[i] == '\'' || str[i] == '\\')
-// 			count++;
-// 		i++;
-// 	}
-// 	return (count);
-// }
-
 //remove all ',",/ from pos 0 to next delim pos 
-char 	*expand_bltn(char *str)
+char	*expand_bltn(char *str)
 {
 	char	*new;
 	int		i;
 	int		j;
-	
-	//printf("next delim : %d\n", next_delim);
+
 	new = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-	//printf("alloced: %d\n", ft_strlen(str) + 1);
 	if (!new)
 		return (NULL);
 	i = 0;
@@ -93,5 +75,42 @@ char 	*expand_bltn(char *str)
 	}
 	new[j] = '\0';
 	free(str);
-	return new;
+	return (new);
+}
+
+int	next_arg_pos3(char *str, int pos)
+{
+	while (str[pos] != '\0')
+	{
+		if (!quotes(str, pos))
+		{
+			while (!quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0')
+				pos++;
+			return (pos);
+		}
+		if (quotes(str, pos))
+		{
+			while (quotes(str, pos))
+				pos++;
+			return (pos + 1);
+		}
+		pos++;
+	}
+	return (pos);
+}
+
+int	curr_delim_offset(char *str, int pos)
+{
+	int	i;
+	int	offset;
+
+	i = 0;
+	offset = 0;
+	while (str[i] != '\0' && i < pos)
+	{
+		if (str[i] == '"' || str[i] == '\'' || str[i] == '\\')
+			offset++;
+		i++;
+	}
+	return (pos - offset);
 }

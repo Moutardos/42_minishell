@@ -6,14 +6,14 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:06:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/16 20:16:59 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/21 14:43:29 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-static int	next_arg_pos2(char *str, int pos)
+int	next_arg_pos2(char *str, int pos)
 {
 	while (str[pos] != '\0')
 	{
@@ -131,4 +131,3 @@ int	delims_args_amount(char *cmd)
 	amount = delims_args_amount_auxiliary(cmd, delim_amount, i, amount);
 	return (amount);
 }
-

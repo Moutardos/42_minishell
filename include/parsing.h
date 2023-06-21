@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/17 15:58:45 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:40:02 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_cmds(t_cmd **cmds);
 int		parse_current_cmd(t_minishell *mini);
 void	cmd_add_back(t_cmd **cmd, t_cmd *new);
 int		get_delims_amount(char *str);
-int		bltn_args_amount(char *cmd);
+int	bltn_args_amount(char *cmd, int end);
 int		get_post_bltn(char *str);
 int		is_delim(char *cmd, int i);
 int		next_arg_pos(char *str, int pos);
@@ -36,12 +36,17 @@ int		validate_builtin(char *builtin);
 char	*str_fullcpy(char *src);
 char	*get_builtin(char *cmd);
 void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin);
-int		get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd, char *cmd2);
+void	get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd, char *cmd2);
 char	*env_from_pos(t_dico *dico, char *str, int start, int end);
 char	*join_from_pos(char *str1, int start, int end, char *env);
 int		delims_args_amount(char *cmd);
 void	remove_quotes(t_cmd *cmds);
 char	*expand_bltn(char *str);
 int		curr_delim_offset(char *str, int pos);
+char	*realloc_quote(char *str);
+int		next_arg_pos3(char *str, int pos);
+int		next_arg_pos2(char *str, int pos);
+void	assign_delims_offset(char *cmd, char *cmd2, int *data, int size);
+void	get_delims_auxiliary3(t_delims_args *args, char *cmd, char *holder);
 
 #endif

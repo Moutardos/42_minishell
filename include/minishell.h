@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 23:02:58 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:40:43 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ typedef enum e_delim
 }	t_delim;
 
 typedef struct s_delims_args {
-	int	i;
-	int	j;
-	int	count;
-	int	m;
-	int	n;
-	int	l;
-	int	delim_b;
+	int		i;
+	int		j;
+	int		count;
+	int		m;
+	int		n;
+	int		l;
+	int		delim_b;
+	char	*holder;
 }			t_delims_args;
 
 // path = chemin du prog, allocated par check_paths dans files_utils
@@ -63,7 +64,7 @@ typedef struct s_cmd
 	char			*path;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
-	int				delim_amount;
+	int				delim_a;
 	int				*offset_delims;
 
 }	t_cmd;

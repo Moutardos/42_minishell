@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:28:01 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/16 20:17:37 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/21 14:43:33 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*str_fullcpy(char *src)
 	int		i;
 
 	i = 0 ;
-	dst = ft_calloc((ft_strlen(src) + 1),  sizeof(char));
+	dst = ft_calloc((ft_strlen(src) + 1), sizeof(char));
 	if (!dst)
 		return (NULL);
 	while (src[i] != '\0')

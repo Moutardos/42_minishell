@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/16 20:17:12 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/21 14:43:24 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ t_delim	get_curr_delim(char *str, int pos)
 	return (NONE);
 }
 
-int	bltn_args_amount(char *cmd)
+int	bltn_args_amount(char *cmd, int end)
 {
 	int	i;
 	int	count;
 
 	i = get_post_bltn(cmd);
 	count = 0;
-	while (cmd[i] != '\0' && !is_delim(cmd, i))
+	while (cmd[i] != '\0' && i < end)
 	{
 		if (cmd[i] != ' ')
 		{
-			i = next_arg_pos(cmd, i);
+			i = next_arg_pos3(cmd, i);
 			count++;
 			continue ;
 		}
@@ -84,8 +84,7 @@ char	*join_from_pos(char *str1, int start, int end, char *env)
 		start++;
 	}
 	new[start] = '\0';
-	free(str1);
-	return (new);
+	return (free(str1), new);
 }
 
 char	*env_from_pos(t_dico *dico, char *str, int start, int end)

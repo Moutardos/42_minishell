@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:10:16 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/15 19:32:39 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:43:54 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	cmd_del_cmd(t_cmd *cmd)
 	}
 	safe_free(cmd->av);
 	i = -1 ;
-	while (i++ < cmd->delim_amount - 1)
+	while (i++ < cmd->delim_a - 1)
 		safe_free(cmd->delim_f[i]);
 	safe_free(cmd->delim_f);
 	safe_free(cmd->delim);

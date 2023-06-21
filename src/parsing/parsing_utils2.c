@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:29:02 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/16 20:17:23 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/21 14:42:18 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ int	get_next_delim(char *str, int start)
 	int	i;
 
 	i = start;
-	//while (str[i] != '\0' && str[i] != '>' && str[i] != '<')
 	while (str[i] != '\0' && !is_delim(str, i))
 		i++;
 	return (i);
 }
-
