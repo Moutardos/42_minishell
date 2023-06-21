@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/21 15:07:27 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:57:44 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 		safe_free(path);
 		i++;
 	}
-	ft_printf("minishell: %s: not found\n", cmd->fname);
 	return (cmd->path = NULL, 0);
 }
 
