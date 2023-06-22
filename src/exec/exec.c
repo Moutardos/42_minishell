@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/22 18:27:59 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:54:47 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	execute(t_minishell	*mini)
 		if (cmd->path == NULL && cmd->fname)
 			if (check_paths(mini, cmd))
 				return (close_pipe(mini->cmds, -1), -1);
-		if (treat_cmds(cmd, mini) < 0)
+		if (treating_here_doc(cmd, mini) < 0)
+			return (exit_m(mini, NULL), -1);
+		if (cmd->fname && treat_cmds(cmd, mini) < 0)
 			return (close_pipe(mini->cmds, -1), -1);
 		closef(cmd->in, 0);
 		closef(cmd->out, 0);
@@ -51,10 +53,6 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	pid_t	pid;
 	char	**env;
 
-	if (!cmd->av)
-		return (0);
-	if (treating_here_doc(cmd, mini) < 0)
-		return (exit_m(mini, NULL), -1);
 	if (!treat_builtins(mini, cmd))
 		return (0);
 	if (!cmd->path)
