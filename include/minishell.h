@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/21 14:40:43 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/23 17:44:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,18 @@ typedef enum e_delim
 	NONE
 }	t_delim;
 
+typedef enum e_builtin
+{
+	ECHO,
+	CD,
+	EXIT,
+	EXPORT,
+	PWD,
+	UNSET,
+	ENV,
+	B_NONE
+}	t_builtin;
+
 typedef struct s_delims_args {
 	int		i;
 	int		j;
@@ -62,6 +74,7 @@ typedef struct s_cmd
 	char			**delim_f;
 	char			*fname;
 	char			*path;
+	t_builtin		builtin;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 	int				delim_a;

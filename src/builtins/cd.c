@@ -6,19 +6,17 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:27:33 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 22:58:35 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:01:56 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
-int	cd(t_minishell *mini)
+int	cd(t_minishell *mini, t_cmd *cmd)
 {
 	int		err;
-	t_cmd	*cmd;
 
-	cmd = mini->cmds;
 	if (cmd->ac > 2)
 		return (ft_putstr_fd("minishell: path not found\n", STDERR), 0);
 	else if (cmd->ac == 2)

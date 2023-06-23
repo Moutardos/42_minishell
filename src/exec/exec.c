@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/22 19:54:47 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:01:28 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execute(t_minishell	*mini)
 		if (treating_here_doc(cmd, mini) < 0)
 			return (exit_m(mini, NULL), -1);
 		if (cmd->fname && treat_cmds(cmd, mini) < 0)
-			return (close_pipe(mini->cmds, -1), -1);
+			return (close_pipe(mini->cmds, -1), exit_m(mini, NULL), -1);
 		closef(cmd->in, 0);
 		closef(cmd->out, 0);
 		cmd = cmd->next;
@@ -53,10 +53,16 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	pid_t	pid;
 	char	**env;
 
-	if (!treat_builtins(mini, cmd))
+	if (!cmd->path && cmd->builtin == B_NONE)
 		return (0);
-	if (!cmd->path)
+	if (cmd->path && access(cmd->path, F_OK))
+		return (perror2("minishell : ", cmd->path), 0);
+	if (cmd->builtin != B_NONE && !cmd->next)
+	{
+		if (treat_builtins(mini, cmd) < 0)
+				return (printf("minishell: error builtin"), -1);
 		return (0);
+	}
 	pid = fork();
 	if (pid == F_CHILD)
 	{
@@ -68,8 +74,14 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 		if (dup2(cmd->out, STDOUT) < 0)
 			return (perror("minishell: out"), 0);
 		close_pipe(cmd, -1);
+		if (cmd->builtin != B_NONE)
+		{
+			if (treat_builtins(mini, cmd) < 0)
+				return (ft_free_split(env), -1);
+			return (-1);
+		}
 		execve(cmd->path, cmd->av, env);
-		return (ft_free_split(env), perror2("minishell : ", cmd->path), 0);
+		return (ft_free_split(env), perror2("minishell : ", cmd->path), -1);
 	}
 	return (0);
 }
@@ -104,19 +116,20 @@ static int	create_pipe(t_minishell *mini)
 
 static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 {
-	if (!ft_strcmp(cmd->fname, "echo"))
+
+	if (cmd->builtin == ECHO)
 		return (echo(cmd));
-	else if (!ft_strcmp(cmd->fname, "pwd"))
+	else if (cmd->builtin == PWD)
 		return (pwd(mini, cmd->out));
-	else if (!ft_strcmp(cmd->fname, "cd"))
-		return (cd(mini));
-	else if (!ft_strcmp(cmd->fname, "env"))
+	else if (cmd->builtin == CD)
+		return (cd(mini, cmd));
+	else if (cmd->builtin == ENV)
 		return (display_dico(mini->env), 0);
-	else if (!ft_strcmp(cmd->fname, "export"))
+	else if (cmd->builtin == EXPORT)
 		return (export_m(mini, cmd));
-	else if (!ft_strcmp(cmd->fname, "unset"))
+	else if (cmd->builtin == UNSET)
 		return (unset(mini, cmd));
-	else if (!ft_strcmp(cmd->fname, "exit"))
+	else if (cmd->builtin == EXIT)
 		return (exit_m(mini, cmd));
 	return (1);
 }

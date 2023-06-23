@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:15:16 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/22 20:03:03 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:04:48 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	redirections(t_minishell *mini, t_cmd *cmd)
 {
 	int		i;
 	int		fds[2];
-	int		out;
 	char	*fname;
 
 	i = -1;
@@ -107,7 +106,10 @@ static int	here_doc(char *stop, t_minishell *mini, int fd, int is_last)
 	while (str && ft_strcmp(str, stop))
 	{
 		if (is_last)
+		{
 			ft_putstr_fd(str, fd);
+			ft_putchar_fd('\n', fd);
+		}
 		safe_free(str);
 		str = prompt_heredoc(mini);
 	}

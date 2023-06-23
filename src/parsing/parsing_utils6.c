@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:20:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/21 15:05:05 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:34:12 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	remove_quotes(t_cmd *cmds)
 			i++;
 		}
 		cmds->fname = cmds->av[0];
+		set_builtins(cmds);
 		cmds = cmds->next;
 	}
 }
