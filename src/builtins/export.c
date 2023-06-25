@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:27:17 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/25 19:45:08 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:47:00 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	export_m(t_minishell *mini, t_cmd *cmd)
 				;
 			else if (!key_val[1])
 			{
-				if (!add_dico(mini->env, !key_val[0], ""))
+				if (!add_dico(mini->env, key_val[0], ""))
 					return (ft_free_split(key_val), exit_m(mini, NULL), -1);
 			}
 			else if (!add_dico(mini->env, key_val[0], key_val[1]))
