@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:54:22 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/25 19:40:13 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:45:33 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	get_options(char ***av)
 	re = 0;
 	while (**av)
 	{
-		str= **av;
+		str = **av;
 		i = 1;
 		if (str[0] != '-')
 			return (re);
@@ -62,5 +62,5 @@ static int	get_options(char ***av)
 			return (re);
 		*av += 1;
 	}
-	return re;
+	return (re);
 }
