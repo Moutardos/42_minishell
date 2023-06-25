@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 01:35:07 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 23:30:23 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:22:02 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,4 +250,5 @@ int			size_dico(t_dico *dico);
 char		*replace_str(t_dico *dico, char *str);
 
 int			ft_isnumeric(const char *str);
+void		delete_dico(t_dico *dico, char *key);
 #endif

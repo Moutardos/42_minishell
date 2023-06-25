@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 01:32:59 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 16:58:59 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:37:11 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,17 @@ char	**dico_array(t_dico *dico)
 	char			*temp;
 
 	size = size_dico(dico);
-	dico_char = ft_calloc(sizeof(char *), size + 1);
+	dico_char = ft_calloc(size + 1, sizeof(char *));
+	if (!dico_char)
+		return (NULL);
 	i = 0;
 	current = dico;
 	while (current)
 	{
-		temp = ft_strjoin(dico->key, "=");
+		temp = ft_strjoin(current->key, "=");
 		if (!temp)
 			return (ft_free_split(dico_char), NULL);
-		dico_char[i] = ft_strjoin(temp, dico->value);
+		dico_char[i] = ft_strjoin(temp, current->value);
 		if (!dico_char[i])
 			return (ft_free_split(dico_char), safe_free(temp), NULL);
 		safe_free(temp);

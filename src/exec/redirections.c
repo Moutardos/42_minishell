@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:15:16 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/23 18:04:48 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:47:25 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils.h"
 #include "builtins.h"
 
-static int	t_redirections(char *name, t_cmd *cmd, t_delim d, int f[2]);
+static int	t_redirections(char *name, t_delim d, int *in, int *out);
 static int	here_doc(char *stop, t_minishell *mini, int fd, int is_last);
 static char	*prompt_heredoc(t_minishell *mini);
 
@@ -23,12 +23,13 @@ static char	*prompt_heredoc(t_minishell *mini);
 int	redirections(t_minishell *mini, t_cmd *cmd)
 {
 	int		i;
-	int		fds[2];
+	int		in;
+	int		out;
 	char	*fname;
 
 	i = -1;
-	fds[0] = -1;
-	fds[1] = -1;
+	in = -1;
+	out = -1;
 	while (cmd->delim_f != NULL && cmd->delim_f[++i] != NULL)
 	{
 		fname = NULL;
@@ -37,40 +38,40 @@ int	redirections(t_minishell *mini, t_cmd *cmd)
 		else if (is_last_heredoc(cmd, i))
 			fname = mini->hd_path;
 		if (fname)
-			if (t_redirections(fname, cmd, cmd->delim[i], fds) < 0)
+			if (t_redirections(fname, cmd->delim[i], &in, &out) < 0)
 				return (-1);
 	}
-	if (fds[0] > 0)
-		cmd->in = closef(cmd->in, fds[0]);
-	if (fds[1] > 0)
-		cmd->out = closef(cmd->out, fds[1]);
+	if (in > 0)
+		cmd->in = closef(cmd->in, in);
+	if (out > 0)
+		cmd->out = closef(cmd->out, out);
 	return (0);
 }
 
-static int	t_redirections(char *name, t_cmd *cmd, t_delim d, int f[2])
+static int	t_redirections(char *name, t_delim d, int *in, int *out)
 {
 	int	option;
 
 	if (d == IN || d == IN_NL)
 	{
-		closef(f[0], 0);
+		closef(*in, 0);
 		if (d == IN)
 			option = O_RDWR;
 		else
 			option = O_CREAT | O_RDWR | O_TRUNC;
-		f[0] = open(name, option, S_IRUSR | S_IWUSR);
-		if (f[0] < 0)
+		*in = open(name, option, S_IRUSR | S_IWUSR);
+		if (*in < 0)
 			return (perror("minishell"), 1);
 	}
 	else if (d == OUT || d == OUT_APPEND)
 	{
-		closef(f[1], 0);
+		closef(*out, 0);
 		if (d == OUT)
 			option = O_CREAT | O_RDWR | O_TRUNC;
 		else
 			option = O_CREAT | O_RDWR | O_APPEND;
-		f[1] = open(name, option, S_IRUSR | S_IWUSR);
-		if (f[1] < 0)
+		*out = open(name, option, S_IRUSR | S_IWUSR);
+		if (*out < 0)
 			return (perror("minishell"), 1);
 	}
 	return (0);

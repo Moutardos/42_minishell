@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:10:23 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/20 16:58:46 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:38:34 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,24 @@ int	size_dico(t_dico *dico)
 		dico = dico->next;
 	}
 	return (size);
+}
+
+void	delete_dico(t_dico *dico, char *key)
+{
+	t_dico	*last;
+
+	last = NULL;
+	while (dico)
+	{
+		if (!ft_strcmp(dico->key, key))
+		{
+			last->next = dico->next;
+			safe_free(dico->key);
+			safe_free(dico->value);
+			safe_free(dico);
+			return ;
+		}
+		last = dico;
+		dico = dico->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/23 18:01:28 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:39:17 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	if (cmd->builtin != B_NONE && !cmd->next)
 	{
 		if (treat_builtins(mini, cmd) < 0)
-				return (printf("minishell: error builtin"), -1);
+			return (printf("minishell: error builtin"), -1);
 		return (0);
 	}
 	pid = fork();
@@ -116,7 +116,6 @@ static int	create_pipe(t_minishell *mini)
 
 static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 {
-
 	if (cmd->builtin == ECHO)
 		return (echo(cmd));
 	else if (cmd->builtin == PWD)
