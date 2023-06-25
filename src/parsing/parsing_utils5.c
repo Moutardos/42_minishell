@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/21 14:59:18 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:49:44 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin)
 	delim_offset = curr_delim_offset(cmd2, get_next_delim(cmd2, 0));
 	alloc = bltn_args_amount(cmd, delim_offset) \
 	+ delims_args_amount(cmd2);
-	curr_cmd->ac = 1;
 	curr_cmd->av = ft_calloc(alloc + 2, sizeof(char *));
 	if (!curr_cmd->av)
 		return ;
-	if (builtin != NULL)
+	if (builtin != NULL && ft_strcmp(builtin, ""))
+	{
 		curr_cmd->av[0] = builtin;
+		curr_cmd->ac = 1;
+	}
 	test = 0;
 	while (cmd[test] == ' ')
 		test++;

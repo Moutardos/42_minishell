@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:27:17 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/20 22:59:14 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:49:20 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	export_m(t_minishell *mini, t_cmd *cmd)
 		if (ft_strchr(cmd->av[i], '=') != NULL)
 		{
 			key_val = ft_split(cmd->av[i], '=');
-			if (!key_val)
-				return (exit_m(mini, NULL), -1);
+			if (!key_val || !key_val[0] || !key_val[1])
+				return (exit_m(mini, NULL), ft_free_split(key_val), -1);
 			if (!add_dico(mini->env, key_val[0], key_val[1]))
 				return (ft_free_split(key_val), exit_m(mini, NULL), -1);
 			ft_free_split(key_val);
