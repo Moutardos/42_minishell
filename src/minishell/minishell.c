@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 23:29:48 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:47:21 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,14 @@ int	g_exit_code = 0;
 t_minishell	*init_minishell(char **envp)
 {
 	t_minishell	*mini;
-	char		*path;
 
-	path = getenv("PATH");
-	if (!path)
-		return (NULL);
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (NULL);
 	mini->env = array_dico(envp);
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
 		return (free_dico(&mini->env), safe_free(mini), NULL);
-	mini->paths = ft_split(path, ':');
-	if (!mini->paths)
-		return (free_dico(&mini->env), safe_free(mini), NULL);
+	mini->paths = NULL;
 	mini->hd_path = ft_strjoin(mini->pwd, "/.hd");
 	if (!mini->hd_path)
 	{

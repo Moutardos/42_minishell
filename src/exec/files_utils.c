@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/22 16:26:03 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:50:44 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "utils.h"
 #include "builtins.h"
 
+static	char **update_paths(t_minishell *mini);
+
 int	check_paths(t_minishell *mini, t_cmd *cmd)
 {
 	char	*path;
@@ -22,6 +24,7 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 	int		i;
 
 	i = 0;
+	update_paths(mini);
 	if (!mini->paths || cmd->fname[1] == '\0')
 		return (-1);
 	while (mini->paths[i])
@@ -76,4 +79,17 @@ void	close_pipe(t_cmd *cmds, int n)
 		i++;
 		current = current->next;
 	}
+}
+
+static	char **update_paths(t_minishell *mini)
+{
+	char		*paths;
+
+	paths = get_dico(mini->env, "PATH");
+	if (!paths)
+		return (NULL);
+	mini->paths = ft_split(paths, ':');
+	if (!mini->paths)
+		return (free_dico(&mini->env), safe_free(mini), NULL);
+	return (mini->paths);
 }
