@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:56:29 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/20 23:30:35 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 22:18:43 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ int	exit_m(t_minishell *mini, t_cmd *cmd)
 	if (cmd)
 	{
 		if (!ft_isnumeric(cmd->av[1]))
-			return (ft_printf("minishell: exit: argument is not numeric"), 1);
-		mini->exit = 1;
+		{
+			mini->exit = 1;
+			return (ft_printf("minishell: exit: argument is not numeric\n"), 1);
+		}
 		if (cmd->ac > 2)
-			return (ft_printf("minishell: exit: too many arguments"), 1);
+			return (ft_printf("minishell: exit: too many arguments\n"), 1);
+		mini->exit = 1;
 		g_exit_code = ft_atoi(cmd->av[1]);
 	}
 	return (0);
