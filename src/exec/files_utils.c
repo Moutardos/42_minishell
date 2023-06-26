@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/26 14:27:36 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:06:03 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_paths(t_minishell *mini, t_cmd *cmd)
 
 	i = 0;
 	update_paths(mini);
-	if (!mini->paths || cmd->fname[1] == '\0')
+	if (!mini->paths || cmd->fname[0] == '\0')
 		return (-1);
 	while (mini->paths[i])
 	{
