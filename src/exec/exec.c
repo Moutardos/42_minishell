@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/26 13:59:15 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:27:03 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,14 @@ int	execute(t_minishell	*mini)
 		if (treating_here_doc(cmd, mini) < 0)
 			return (exit_m(mini, NULL), -1);
 		if (cmd->fname)
-			re= treat_cmds(cmd, mini);
+			re = treat_cmds(cmd, mini);
 		if (re < 0)
 			return (close_pipe(mini->cmds, -1), exit_m(mini, NULL), -1);
 		if (re == 1)
 			ft_printf("minishell: command not found : %s\n", cmd->fname);
-		closef(cmd->in, 0);
-		closef(cmd->out, 0);
 		cmd = cmd->next;
 	}
+	close_pipe(mini->cmds, -1);
 	if (wait_exec(mini) < 0)
 		return (exit_m(mini, NULL), -1);
 	return (0);
@@ -112,7 +111,7 @@ static int	create_pipe(t_minishell *mini)
 			current->next->in = pip[0];
 		}
 		if (redirections(mini, current) < 0)
-			return (perror("minishell"), -1);
+			return (-1);
 		current = current->next;
 		i++;
 	}
@@ -121,21 +120,31 @@ static int	create_pipe(t_minishell *mini)
 
 static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 {
+	int		re;
+	char	*str;
+
+	re = 1;
 	if (cmd->builtin == ECHO)
-		return (echo(cmd));
+		re = echo(cmd);
 	else if (cmd->builtin == PWD)
-		return (pwd(mini, cmd->out));
+		re = pwd(mini, cmd->out);
 	else if (cmd->builtin == CD)
-		return (cd(mini, cmd));
+		re = cd(mini, cmd);
 	else if (cmd->builtin == ENV)
-		return (display_dico(mini->env), 0);
+	{
+		re = 0;
+		display_dico(mini->env);
+	}
 	else if (cmd->builtin == EXPORT)
-		return (export_m(mini, cmd));
+		re = export_m(mini, cmd);
 	else if (cmd->builtin == UNSET)
-		return (unset(mini, cmd));
+		re = unset(mini, cmd);
 	else if (cmd->builtin == EXIT)
-		return (exit_m(mini, cmd));
-	return (1);
+		re = exit_m(mini, cmd);
+	str = ft_itoa(re);
+	if (!str || !add_dico(mini->env, "?", str))
+		return (exit_m(mini, NULL), -1);
+	return (re);
 }
 
 static int	wait_exec(t_minishell *mini)

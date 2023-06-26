@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:44:12 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/11/28 20:18:45 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:18:15 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 int	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, sizeof(char));
-	return (1);
+	return (write(fd, &c, sizeof(char)));
 }

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:54:22 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/25 19:45:33 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:22:32 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ int	echo(t_cmd *cmd)
 	while (av[i])
 	{
 		if (i != 0)
-			ft_putchar_fd(' ', cmd->out);
-		ft_putstr_fd(av[i], cmd->out);
+			if (ft_putchar_fd(' ', cmd->out) < 1)
+				return (-1);
+		if (ft_putstr_fd(av[i], cmd->out) < ft_strlen(av[i]))
+			return (-1);
 		i++;
 	}
 	if (!option)
-		ft_putchar_fd('\n', cmd->out);
+		if (ft_putchar_fd('\n', cmd->out) < 1)
+			return (-1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 16:15:16 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/25 18:47:25 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:23:27 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	t_redirections(char *name, t_delim d, int *in, int *out)
 			option = O_CREAT | O_RDWR | O_TRUNC;
 		*in = open(name, option, S_IRUSR | S_IWUSR);
 		if (*in < 0)
-			return (perror("minishell"), 1);
+			return (perror("minishell"), -1);
 	}
 	else if (d == OUT || d == OUT_APPEND)
 	{
@@ -72,7 +72,7 @@ static int	t_redirections(char *name, t_delim d, int *in, int *out)
 			option = O_CREAT | O_RDWR | O_APPEND;
 		*out = open(name, option, S_IRUSR | S_IWUSR);
 		if (*out < 0)
-			return (perror("minishell"), 1);
+			return (perror("minishell"), -1);
 	}
 	return (0);
 }

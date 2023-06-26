@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/26 13:47:21 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:18:24 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_minishell	*init_minishell(char **envp)
 		return (NULL);
 	mini->env = array_dico(envp);
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
+		mini->pwd[0] = '\0';
+	if (!add_dico(mini->env, "?", "0"))
 		return (free_dico(&mini->env), safe_free(mini), NULL);
 	mini->paths = NULL;
 	mini->hd_path = ft_strjoin(mini->pwd, "/.hd");

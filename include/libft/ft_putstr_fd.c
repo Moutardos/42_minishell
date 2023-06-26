@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:57:27 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/11/28 20:09:50 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:09:45 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,5 @@ int	ft_putstr_fd(char *s, int fd)
 	if (s == NULL)
 		return (0);
 	size = ft_strlen(s);
-	write(fd, s, size);
-	return (size);
+	return (write(fd, s, size));
 }
