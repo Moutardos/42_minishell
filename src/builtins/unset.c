@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:47:49 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/25 18:30:14 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:42:02 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	unset(t_minishell *mini, t_cmd *cmd)
 			if (!ft_strcmp(key, cmd->av[i]))
 			{
 				delete_dico(mini->env, cmd->av[i]);
+				return (0);
 			}
 			dico = dico->next;
 		}

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 01:32:59 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/25 18:37:11 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:44:36 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*get_dico(t_dico *dico, char *key)
 {
 	while (dico)
 	{
-		if (ft_strncmp(key, dico->key, ft_strlen(key)) == 0)
+		if (ft_strcmp(key, dico->key) == 0)
 			return (ft_strdup(dico->value));
 		dico = dico->next;
 	}
