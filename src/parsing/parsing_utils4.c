@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:06:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 16:31:02 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 22:34:05 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ static int	next_arg_pos5(char *str, int pos)
 		}
 		if (quotes(str, pos))
 		{
-			while (quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0')
+			while (quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0' \
+			&& (ft_isalnum(str[pos]) || str[pos] == '_'))
 				pos++;
 			return (pos);
 		}
