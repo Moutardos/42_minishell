@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 12:20:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 15:38:01 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 17:43:47 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int	curr_delim_offset(char *str, int pos)
 	{
 		//printf("str[i] : %c\n", str[i]);
 		if (((!quotes_test(str, i) || quotes_test(str, i) && !quotes_test(str, i + 1))) \
-		&& (str[i] == '"' || str[i] == '\'' || str[i] == '\\') || str[i] == '|')
+		&& (str[i] == '"' || str[i] == '\'' || str[i] == '\\'))
 		{
 		//	printf("reached \n");
 			offset++;

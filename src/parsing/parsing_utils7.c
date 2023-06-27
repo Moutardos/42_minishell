@@ -6,14 +6,14 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:31:06 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 14:59:08 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 17:57:46 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-//echo "$USER ' ' ' | " > test
+//echo salut toi " ||||| || | || " > test".txt" append2">" "|||"
 void	assign_delims_offset(char *cmd, char *cmd2, int *data, int size)
 {
 	int	i;
@@ -38,6 +38,8 @@ void	assign_delims_offset(char *cmd, char *cmd2, int *data, int size)
 		//j = get_next_delim(cmd2, j);
 		//data[i] = j;
 		//printf("data[i] : %d\n", data[i]);
+		//printf("cmd[data[i]] : %c\n", cmd[data[i]]);
+		//printf("cmd[data[i] : %c\n", cmd[data[i] + 1]);
 		//printf("get_next_delim(cmd2, 0) : %d\n", get_next_delim(cmd2, 0));
 		//delim_offset = curr_delim_offset(cmd2, get_next_delim(cmd2, 0));
 		i++;

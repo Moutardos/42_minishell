@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 14:49:14 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 18:03:38 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,18 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin)
 	return ;
 }
 
-//echo salut > test | echo test
+//echo salut toi " ||||| || | || " > test".txt" append2">" "|||"
 static void	get_delims_auxiliary2(t_cmd *c, t_delims_args *a, char *cmd, \
 int delim_offset_index)
 {
 	while (a->i < c->offset_delims[delim_offset_index + 1] && \
-	cmd[a->i] != '\0' && cmd[a->i] != '|')
+	cmd[a->i] != '\0')
+	//cmd[a->i] != '\0' && cmd[a->i] != '|')
 	{
+		//printf("a->i : %d\n", a->i);
+		//printf("c->offset_delims[delim_offset_index + 1]: %d\n", \
+		c->offset_delims[delim_offset_index + 1]);
+		//printf("cmd[a->i] : %c\n", cmd[a->i]);
 		if (cmd[a->i] != ' ')
 		{
 			a->l = 0;
