@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 17:29:38 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 23:10:10 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	g_exit_code = 0;
 t_minishell	*init_minishell(char **envp)
 {
 	t_minishell	*mini;
+	char		*value;
 
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
@@ -31,6 +32,12 @@ t_minishell	*init_minishell(char **envp)
 		mini->pwd[0] = '\0';
 	if (!add_dico(mini->env, "?", "0"))
 		return (free_dico(&mini->env), safe_free(mini), NULL);
+	if (getenv("SHLVL"))
+	{
+		value = ft_itoa(ft_atoi(getenv("SHLVL")) + 1);
+		if (!value || !add_dico(mini->env, "SHLVL", value))
+			return (free_dico(&mini->env), safe_free(mini), NULL);
+	}
 	mini->paths = NULL;
 	mini->hd_path = ft_strjoin(mini->pwd, "/.hd");
 	if (!mini->hd_path)
