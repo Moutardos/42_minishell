@@ -6,19 +6,21 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:27:17 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/25 19:47:00 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 22:31:02 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtins.h"
 
+static int	is_valid(char *str);
+
 int	export_m(t_minishell *mini, t_cmd *cmd)
 {
 	int		i;
 	char	**key_val;
 
-	i = 1;
+	i = 0;
 	while (i < cmd->ac)
 	{
 		if (ft_strchr(cmd->av[i], '=') != NULL)
@@ -26,7 +28,7 @@ int	export_m(t_minishell *mini, t_cmd *cmd)
 			key_val = ft_split(cmd->av[i], '=');
 			if (!key_val)
 				return (exit_m(mini, NULL), -1);
-			if (!key_val[0])
+			if (!key_val[0] || !is_valid(key_val[0]))
 				;
 			else if (!key_val[1])
 			{
@@ -40,4 +42,18 @@ int	export_m(t_minishell *mini, t_cmd *cmd)
 		i++;
 	}
 	return (0);
+}
+
+static int	is_valid(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isalnum(*str) && *str != '_')
+		{
+			ft_putstr_fd("minishell: export: character not valid\n", STDERR);
+			return (0);
+		}
+		str++;
+	}
+	return (1);
 }
