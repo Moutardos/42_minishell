@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 21:07:29 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 21:48:48 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ t_delims_args *a, int delim_offset)
 	//printf("for cmd2 : %s\n", cmd2);
 	//printf("delim_offset : %d\n", delim_offset);
 	//echo coltcivers '" > test
+	a->i = 0;
 	while (cmd2[a->i] != '\0' && !is_delim(cmd2, a->i))
 	{
 		//printf("i %d\n", a->i);
@@ -162,11 +163,11 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin)
 	curr_cmd->av = ft_calloc(alloc + 2, sizeof(char *));
 	if (!curr_cmd->av)
 		return ;
-	if (builtin != NULL && ft_strcmp(builtin, ""))
-	{
-		curr_cmd->av[0] = builtin;
-		curr_cmd->ac = 1;
-	}
+	//if (builtin != NULL && ft_strcmp(builtin, ""))
+	//{
+	//	curr_cmd->av[0] = builtin;
+	//	curr_cmd->ac = 1;
+	//}
 	test = 0;
 	while (cmd[test] == ' ')
 		test++;
