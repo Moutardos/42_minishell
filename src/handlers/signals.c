@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:56:07 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 22:34:23 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 23:18:41 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 void	handler(int sig)
 {
-	if (waitpid(-1, NULL, WNOHANG) == 0)
-		return ;
 	if (sig == SIGINT)
 		replace_line();
 }
