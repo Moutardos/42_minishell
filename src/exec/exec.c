@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/27 14:26:29 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:04:10 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,8 @@ static int	treat_builtins(t_minishell *mini, t_cmd *cmd)
 		re = exit_m(mini, cmd);
 	str = ft_itoa(re);
 	if (!str || !add_dico(mini->env, "?", str))
-		return (exit_m(mini, NULL), -1);
-	return (re);
+		return (safe_free(str), exit_m(mini, NULL), -1);
+	return (safe_free(str), re);
 }
 
 static int	wait_exec(t_minishell *mini)
