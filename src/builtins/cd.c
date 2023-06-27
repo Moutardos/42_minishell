@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:27:33 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/25 20:20:32 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:59:16 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	cd(t_minishell *mini, t_cmd *cmd)
 	char	*home;
 
 	if (cmd->ac > 2)
-		return (ft_putstr_fd("minishell: path not found\n", STDERR), 0);
+		return (ft_putstr_fd("minishell: too much arguments\n", STDERR), 0);
 	else if (cmd->ac == 2)
 		err = chdir(cmd->av[1]);
 	else
