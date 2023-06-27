@@ -6,14 +6,14 @@ IDIR = include
 NAME = $(BDIR)/minishell
 LIBFT = $(IDIR)/libft/libft.a
 RM = rm -f
-CFLAGS = -Wall -Wextra -I$(IDIR)
+CFLAGS = -Wall -Wextra -Werror -I$(IDIR)
 LFLAGS = -L$(IDIR)/libft -lft -lreadline 
 FILES =  exec/exec exec/files_utils \
          minishell/minishell parsing/cmd_utils parsing/parsing_utils1 \
 		 parsing/parsing_utils2 parsing/parsing_utils3 parsing/parsing \
 		 parsing/parsing_utils4 parsing/parsing_utils5 parsing/parsing_utils6\
 		 parsing/parsing_utils7 builtins/echo builtins/pwd builtins/cd\
-		 builtins/export builtins/unset builtins/exit\
+		 builtins/export builtins/unset builtins/exit parsing/parsing_utils8\
 		 handlers/signals exec/redirections
 OBJS = $(patsubst %,$(ODIR)/%,$(FILES:=.o))
 DEPS = $(patsubst %,$(SDIR)/%,$(FILES:=.d))

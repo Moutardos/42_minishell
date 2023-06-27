@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:28:01 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/27 16:20:25 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/28 00:07:30 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,33 @@ int	next_sep_pos(char *str, int pos)
 	{
 		if (!quotes(str, pos) && str[pos] == '|')
 			return (pos + 1);
-		//return (pos + 1);
 		pos++;
 	}
 	return (pos);
 }
 
-int	validate_builtin(char *builtin)
+void	get_args_auxiliary2(t_cmd *curr_cmd, char *cmd2,
+t_delims_args *a)
 {
-	if (!ft_strncmp(builtin, "echo", 4) || !ft_strncmp(builtin, "cd", 2) || \
-	!ft_strncmp(builtin, "pwd", 3) || !ft_strncmp(builtin, "export", 6) || \
-	!ft_strncmp(builtin, "unset", 5) || !ft_strncmp(builtin, "env", 3) || \
-	!ft_strncmp(builtin, "exit", 4) || !ft_strncmp(builtin, ">>", 2))
-		return (1);
-	return (0);
+	curr_cmd->av[curr_cmd->ac] = ft_calloc(a->j - a->i + 1, \
+	sizeof(char));
+	if (!curr_cmd->av[curr_cmd->ac])
+		return ;
+	while (a->i < a->j)
+	{
+		if ((cmd2[a->i] == '\'' || cmd2[a->i] == '"') \
+		&& (!quotes2(cmd2, a->i) || (quotes2(cmd2, a->i) \
+		&& !quotes2(cmd2, a->i + 1))))
+		{
+			a->i++;
+			continue ;
+		}
+		curr_cmd->av[curr_cmd->ac][a->l] = cmd2[a->i];
+		a->i++;
+		a->l++;
+	}
+	curr_cmd->av[curr_cmd->ac][a->l] = '\0';
+	curr_cmd->ac++;
 }
 
 int	is_sep(char c)

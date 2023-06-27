@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/27 14:48:53 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 23:00:57 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,6 @@ char	*join_from_pos(char *str1, int start, int end, char *env)
 	int		i;
 
 	i = -1;
-	//printf("start : %d\n", start);
-	//printf("end : %d\n", end);
-	//printf("str1[start] : %c\n", str1[start]);
-	//printf("str1[end] : %c\n", str1[end]);
 	new = ft_calloc(ft_strlen(str1) \
 	+ ft_strlen(env) + 1, sizeof(char));
 	if (!new)
@@ -103,15 +99,12 @@ char	*env_from_pos(t_dico *dico, char *str, int start, int end)
 		return (NULL);
 	while (start < end)
 	{
-		//printf("str[start] envfrom: %c\n", str[start]);
 		new[i] = str[start];
 		start++;
 		i++;
 	}
 	new[i] = '\0';
-	//printf("new envfrom: %s\n", new);
 	rep = get_dico(dico, new);
 	free(new);
-	//printf("rep : %s\n", rep);
 	return (rep);
 }

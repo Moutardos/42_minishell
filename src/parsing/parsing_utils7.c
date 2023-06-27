@@ -6,49 +6,34 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:31:06 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 17:57:46 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/28 00:04:50 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-//echo salut toi " ||||| || | || " > test".txt" append2">" "|||"
-void	assign_delims_offset(char *cmd, char *cmd2, int *data, int size)
+void	assign_delims_offset(char *cmd, int *data, int size)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	//printf("assign cmd : %s\n", cmd);
-	//printf("assign cmd2 : %s\n", cmd2);
 	while (i < size)
 	{
-		//if (is_delim(cmd2, j) && i != 0)
 		if ((cmd[j] == '>' || cmd[j] == '<') && i != 0)
 		{
 			j++;
 			continue ;
 		}
 		j = get_next_delim(cmd, j);
-		//printf("j : %d\n", j);
-		//printf("curr_delim_offset(cmd, j) : %d\n", curr_delim_offset(cmd, j));
 		data[i] = curr_delim_offset(cmd, j);
-		//j = get_next_delim(cmd2, j);
-		//data[i] = j;
-		//printf("data[i] : %d\n", data[i]);
-		//printf("cmd[data[i]] : %c\n", cmd[data[i]]);
-		//printf("cmd[data[i] : %c\n", cmd[data[i] + 1]);
-		//printf("get_next_delim(cmd2, 0) : %d\n", get_next_delim(cmd2, 0));
-		//delim_offset = curr_delim_offset(cmd2, get_next_delim(cmd2, 0));
 		i++;
 	}
 	data[i] = ft_strlen(cmd);
-	//printf("data[i] : %d\n", data[i]);
 }
 
-//echo salut"toi >>> || |" "|" > test."txt" append" append2" ">"
 void	get_delims_auxiliary3(t_delims_args *args, \
 char *cmd, char *holder)
 {
@@ -59,7 +44,6 @@ char *cmd, char *holder)
 		args->l++;
 	}
 	holder[args->l] = '\0';
-	//printf("holder : %s\n", holder);
 	args->delim_b++;
 }
 
@@ -86,4 +70,35 @@ void	set_builtins(t_cmd *cmd)
 	}
 	else
 		cmd->builtin = B_NONE;
+}
+
+int	is_delim2(char *cmd, int i)
+{
+	if (!quotes(cmd, i) && (cmd[i] == '>' || cmd[i] == '<'))
+		return (1);
+	return (0);
+}
+
+int	quotes2(char *line, int index)
+{
+	int	i;
+	int	open;
+
+	i = 0;
+	open = 0;
+	while (line[i] && i < index)
+	{
+		if (i > 0 && line[i - 1] == '\\')
+			;
+		else if (open == 0 && line[i] == '"')
+			open = 1;
+		else if (open == 0 && line[i] == '\'')
+			open = 2;
+		else if (open == 1 && line[i] == '"')
+			open = 0;
+		else if (open == 2 && line[i] == '\'')
+			open = 0;
+		i++;
+	}
+	return (open);
 }
