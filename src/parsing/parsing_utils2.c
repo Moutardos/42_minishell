@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:29:02 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/21 14:42:18 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 14:58:11 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,20 @@ int	get_delims_amount(char *str)
 	return (count);
 }
 
+static int	is_delim2(char *cmd, int i)
+{
+	if (!quotes(cmd, i) && (cmd[i] == '>' || cmd[i] == '<'))
+		return (1);
+	return (0);
+}
+
 int	get_next_delim(char *str, int start)
 {
 	int	i;
 
 	i = start;
-	while (str[i] != '\0' && !is_delim(str, i))
+	//MODIF CA POUR JUSTE ALLER AU NEXT DELIM
+	while (str[i] != '\0' && !is_delim2(str, i))
 		i++;
 	return (i);
 }
