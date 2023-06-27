@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 14:49:42 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 16:38:26 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,41 @@ t_cmd *parse_cmd(int start, int end, char *str)
 	return (safe_free(temp), safe_free(copy), safe_free(copy2), cmd);
 }
 
+static int check_empty(char *str, int pos)
+{
+	//if (pos > 0 && str[pos - 1] == '|')
+	//	return (1);
+	if (str[pos] == '\0' && (pos > 0 && str[pos - 1] != '|'))
+		return (0);
+	while(str[pos] != '\0')
+	{
+		if (str[pos] != ' ')
+			return (0);
+		pos++;
+	}
+	return (1);
+}
+
 static t_cmd *parser(char *str)
 {
 	int i;
 	int next_delim;
 	t_cmd *curr_cmd;
 	t_cmd *new_cmd;
+	int temp;
 
 	i = 0;
+	temp = 0;
 	curr_cmd = NULL;
 	while (str[i] != '\0')
 	{
 		next_delim = next_sep_pos(str, i);
+		//printf("str[next_delim] : %c\n", str[next_delim]);
+		//printf("iteration : \n");
+		//check if post | is empty
+		//printf("check_empty(str, next_delim) : %d\n",  check_empty(str, next_delim));
+		if (check_empty(str, next_delim))
+			return (clear_cmd(curr_cmd));
 		new_cmd = parse_cmd(i, next_delim, str);
 		if (!new_cmd)
 			return (clear_cmd(curr_cmd));
@@ -102,7 +125,7 @@ static t_cmd *parser(char *str)
 		printf("delim_f : %s\n", new_cmd->delim_f[i]);
 		i++;
 	}
-	*/
+		*/
 		i = next_delim;
 	}
 	return (curr_cmd);

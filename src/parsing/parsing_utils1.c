@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:28:01 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/27 14:48:34 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 16:20:25 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	next_sep_pos(char *str, int pos)
 	{
 		if (!quotes(str, pos) && str[pos] == '|')
 			return (pos + 1);
+		//return (pos + 1);
 		pos++;
 	}
 	return (pos);

@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:06:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 14:49:02 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 16:31:02 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ char	*get_builtin(char *cmd)
 		return (NULL);
 	j = i;
 	i = next_arg_pos(cmd, i);
+	//printf("i : %d\n", i);
+	//printf("j : %d\n", j);
 	builtin = ft_calloc(i - j + 1, sizeof(char));
 	if (!builtin)
 		return (NULL);
