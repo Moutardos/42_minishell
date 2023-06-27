@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:54:22 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/27 14:26:08 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:16:38 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	echo(t_cmd *cmd)
 	while (av[i])
 	{
 		if (i != 0)
-			if (ft_putchar_fd(' ', cmd->out) < 1)
+			if (ft_putchar_fd(' ', cmd->out) == ENOSPC)
 				return (-1);
-		if ((size_t) ft_putstr_fd(av[i], cmd->out) < ft_strlen(av[i]))
+		if (ft_putstr_fd(av[i], cmd->out) == ENOSPC)
 			return (ft_putstr_fd("echo: file is full\n", STDERR), -1);
 		i++;
 	}
 	if (!option)
-		if (ft_putchar_fd('\n', cmd->out) < 1)
+		if (ft_putchar_fd('\n', cmd->out) == ENOSPC)
 			return (-1);
 	return (0);
 }
