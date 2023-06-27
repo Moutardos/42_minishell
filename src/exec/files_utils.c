@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 14:53:38 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/27 15:02:24 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:02:06 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ static char	**update_paths(t_minishell *mini)
 		ft_free_split(mini->paths);
 	mini->paths = ft_split(paths, ':');
 	if (!mini->paths)
-		return (free_dico(&mini->env), safe_free(mini), NULL);
-	return (mini->paths);
+		return (safe_free(paths), free_dico(&mini->env), safe_free(mini), NULL);
+	return (safe_free(paths), mini->paths);
 }
