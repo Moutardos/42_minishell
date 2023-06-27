@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 22:43:02 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 22:49:07 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ t_delims_args *a, int delim_offset)
 /// @param curr_cmd 
 /// @param cmd 
 /// @return 
-void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin)
+void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2)
 {
 	int	alloc;
 	int	test;

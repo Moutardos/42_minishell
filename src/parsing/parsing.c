@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 18:18:04 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 22:49:22 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_cmd *parse_cmd(int start, int end, char *str)
 	char *temp;
 	char *copy;
 	char *copy2;
-	char *builtin;
 	t_cmd *cmd;
 
 	if (delims_args_amount(str) < get_delims_amount(str))
@@ -52,8 +51,8 @@ t_cmd *parse_cmd(int start, int end, char *str)
 	copy = str_fullcpy(temp);
 	copy = expand_bltn(copy);
 	copy2 = str_fullcpy(temp);
-	builtin = get_builtin(copy);
-	get_args(cmd, copy, copy2, builtin);
+	//builtin = get_builtin(copy);
+	get_args(cmd, copy, copy2);
 	//printf("past get_args\n");
 	get_delims(cmd, ft_calloc(sizeof(t_delims_args), 1), copy, copy2);
 	//printf("past get_delims\n");
