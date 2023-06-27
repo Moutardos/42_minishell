@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 18:03:38 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 21:07:29 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,41 +21,115 @@ int	next_arg_pos4(char *str, int pos)
 	return (pos);
 }
 
+static int	quotes_temp(char *line, int index)
+{
+	int	i;
+	int	open;
+
+	i = 0;
+	open = 0;
+	while (line[i] && i < index)
+	{
+		if (i > 0 && line[i - 1] == '\\')
+			;
+		else if (open == 0 && line[i] == '"')
+			open = 1;
+		else if (open == 0 && line[i] == '\'')
+			open = 2;
+		else if (open == 1 && line[i] == '"')
+			open = 0;
+		else if (open == 2 && line[i] == '\'')
+			open = 0;
+		i++;
+	}
+	return (open);
+}
+
+/*
+static int	next_arg_pos_temp(char *str, int pos)
+{
+	while (str[pos] != '\0')
+	{
+		if (!quotes(str, pos))
+		{
+			while (!quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0' \
+			&& !is_delim(str, pos))
+				pos++;
+			return (pos);
+		}
+		if (quotes(str, pos))
+		{
+			while (quotes(str, pos))
+				pos++;
+			return (pos);
+		}
+		pos++;
+	}
+	return (pos);
+}
+*/
+
+static int	next_arg_pos_temp(char *str, int pos)
+{
+	while (str[pos] != '\0')
+	{
+		if (!quotes_temp(str, pos) && str[pos] == ' ')
+			return (pos);
+		pos++;
+	}
+	if (pos > 0 && (str[pos - 1] == '\'' || str[pos - 1] == '"'))
+		return (pos - 1);
+	return (pos);
+}
+
 //echo coltcivers '
 //echo "salut 'test' ee' "
-static void	get_args_auxiliary(t_cmd *curr_cmd, char *cmd, t_delims_args *a,
-int delim_offset)
+static void	get_args_auxiliary(t_cmd *curr_cmd, char *cmd, char *cmd2, 
+t_delims_args *a, int delim_offset)
 {
 	a->i = get_post_bltn(cmd);
 	//printf("for cmd : %s\n", cmd);
+	//printf("for cmd2 : %s\n", cmd2);
 	//printf("delim_offset : %d\n", delim_offset);
 	//echo coltcivers '" > test
-	while (cmd[a->i] != '\0' && a->i < delim_offset)
+	while (cmd2[a->i] != '\0' && !is_delim(cmd2, a->i))
 	{
 		//printf("i %d\n", a->i);
 		//printf("a->i <= delim_offset %d\n", a->i <= delim_offset);
-		if (cmd[a->i] != ' ')
+		//if (((!quotes_test(str, i) || quotes_test(str, i) && !quotes_test(str, i + 1)))
+		if ((cmd2[a->i] == ' ' || cmd2[a->i] == '\'' || cmd2[a->i] == '"')\
+		&& (!quotes_temp(cmd2, a->i) || (quotes_temp(cmd2, a->i) \
+		&& !quotes_temp(cmd2, a->i + 1))))
 		{
+			a->i++;
+			a->j++;
+			continue ;
+		}
 			a->l = 0;
-			a->j = next_arg_pos4(cmd, a->i);
-			//printf("next arg pos %d\n", a->j);
+			//CE SERA A MODIFIER POUR CORRESPONDRE AUX ESPACES COMME ARG
+			a->j = next_arg_pos_temp(cmd2, a->i);
+			printf("next arg pos %d\n", a->j);
 			curr_cmd->av[curr_cmd->ac] = ft_calloc(a->j - a->i + 1, \
 			sizeof(char));
 			if (!curr_cmd->av[curr_cmd->ac])
 				return ;
 			while (a->i < a->j)
 			{
-				curr_cmd->av[curr_cmd->ac][a->l] = cmd[a->i];
+				if ((cmd2[a->i] == '\'' || cmd2[a->i] == '"')\
+				&& (!quotes_temp(cmd2, a->i) || (quotes_temp(cmd2, a->i) \
+				&& !quotes_temp(cmd2, a->i + 1))))
+				{
+					a->i++;
+					continue ;
+				}
+				curr_cmd->av[curr_cmd->ac][a->l] = cmd2[a->i];
 				a->i++;
 				a->l++;
 			}
 			curr_cmd->av[curr_cmd->ac][a->l] = '\0';
-			//printf("arg : %s\n", curr_cmd->av[curr_cmd->ac]);
+			printf("arg : %s\n", curr_cmd->av[curr_cmd->ac]);
 			curr_cmd->ac++;
-			continue ;
-		}
-		a->i++;
-		a->j++;
+			//continue ;
 	}
 	//printf("out of loop \n");
 	free(a);
@@ -81,8 +155,8 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin)
 	alloc = bltn_args_amount(cmd, delim_offset) \
 	+ delims_args_amount(cmd2);
 	//printf("delim_offset : %d\n", delim_offset);
-	//printf("cmd : %s\n", cmd);
-	//printf("cmd2 : %s\n", cmd2);
+	//printf("get_args cmd : %s\n", cmd);
+	//printf("get_args cmd2 : %s\n", cmd2);
 	//printf("bltn_args_amount(cmd, delim_offset) : %d\n", bltn_args_amount(cmd, delim_offset));
 	//printf("delims_args_amount(cmd2) : %d\n", delims_args_amount(cmd2));
 	curr_cmd->av = ft_calloc(alloc + 2, sizeof(char *));
@@ -98,7 +172,7 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin)
 		test++;
 	if (is_delim(cmd, test))
 		return ;
-	get_args_auxiliary(curr_cmd, cmd, ft_calloc(sizeof(t_delims_args), 1), \
+	get_args_auxiliary(curr_cmd, cmd, cmd2, ft_calloc(sizeof(t_delims_args), 1), \
 	delim_offset);
 	return ;
 }
