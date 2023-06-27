@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils7.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 13:31:06 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/23 17:54:53 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:59:08 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+//echo "$USER ' ' ' | " > test
 void	assign_delims_offset(char *cmd, char *cmd2, int *data, int size)
 {
 	int	i;
@@ -20,18 +21,29 @@ void	assign_delims_offset(char *cmd, char *cmd2, int *data, int size)
 
 	i = 0;
 	j = 0;
+	//printf("assign cmd : %s\n", cmd);
+	//printf("assign cmd2 : %s\n", cmd2);
 	while (i < size)
 	{
-		if (is_delim(cmd, j) && i != 0)
+		//if (is_delim(cmd2, j) && i != 0)
+		if ((cmd[j] == '>' || cmd[j] == '<') && i != 0)
 		{
 			j++;
 			continue ;
 		}
 		j = get_next_delim(cmd, j);
+		//printf("j : %d\n", j);
+		//printf("curr_delim_offset(cmd, j) : %d\n", curr_delim_offset(cmd, j));
 		data[i] = curr_delim_offset(cmd, j);
+		//j = get_next_delim(cmd2, j);
+		//data[i] = j;
+		//printf("data[i] : %d\n", data[i]);
+		//printf("get_next_delim(cmd2, 0) : %d\n", get_next_delim(cmd2, 0));
+		//delim_offset = curr_delim_offset(cmd2, get_next_delim(cmd2, 0));
 		i++;
 	}
-	data[i] = ft_strlen(cmd2);
+	data[i] = ft_strlen(cmd);
+	//printf("data[i] : %d\n", data[i]);
 }
 
 //echo salut"toi >>> || |" "|" > test."txt" append" append2" ">"
@@ -45,6 +57,7 @@ char *cmd, char *holder)
 		args->l++;
 	}
 	holder[args->l] = '\0';
+	//printf("holder : %s\n", holder);
 	args->delim_b++;
 }
 

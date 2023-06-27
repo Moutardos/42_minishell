@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/23 17:46:26 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:49:42 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include "builtins.h"
 #include <stdio.h>
 
-static char	*parse_cmd_auxiliary(char *str, int start, int end, int j)
+static char *parse_cmd_auxiliary(char *str, int start, int end, int j)
 {
-	char	*temp;
+	char *temp;
 
 	temp = ft_calloc(end - start + 1, sizeof(char));
 	if (!temp)
@@ -32,13 +32,13 @@ static char	*parse_cmd_auxiliary(char *str, int start, int end, int j)
 	return (temp);
 }
 
-t_cmd	*parse_cmd(int start, int end, char *str)
+t_cmd *parse_cmd(int start, int end, char *str)
 {
-	char			*temp;
-	char			*copy;
-	char			*copy2;
-	char			*builtin;
-	t_cmd			*cmd;
+	char *temp;
+	char *copy;
+	char *copy2;
+	char *builtin;
+	t_cmd *cmd;
 
 	if (delims_args_amount(str) < get_delims_amount(str))
 	{
@@ -46,26 +46,28 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 		return (NULL);
 	}
 	temp = parse_cmd_auxiliary(str, start, end, 0);
-	builtin = get_builtin(temp);
 	cmd = new_cmd();
 	if (!cmd)
 		return (NULL);
 	copy = str_fullcpy(temp);
 	copy = expand_bltn(copy);
 	copy2 = str_fullcpy(temp);
+	builtin = get_builtin(copy);
 	get_args(cmd, copy, copy2, builtin);
+	//printf("past get_args\n");
 	get_delims(cmd, ft_calloc(sizeof(t_delims_args), 1), copy, copy2);
+	//printf("past get_delims\n");
 	cmd->in = STDIN;
 	cmd->out = STDOUT;
 	return (safe_free(temp), safe_free(copy), safe_free(copy2), cmd);
 }
 
-static t_cmd	*parser(char *str)
+static t_cmd *parser(char *str)
 {
-	int		i;
-	int		next_delim;
-	t_cmd	*curr_cmd;
-	t_cmd	*new_cmd;
+	int i;
+	int next_delim;
+	t_cmd *curr_cmd;
+	t_cmd *new_cmd;
 
 	i = 0;
 	curr_cmd = NULL;
@@ -82,15 +84,34 @@ static t_cmd	*parser(char *str)
 				return (clear_cmd(new_cmd), NULL);
 		}
 		cmd_add_back(&curr_cmd, new_cmd);
+		/*
+		printf("=============\n");
+		printf("Builtin args : \n");
+	i = 0;
+	while (new_cmd->av[i] != NULL)
+	{
+		printf("arg : %s\n", new_cmd->av[i]);
+		i++;
+	}
+	printf("/////////////\n");
+	printf("Builtin redirections : \n");
+	i = 0;
+	while (i < new_cmd->delim_a)
+	{
+		printf("delim : %d\n", new_cmd->delim[i]);
+		printf("delim_f : %s\n", new_cmd->delim_f[i]);
+		i++;
+	}
+	*/
 		i = next_delim;
 	}
 	return (curr_cmd);
 }
 
 /// @brief Get the latest user input and parse it into args, loop called
-int	parse_current_cmd(t_minishell *mini)
+int parse_current_cmd(t_minishell *mini)
 {
-	char	*line;
+	char *line;
 
 	line = readline("minishell : ");
 	add_history(line);
@@ -102,6 +123,6 @@ int	parse_current_cmd(t_minishell *mini)
 	mini->cmds = parser(line);
 	if (!mini->cmds)
 		return (safe_free(line), -1);
-	remove_quotes(mini->cmds);
+	parse_current_cmd_utils(mini->cmds);
 	return (safe_free(line), 0);
 }
