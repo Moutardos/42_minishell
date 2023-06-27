@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 21:48:48 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 22:06:29 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,11 @@ static int	next_arg_pos_temp(char *str, int pos)
 {
 	while (str[pos] != '\0')
 	{
-		if (!quotes_temp(str, pos) && str[pos] == ' ')
+		if (!quotes_temp(str, pos) && str[pos] == ' ' \
+		|| str[pos] == '>' || str[pos] == '<')
 			return (pos);
 		pos++;
 	}
-	if (pos > 0 && (str[pos - 1] == '\'' || str[pos - 1] == '"'))
-		return (pos - 1);
 	return (pos);
 }
 
@@ -109,6 +108,9 @@ t_delims_args *a, int delim_offset)
 			a->l = 0;
 			//CE SERA A MODIFIER POUR CORRESPONDRE AUX ESPACES COMME ARG
 			a->j = next_arg_pos_temp(cmd2, a->i);
+			if (cmd2[a->j - 1] == '>' || cmd2[a->j - 1] == '<' || cmd2[a->j - 1] == '|'\
+			|| cmd2[a->j - 1] == '\'' || cmd2[a->j - 1] == '"')
+				a->j--;
 			printf("next arg pos %d\n", a->j);
 			curr_cmd->av[curr_cmd->ac] = ft_calloc(a->j - a->i + 1, \
 			sizeof(char));
