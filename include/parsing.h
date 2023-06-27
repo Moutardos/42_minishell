@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/23 17:29:38 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 15:26:23 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int		next_arg_pos2(char *str, int pos);
 void	assign_delims_offset(char *cmd, char *cmd2, int *data, int size);
 void	get_delims_auxiliary3(t_delims_args *args, char *cmd, char *holder);
 void	set_builtins(t_cmd *cmd);
+int		next_arg_pos4(char *str, int pos);
+void	parse_current_cmd_utils(t_cmd *cmds);
 
 #endif
