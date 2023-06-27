@@ -6,7 +6,7 @@
 /*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 22:06:29 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/27 22:43:02 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static int	next_arg_pos_temp(char *str, int pos)
 {
 	while (str[pos] != '\0')
 	{
-		if (!quotes_temp(str, pos) && str[pos] == ' ' \
-		|| str[pos] == '>' || str[pos] == '<')
+		if (!quotes_temp(str, pos) && (str[pos] == ' ' \
+		|| str[pos] == '>' || str[pos] == '<'))
 			return (pos);
 		pos++;
 	}
@@ -88,7 +88,7 @@ t_delims_args *a, int delim_offset)
 {
 	a->i = get_post_bltn(cmd);
 	//printf("for cmd : %s\n", cmd);
-	//printf("for cmd2 : %s\n", cmd2);
+	printf("for cmd2 : %s\n", cmd2);
 	//printf("delim_offset : %d\n", delim_offset);
 	//echo coltcivers '" > test
 	a->i = 0;
@@ -108,6 +108,8 @@ t_delims_args *a, int delim_offset)
 			a->l = 0;
 			//CE SERA A MODIFIER POUR CORRESPONDRE AUX ESPACES COMME ARG
 			a->j = next_arg_pos_temp(cmd2, a->i);
+			//if (cmd2[a->j - 1] == '>' || cmd2[a->j - 1] == '<' || cmd2[a->j - 1] == '|'\
+			//|| cmd2[a->j - 1] == '\'' || cmd2[a->j - 1] == '"')
 			if (cmd2[a->j - 1] == '>' || cmd2[a->j - 1] == '<' || cmd2[a->j - 1] == '|'\
 			|| cmd2[a->j - 1] == '\'' || cmd2[a->j - 1] == '"')
 				a->j--;
