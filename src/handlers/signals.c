@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:56:07 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 22:32:09 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 22:34:23 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	setup_signals(void handler(int))
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
-	ssignal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	replace_line(void)
