@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 15:26:23 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/27 22:49:15 by coltcivers       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_delim	get_curr_delim(char *str, int pos);
 int		validate_builtin(char *builtin);
 char	*str_fullcpy(char *src);
 char	*get_builtin(char *cmd);
-void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2, char *builtin);
+void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2);
 void	get_delims(t_cmd *curr_cmd, t_delims_args *args, char *cmd, char *cmd2);
 char	*env_from_pos(t_dico *dico, char *str, int start, int end);
 char	*join_from_pos(char *str1, int start, int end, char *env);
