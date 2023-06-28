@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 01:32:59 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/27 14:44:36 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:09:24 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,16 @@ t_dico	*init_dico(char *key, char *value)
 	if (!dico)
 		return (NULL);
 	dico->next = NULL;
-	dico->key = ft_strdup(key);
-	dico->value = ft_strdup(value);
+	if (key == NULL || value == NULL)
+	{
+		dico->key = ft_strdup("");
+		dico->value = ft_strdup("");
+	}
+	else
+	{
+		dico->key = ft_strdup(key);
+		dico->value = ft_strdup(value);
+	}
 	if (!dico->key || !dico->value)
 		return (safe_free(&dico), NULL);
 	return (dico);

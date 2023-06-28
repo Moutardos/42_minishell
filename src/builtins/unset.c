@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 20:47:49 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 15:27:49 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:54:36 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int	unset(t_minishell *mini, t_cmd *cmd)
 {
 	char	**av;
-	char	*key;
 	t_dico	*dico;
 
 	av = cmd->av + 1;
@@ -25,10 +24,15 @@ int	unset(t_minishell *mini, t_cmd *cmd)
 		dico = mini->env;
 		while (dico)
 		{
-			key = dico->key;
-			if (!ft_strcmp(key, *av))
+			if (!ft_strcmp(dico->key, *av))
 			{
 				delete_dico(&mini->env, *av);
+				if (!mini->env)
+				{
+					mini->env = init_dico(NULL, NULL);
+					if (!mini->env)
+						return (exit_m(mini, NULL), -1);
+				}
 				return (0);
 			}
 			dico = dico->next;

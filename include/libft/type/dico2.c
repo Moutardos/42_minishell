@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:10:23 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/25 18:38:34 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:50:40 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	display_dico(t_dico *dico)
 {	
 	while (dico)
 	{
-		ft_printf("%s=%s\n", dico->key, dico->value);
+		if (dico->key[0] != '\0')
+			ft_printf("%s=%s\n", dico->key, dico->value);
 		dico = dico->next;
 	}
 }
@@ -61,22 +62,27 @@ int	size_dico(t_dico *dico)
 	return (size);
 }
 
-void	delete_dico(t_dico *dico, char *key)
+void	delete_dico(t_dico **dico, char *key)
 {
 	t_dico	*last;
+	t_dico	*current;
 
 	last = NULL;
-	while (dico)
+	current = *dico;
+	while (current)
 	{
-		if (!ft_strcmp(dico->key, key))
+		if (!ft_strcmp(current->key, key))
 		{
-			last->next = dico->next;
-			safe_free(dico->key);
-			safe_free(dico->value);
-			safe_free(dico);
+			if (last == NULL)
+				*dico = current->next;
+			else
+				last->next = current->next;
+			safe_free(current->key);
+			safe_free(current->value);
+			safe_free(current);
 			return ;
 		}
-		last = dico;
-		dico = dico->next;
+		last = current;
+		current = current->next;
 	}
 }
