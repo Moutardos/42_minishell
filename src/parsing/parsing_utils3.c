@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/27 23:00:57 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/28 15:38:28 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*join_from_pos(char *str1, int start, int end, char *env)
 	+ ft_strlen(env) + 1, sizeof(char));
 	if (!new)
 		return (NULL);
-	while (i++ < start)
+	while (i++ < start && str1[i] != '$')
 		new[i] = str1[i];
 	i = 0;
 	while (env[i] != '\0')

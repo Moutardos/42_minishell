@@ -6,12 +6,13 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:56:07 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 13:58:00 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:47:24 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "handlers.h"
+#include "builtins.h"
 
 void	handler(int sig)
 {
@@ -22,6 +23,17 @@ void	handler(int sig)
 		g_sig_get = 1;
 		replace_line();
 	}
+}
+
+int	signal_caught(t_minishell *mini)
+{
+	extern int	g_sig_get;
+
+	mini->exit_code = 130;
+	g_sig_get = 0;
+	if (!add_dico(mini->env, "?", "130"))
+		return (exit_m(mini, NULL), -1);
+	return (0);
 }
 
 void	setup_signals(void handler(int))

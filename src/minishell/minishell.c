@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 12:43:05 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:46:15 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "builtins.h"
 
 int	g_sig_get = 0;
+static t_dico	*create_env(t_minishell *mini, char **envp);
 
 /// @brief Minishell struct and fields init
 /// @return Newly allocated shell entity
@@ -27,12 +28,13 @@ t_minishell	*init_minishell(char **envp, char *v)
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
 		return (NULL);
-	mini->env = array_dico(envp);
+	if (!create_env(mini, envp))
+		return (safe_free(mini), NULL);
 	if (getcwd(mini->pwd, BUFFER_SIZE) == NULL)
 		mini->pwd[0] = '\0';
 	if (!add_dico(mini->env, "?", "0"))
 		return (free_dico(&mini->env), safe_free(mini), NULL);
-	if (getenv("SHLVL"))
+	if (envp && getenv("SHLVL"))
 	{
 		v = ft_itoa(ft_atoi(getenv("SHLVL")) + 1);
 		if (!v || !add_dico(mini->env, "SHLVL", v))
@@ -92,13 +94,13 @@ static void	free_mini(t_minishell **mini)
 	*mini = NULL;
 }
 
-int	signal_caught(t_minishell *mini)
+static t_dico	*create_env(t_minishell *mini, char **envp)
 {
-	mini->exit_code = 130;
-	g_sig_get = 0;
-	if (!add_dico(mini->env, "?", "130"))
-		return (exit_m(mini, NULL), -1);
-	return (0);
+	if (*envp)
+		mini->env = array_dico(envp);
+	else
+		mini->env = init_dico(NULL, NULL);
+	return (mini->env);
 }
 
 int	main(int ac, char **av, char **envp)

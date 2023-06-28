@@ -6,13 +6,14 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 14:27:13 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:42:27 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "builtins.h"
+#include "handlers.h"
 #include <stdio.h>
 
 static char	*parse_cmd_auxiliary(char *str, int start, int end, int j)

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:06:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 13:57:38 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:36:26 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static int	next_arg_pos5(char *str, int pos)
 		if (!quotes(str, pos))
 		{
 			while (!quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0' \
-			&& (ft_isalnum(str[pos]) || str[pos] == '_'))
+			&& (ft_isalnum(str[pos]) || str[pos] == '_' || str[pos] == '?'))
 				pos++;
 			return (pos);
 		}
 		if (quotes(str, pos))
 		{
 			while (quotes(str, pos) && str[pos] != ' ' && str[pos] != '\0' \
-			&& (ft_isalnum(str[pos]) || str[pos] == '_'))
+			&& (ft_isalnum(str[pos]) || str[pos] == '_' || str[pos] == '?'))
 				pos++;
 			return (pos);
 		}
