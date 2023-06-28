@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 12:26:55 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:43:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ int	g_sig_get = 0;
 
 /// @brief Minishell struct and fields init
 /// @return Newly allocated shell entity
-t_minishell	*init_minishell(char **envp)
+t_minishell	*init_minishell(char **envp, char *v)
 {
 	t_minishell	*mini;
-	char		*v;
 
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
@@ -44,9 +43,9 @@ t_minishell	*init_minishell(char **envp)
 	if (!mini->hd_path)
 	{
 		ft_free_split(mini->paths);
-		return (free(v), free_dico(&mini->env), safe_free(mini), NULL);
+		return (safe_free(v), free_dico(&mini->env), safe_free(mini), NULL);
 	}
-	return (free(v), mini);
+	return (safe_free(v), mini);
 }
 
 void	free_cmds(t_cmd **cmds)
@@ -111,7 +110,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac > 1)
 		return (ft_putstr_fd("minishell: wrong arguments amount\n", STDERR));
 	setup_signals(handler);
-	mini = init_minishell(envp);
+	mini = init_minishell(envp, NULL);
 	if (!mini)
 		return (-1);
 	while (!mini->exit)

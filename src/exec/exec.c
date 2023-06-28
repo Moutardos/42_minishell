@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/28 12:15:21 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 13:30:34 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execute(t_minishell	*mini)
 		if (re < 0)
 			return (close_pipe(mini->cmds, -1), exit_m(mini, NULL), -1);
 		if (cmd->fname && re == 1)
-			ft_printf("minishell: command not found : %s\n", cmd->fname);
+			ft_putstr_fd2("minishell: command not found: ", cmd->fname, STDERR);
 		closef(cmd->in, 0);
 		closef(cmd->out, 0);
 		cmd = cmd->next;

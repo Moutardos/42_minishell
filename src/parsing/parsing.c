@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 12:26:20 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 13:33:33 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_cmd	*parse_cmd(int start, int end, char *str)
 
 	if (delims_args_amount(str) < get_delims_amount(str))
 	{
-		ft_printf("mnishell: parsing error\n");
+		ft_putstr_fd("minishell: parsing error\n", STDERR);
 		return (NULL);
 	}
 	temp = parse_cmd_auxiliary(str, start, end, 0);
@@ -105,9 +105,10 @@ int	parse_current_cmd(t_minishell *mini)
 	extern int	g_sig_get;
 
 	line = readline("minishell : ");
-	add_history(line);
 	if (!line)
 		return (exit_m(mini, mini->cmds), -1);
+	if (ft_strlen(line) > 0)
+		add_history(line);
 	if (g_sig_get)
 		if (signal_caught(mini) < 0)
 			return (exit_m(mini, mini->cmds), free(line), -1);

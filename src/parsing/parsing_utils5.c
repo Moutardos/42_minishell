@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 00:07:00 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/28 13:18:19 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ t_delims_args *a)
 			a->j++;
 			continue ;
 		}
-			a->l = 0;
-			a->l = 0;
 		a->l = 0;
 		a->j = next_arg_pos_temp(cmd2, a->i);
 		if (cmd2[a->j - 1] == '>' || cmd2[a->j - 1] == '<' || \
@@ -54,7 +52,7 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2)
 	delim_offset = curr_delim_offset(cmd2, get_next_delim(cmd2, 0));
 	alloc = bltn_args_amount(cmd, delim_offset) \
 	+ delims_args_amount(cmd2);
-	curr_cmd->av = ft_calloc(alloc + 2, sizeof(char *));
+	curr_cmd->av = ft_calloc(alloc + 3, sizeof(char *));
 	if (!curr_cmd->av)
 		return ;
 	test = 0;

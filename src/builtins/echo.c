@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:54:22 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/27 15:16:38 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:53:12 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	echo(t_cmd *cmd)
 	int		i;
 	char	**av;
 
+	if (!cmd->av || !*cmd->av)
+		return (0);
 	av = cmd->av + 1;
 	i = 0;
 	if (!av)
