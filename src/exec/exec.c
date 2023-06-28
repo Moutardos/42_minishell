@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/28 13:30:34 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:25:19 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	treat_cmds(t_cmd *cmd, t_minishell *mini)
 	pid = fork();
 	if (pid != F_CHILD)
 		return (0);
+	signal(SIGQUIT, SIG_DFL);
 	env = dico_array(mini->env);
 	if (!env)
 		return (-1);
