@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:37:11 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 23:10:10 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:26:55 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 #include "parsing.h"
 #include "exec.h"
 #include "handlers.h"
+#include "builtins.h"
 
-int	g_exit_code = 0;
+int	g_sig_get = 0;
 
 /// @brief Minishell struct and fields init
 /// @return Newly allocated shell entity
 t_minishell	*init_minishell(char **envp)
 {
 	t_minishell	*mini;
-	char		*value;
+	char		*v;
 
 	mini = ft_calloc(1, sizeof(t_minishell));
 	if (!mini)
@@ -34,18 +35,18 @@ t_minishell	*init_minishell(char **envp)
 		return (free_dico(&mini->env), safe_free(mini), NULL);
 	if (getenv("SHLVL"))
 	{
-		value = ft_itoa(ft_atoi(getenv("SHLVL")) + 1);
-		if (!value || !add_dico(mini->env, "SHLVL", value))
-			return (free_dico(&mini->env), safe_free(mini), NULL);
+		v = ft_itoa(ft_atoi(getenv("SHLVL")) + 1);
+		if (!v || !add_dico(mini->env, "SHLVL", v))
+			return (safe_free(v), free_dico(&mini->env), safe_free(mini), NULL);
 	}
 	mini->paths = NULL;
 	mini->hd_path = ft_strjoin(mini->pwd, "/.hd");
 	if (!mini->hd_path)
 	{
 		ft_free_split(mini->paths);
-		return (free_dico(&mini->env), safe_free(mini), NULL);
+		return (free(v), free_dico(&mini->env), safe_free(mini), NULL);
 	}
-	return (mini);
+	return (free(v), mini);
 }
 
 void	free_cmds(t_cmd **cmds)
@@ -92,12 +93,23 @@ static void	free_mini(t_minishell **mini)
 	*mini = NULL;
 }
 
+int	signal_caught(t_minishell *mini)
+{
+	mini->exit_code = 130;
+	g_sig_get = 0;
+	if (!add_dico(mini->env, "?", "130"))
+		return (exit_m(mini, NULL), -1);
+	return (0);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_minishell	*mini;
+	int			exit_code;
 
-	(void)ac;
 	(void)av;
+	if (ac > 1)
+		return (ft_putstr_fd("minishell: wrong arguments amount\n", STDERR));
 	setup_signals(handler);
 	mini = init_minishell(envp);
 	if (!mini)
@@ -112,6 +124,5 @@ int	main(int ac, char **av, char **envp)
 			free_cmds(&mini->cmds);
 		}
 	}
-	free_mini(&mini);
-	return (g_exit_code);
+	return (exit_code = mini->exit_code, free_mini(&mini), exit_code);
 }

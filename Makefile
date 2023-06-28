@@ -1,4 +1,4 @@
-CC = gcc
+CC = cc
 ODIR = obj
 BDIR = bin
 SDIR = src

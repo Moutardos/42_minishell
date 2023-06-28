@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:56:07 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/27 23:18:41 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:17:22 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,13 @@
 
 void	handler(int sig)
 {
+	extern int	g_sig_get;
+
 	if (sig == SIGINT)
+	{
+		g_sig_get = 1;
 		replace_line();
+	}
 }
 
 void	setup_signals(void handler(int))

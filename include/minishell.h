@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:34:18 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/23 17:44:05 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:25:17 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ typedef struct s_minishell
 	char	*raw_line;
 	t_cmd	*cmds;
 	int		exit;
+	int		exit_code;
 }	t_minishell;
 
 char	*replace_str2(t_dico *dico, char *str);
+int		signal_caught(t_minishell *mini);
 #endif

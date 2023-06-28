@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 00:07:09 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/28 12:26:20 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,16 @@ static t_cmd	*parser(char *str, int i)
 /// @brief Get the latest user input and parse it into args, loop called
 int	parse_current_cmd(t_minishell *mini)
 {
-	char	*line;
+	char		*line;
+	extern int	g_sig_get;
 
 	line = readline("minishell : ");
 	add_history(line);
 	if (!line)
 		return (exit_m(mini, mini->cmds), -1);
+	if (g_sig_get)
+		if (signal_caught(mini) < 0)
+			return (exit_m(mini, mini->cmds), free(line), -1);
 	if (quotes(line, ft_strlen(line)))
 		return (free(line), -1);
 	line = replace_str2(mini->env, line);

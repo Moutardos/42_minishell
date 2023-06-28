@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:42:56 by lcozdenm          #+#    #+#             */
-/*   Updated: 2023/06/27 15:04:10 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:15:21 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,12 @@ static int	wait_exec(t_minishell *mini)
 	int			status;
 	char		*re;
 	t_dico		*check;
-	extern int	g_exit_code;
 
 	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WIFEXITED(status))
 		{
-			g_exit_code = WEXITSTATUS(status);
+			mini->exit_code = WEXITSTATUS(status);
 			re = ft_itoa(WEXITSTATUS(status));
 			if (!re)
 				return (-1);
