@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:29:02 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/27 23:41:27 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/28 14:36:30 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	next_arg_pos(char *str, int pos)
 		}
 		if (quotes(str, pos))
 		{
-			while (quotes(str, pos))
+			while (quotes(str, pos) && str[pos] != '\0')
 				pos++;
 			return (pos + 1);
 		}
