@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 13:33:33 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:12:52 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ static t_cmd	*parser(char *str, int i)
 		new_cmd = parse_cmd(i, next_delim, str);
 		if (!new_cmd)
 			return (clear_cmd(curr_cmd));
+		if (new_cmd->av[0] == NULL)
+			printf("flag null\n");
 		if (new_cmd->av[0] != NULL && ft_strchr(new_cmd->av[0], '/'))
 		{
 			new_cmd->path = ft_strdup(new_cmd->av[0]);

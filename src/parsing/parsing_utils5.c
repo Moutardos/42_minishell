@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 13:18:19 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:23:44 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2)
 	if (!curr_cmd->av)
 		return ;
 	test = 0;
-	while (cmd[test] == ' ')
+	while (cmd2[test] == ' ')
 		test++;
 	if (is_delim(cmd, test))
 		return ;
