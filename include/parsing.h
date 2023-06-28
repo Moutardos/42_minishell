@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coltcivers <coltcivers@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 15:13:05 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 00:05:02 by coltcivers       ###   ########.fr       */
+/*   Updated: 2023/06/28 16:58:31 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	parse_current_cmd_utils(t_cmd *cmds);
 int		is_delim2(char *cmd, int i);
 int		quotes2(char *line, int index);
 int		replace_case(char *str, int pos);
-int		next_arg_pos4(char *str, int pos);
 int		next_arg_pos_temp(char *str, int pos);
 void	get_args_auxiliary2(t_cmd *curr_cmd, char *cmd2, t_delims_args *a);
 

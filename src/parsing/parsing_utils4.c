@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:06:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 15:36:26 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:20:19 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*replace_str2(t_dico *dico, char *str)
 			j = next_arg_pos5(str, i + 1);
 			env = env_from_pos(dico, str, i + 1, j);
 			str = join_from_pos(str, i, j, env);
-			i = j;
 			free(env);
+			i = 0;
 			continue ;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 14:50:25 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 16:03:32 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:10:54 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include "handlers.h"
 #include <stdio.h>
 
-static char *parse_cmd_auxiliary(char *str, int start, int end, int j)
+static char	*parse_cmd_auxiliary(char *str, int start, int end, int j)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_calloc(end - start + 1, sizeof(char));
 	if (!temp)
@@ -33,12 +33,12 @@ static char *parse_cmd_auxiliary(char *str, int start, int end, int j)
 	return (temp);
 }
 
-t_cmd *parse_cmd(int start, int end, char *str)
+t_cmd	*parse_cmd(int start, int end, char *str)
 {
-	char *temp;
-	char *copy;
-	char *copy2;
-	t_cmd *cmd;
+	char	*temp;
+	char	*copy;
+	char	*copy2;
+	t_cmd	*cmd;
 
 	if (delims_args_amount(str) < get_delims_amount(str))
 	{
@@ -59,7 +59,7 @@ t_cmd *parse_cmd(int start, int end, char *str)
 	return (safe_free(temp), safe_free(copy), safe_free(copy2), cmd);
 }
 
-static int check_empty(char *str, int pos)
+static int	check_empty(char *str, int pos)
 {
 	if (str[pos] == '\0' && (pos > 0 && str[pos - 1] != '|'))
 		return (0);
@@ -72,11 +72,11 @@ static int check_empty(char *str, int pos)
 	return (1);
 }
 
-static t_cmd *parser(char *str, int i)
+static t_cmd	*parser(char *str, int i)
 {
-	int next_delim;
-	t_cmd *curr_cmd;
-	t_cmd *new_cmd;
+	int		next_delim;
+	t_cmd	*curr_cmd;
+	t_cmd	*new_cmd;
 
 	curr_cmd = NULL;
 	while (str[i] != '\0')
@@ -102,10 +102,10 @@ static t_cmd *parser(char *str, int i)
 }
 
 /// @brief Get the latest user input and parse it into args, loop called
-int parse_current_cmd(t_minishell *mini)
+int	parse_current_cmd(t_minishell *mini)
 {
-	char *line;
-	extern int g_sig_get;
+	char		*line;
+	extern int	g_sig_get;
 
 	line = readline("minishell : ");
 	if (!line)

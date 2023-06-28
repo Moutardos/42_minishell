@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 13:33:21 by coltcivers        #+#    #+#             */
-/*   Updated: 2023/06/28 14:35:15 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:13:11 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	get_args(t_cmd *curr_cmd, char *cmd, char *cmd2)
 	int	delim_offset;
 
 	delim_offset = curr_delim_offset(cmd2, get_next_delim(cmd2, 0));
-	alloc = bltn_args_amount(cmd, delim_offset) \
+	alloc = ft_strlen(cmd2) \
 	+ delims_args_amount(cmd2);
-	curr_cmd->av = ft_calloc(alloc + 3, sizeof(char *));
+	curr_cmd->av = ft_calloc(alloc + 4, sizeof(char *));
 	if (!curr_cmd->av)
 		return ;
 	test = 0;

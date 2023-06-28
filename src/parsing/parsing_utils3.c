@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:48:51 by hgirard           #+#    #+#             */
-/*   Updated: 2023/06/28 15:38:28 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:05:55 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,19 @@ int	bltn_args_amount(char *cmd, int end)
 	int	i;
 	int	count;
 
-	i = get_post_bltn(cmd);
+	i = 0;
 	count = 0;
 	while (cmd[i] != '\0' && i < end)
 	{
-		if (cmd[i] != ' ')
+		if (quotes(cmd, i))
 		{
-			i = next_arg_pos4(cmd, i);
 			count++;
-			continue ;
+			i = next_arg_pos3(cmd, i);
+		}
+		else if (cmd[i] != ' ')
+		{
+			i = next_arg_pos3(cmd, i);
+			count++;
 		}
 		i++;
 	}
